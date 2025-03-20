@@ -1,0 +1,62 @@
+{{ 'question.css' |  asset_url |  stylesheet_tag }}
+
+<section class="question_section_wrapper">
+    <div class="question_wrapper">
+        <div class="question">
+            <div class="question_content">
+                <h2 class="question_title">{{ section.settings.question_title }}</h2>
+                <p class="question_paragraph">{{ section.settings.question_paragraph }}</p>
+                <div class="question_options">
+                    <p class="option">{{ section.settings.question_option_1 }}</p>
+                    <p class="option">{{ section.settings.question_option_2 }}</p>
+                    <p class="option">{{ section.settings.question_option_3 }}</p>
+                    <p class="option">{{ section.settings.question_option_4 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "question",
+    "settings": [
+        {
+            "type": "text",
+            "id": "question_title",
+            "label": "Define the title"
+        },
+        {
+            "type": "text",
+            "id": "question_paragraph",
+            "label": "Define the question body"
+        },
+        {
+            "type": "text",
+            "id": "question_option_1",
+            "label": "Define option 1"
+        },
+        {
+            "type": "text",
+            "id": "question_option_2",
+            "label": "Define option 2"
+        },
+        {
+            "type": "text",
+            "id": "question_option_3",
+            "label": "Define option 3"
+        },
+        {
+            "type": "text",
+            "id": "question_option_4",
+            "label": "Define option 4"
+        }
+
+    ],
+    "presets": [
+        {
+            "name": "question"
+        }
+    ]
+}
+{% endschema %}

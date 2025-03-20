@@ -1,0 +1,86 @@
+{{ "header.css" |  asset_url |  stylesheet_tag }}
+
+
+<section class="header_container">
+  <div class="header">
+
+    <div class="header_content">
+       <div class="nav_icons">
+        <a class="nav_icon" href="/cart"><img width="auto" height="100%" src="{{ "cart.svg" |  asset_url }}" alt="Logo"></a>
+        <a class="nav_icon" href="{{ routes.account_url }}"><img width="auto" height="100%" src="{{ "accounts.svg" |  asset_url }}" alt="Logo"></a>
+        <div class="nav_icon search"><img width="auto" height="100%" src="{{ "search.svg" |  asset_url }}" alt="Logo"></div>
+       </div>
+    </div>
+
+    <div class="search_box">
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <input type="text" name="q" placeholder="Search products..." aria-label="Search">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+    <div class="header_content">
+      <nav class="navlinks">
+        <ul class="main-menu">
+          {% for link in linklists.main-menu.links %}
+            <li class="menu-item">
+              <a class="nav_link" href="{{ link.url }}">{{ link.title }}</a>
+
+              {% if link.links != blank %}
+                <ul class="submenu">
+                  {% for sub_link in link.links %}
+                    <li>
+                      <a href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+
+                      {% if sub_link.links != blank %}
+                        <ul class="sub-submenu">
+                          {% for sub_sub_link in sub_link.links %}
+                            <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="header_content">
+      <div class="logo_container">
+        <a href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+
+let searchButton = document.querySelector('.search');
+let searchBox = document.querySelector('.search_box');
+
+searchButton.addEventListener('click', function() {
+  searchBox.classList.toggle('active');
+});
+
+</script>
+
+
+{% schema %}
+{
+  "name": "header",
+  "settings": [],
+  "presets": [
+    {
+      "name": "header"
+    }
+  ]
+}
+{% endschema %}
