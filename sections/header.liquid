@@ -66,22 +66,30 @@
 
 <script>
 
-let searchButton = document.querySelector('.search');
-let searchBox = document.querySelector('.search_box');
-let closeButton = document.querySelector('.search_close_icon')
-let blackBackground = document.querySelector('.black_fade_in')
+const searchButton = document.querySelector('.search');
+const searchBox = document.querySelector('.search_box');
+const closeButton = document.querySelector('.search_close_icon');
+const blackBackground = document.querySelector('.black_fade_in');
+const searchField = document.querySelector('.search_field');
 
-searchButton.addEventListener('click', function() {
-  searchBox.classList.add('active');
+function openSearch() {
+    searchBox.classList.add('active');
+    setTimeout(() => searchField.focus(), 50);
+}
+
+function closeSearch() {
+    searchBox.classList.remove('active');
+}
+
+// Event Listeners
+searchButton?.addEventListener('click', openSearch);
+closeButton?.addEventListener('click', closeSearch);
+blackBackground?.addEventListener('click', closeSearch);
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") openSearch();
 });
 
-closeButton.addEventListener('click', function() {
-  searchBox.classList.remove('active');
-});
-
-blackBackground.addEventListener('click', function() {
-  searchBox.classList.remove('active');
-});
 
 
 
