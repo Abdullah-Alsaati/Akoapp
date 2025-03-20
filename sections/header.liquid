@@ -13,10 +13,13 @@
     </div>
 
     <div class="search_box">
-      <form action="{{ routes.search_url }}" method="get" role="search">
-        <input type="text" name="q" placeholder="Search products..." aria-label="Search">
-        <button type="submit">Search</button>
+      <div class="black_fade_in"></div>
+      <form class="search_box_content" action="{{ routes.search_url }}" method="get" role="search">
+        <img class="search_close_icon" width="30px" height="auto" src="{{ 'close-icon.svg' |  asset_url }}" alt="Close Icon" aria-label="Close">
+        <input class="search_field" type="text" name="q" placeholder="أبحث عن منتج" aria-label="Search">
+        <button class="search_button" type="submit">Search</button>
       </form>
+      
     </div>
 
     <div class="header_content">
@@ -65,10 +68,24 @@
 
 let searchButton = document.querySelector('.search');
 let searchBox = document.querySelector('.search_box');
+let closeButton = document.querySelector('.search_close_icon')
+let blackBackground = document.querySelector('.black_fade_in')
 
 searchButton.addEventListener('click', function() {
-  searchBox.classList.toggle('active');
+  searchBox.classList.add('active');
 });
+
+closeButton.addEventListener('click', function() {
+  searchBox.classList.remove('active');
+});
+
+blackBackground.addEventListener('click', function() {
+  searchBox.classList.remove('active');
+});
+
+
+
+
 
 </script>
 
