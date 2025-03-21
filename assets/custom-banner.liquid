@@ -1,0 +1,52 @@
+{{ 'custom-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="banner-container">
+  <div class="custom-mug-banner">
+    <div class="banner-content">
+      <div class="banner-text">
+        <h2 class="banner-title">
+          {{ section.settings['main-text'] }}
+        </h2>
+        <p class="banner-description">
+          {{ section.settings['secondary-text'] }}
+        </p>
+        <div class="button-wrapper">
+          <a href="{{section.settings.url}}" class="banner-button">{{ section.settings['url-text'] }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "custom-banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "main-text",
+      "label": "Edit the main text"
+    },
+    {
+      "type": "text",
+      "id": "secondary-text",
+      "label": "Edit the secondary text"
+    },
+    {
+      "type": "text",
+      "id": "url-text",
+      "label": "Edit the url text"
+    },
+    {
+      "type": "text",
+      "id": "url",
+      "label": "Edit the url itself"
+    }
+  ],
+  "presets": [
+    {
+      "name": "custom-banner"
+    }
+  ]
+}
+{% endschema %}
