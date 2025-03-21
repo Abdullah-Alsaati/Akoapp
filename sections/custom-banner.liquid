@@ -1,52 +1,99 @@
 {{ 'custom-banner.css' | asset_url | stylesheet_tag }}
 
+
 <div class="banner-container">
-  <div class="custom-mug-banner">
-    <div class="banner-content">
-      <div class="banner-text">
-        <h2 class="banner-title">
-          {{ section.settings['main-text'] }}
-        </h2>
-        <p class="banner-description">
-          {{ section.settings['secondary-text'] }}
-        </p>
-        <div class="button-wrapper">
-          <a href="{{section.settings.url}}" class="banner-button">{{ section.settings['url-text'] }}</a>
+  <div class="custom-mug-banner swiper">
+    <div class="slide_container swiper-wrapper">
+
+      {% for block in section.blocks %}
+        
+      <div class="banner-content swiper-slide">
+
+        <div class="image_banner">
+          <img width="100%" height="auto" src="{{ block.settings.banner_image |  img_url: 'master' }}" alt="">
         </div>
+
+        <div class="banner-text">
+          <h2 class="banner-title">
+            {{ block.settings['main-text'] }}
+          </h2>
+          <p class="banner-description">
+            {{ block.settings['secondary-text'] }}
+          </p>
+          <div class="button-wrapper">
+            <a href="{{ block.settings.url }}" class="banner-button">{{ block.settings['url-text'] }}</a>
+          </div>
+        </div>
+
       </div>
+
+    {% endfor %}
+
     </div>
+    <div class="swiper-pagination"></div>  
   </div>
 </div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+  const swiper = new Swiper('.swiper', {
+    direction: 'horizontal',
+    loop: true,
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  });
+});
+
+</script>
+
+
 
 {% schema %}
 {
   "name": "custom-banner",
-  "settings": [
-    {
-      "type": "text",
-      "id": "main-text",
-      "label": "Edit the main text"
-    },
-    {
-      "type": "text",
-      "id": "secondary-text",
-      "label": "Edit the secondary text"
-    },
-    {
-      "type": "text",
-      "id": "url-text",
-      "label": "Edit the url text"
-    },
-    {
-      "type": "text",
-      "id": "url",
-      "label": "Edit the url itself"
-    }
-  ],
+  "settings": [],
   "presets": [
     {
       "name": "custom-banner"
     }
+  ],
+  "blocks": [
+    {
+      "type": "image_slide",
+      "name": "image_lide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "Choose a banner image"
+        },
+        {
+          "type": "text",
+          "id": "main-text",
+          "label": "Edit the Title"
+        },
+        {
+          "type": "text",
+          "id": "secondary-text",
+          "label": "Edit the paragraph"
+        },
+        {
+          "type": "text",
+          "id": "url-text",
+          "label": "Edit the button text"
+        },
+        {
+          "type": "text",
+          "id": "url",
+          "label": "Edit the button URL"
+        }
+
+      ]
+    }
   ]
+
 }
 {% endschema %}
