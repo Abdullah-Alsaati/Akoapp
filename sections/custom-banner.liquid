@@ -7,27 +7,27 @@
 
       {% for block in section.blocks %}
         
-      <div class="banner-content swiper-slide">
+        <div class="banner-content swiper-slide">
 
-        <div class="image_banner">
-          <img width="100%" height="auto" src="{{ block.settings.banner_image |  img_url: 'master' }}" alt="">
-        </div>
-
-        <div class="banner-text">
-          <h2 class="banner-title">
-            {{ block.settings['main-text'] }}
-          </h2>
-          <p class="banner-description">
-            {{ block.settings['secondary-text'] }}
-          </p>
-          <div class="button-wrapper">
-            <a href="{{ block.settings.url }}" class="banner-button">{{ block.settings['url-text'] }}</a>
+          <div class="image_banner">
+            <img width="100%" height="auto" src="{{ block.settings.banner_image |  img_url: 'master' }}" alt="">
           </div>
+
+          <div class="banner-text">
+            <h2 class="banner-title">
+              {{ block.settings['main-text'] }}
+            </h2>
+            <p class="banner-description">
+              {{ block.settings['secondary-text'] }}
+            </p>
+            <div class="button-wrapper">
+              <a href="{{ block.settings.url }}" class="banner-button">{{ block.settings['url-text'] }}</a>
+            </div>
+          </div>
+
         </div>
 
-      </div>
-
-    {% endfor %}
+      {% endfor %}
 
     </div>
     <div class="swiper-pagination"></div>  
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
   "blocks": [
     {
       "type": "image_slide",
-      "name": "image_lide",
+      "name": "image_slide",
       "settings": [
         {
           "type": "image_picker",
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "label": "Edit the button text"
         },
         {
-          "type": "text",
+          "type": "url",
           "id": "url",
           "label": "Edit the button URL"
         }

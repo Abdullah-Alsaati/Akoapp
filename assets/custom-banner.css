@@ -44,23 +44,32 @@
   width: 100%;
   position: absolute;
   bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .banner-title {
+  padding: 0px;
+  margin: 0px;
   font-size: 40px;
   font-weight: 700;
-  margin-bottom: 15px;
   text-align: center;
   font-weight: bolder;
   color: #083135;
+  padding-bottom: 10px;
 }
 
 .banner-description {
+  padding: 0px;
+  margin: 0px;
   font-size: 16px;
   line-height: 1.6;
   text-align: center;
   color: #083135;
-  margin-bottom: 25px;
+  width: 40%;
+  padding-bottom: 10px;
 }
 
 .button-wrapper {
