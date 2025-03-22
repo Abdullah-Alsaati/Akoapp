@@ -4,6 +4,8 @@
   width: 100%;
   height: max-content;
   padding: 30px 0px;
+  overflow: hidden;
+  background-color: #083135;
 }
 
 .custom-mug-banner {
@@ -15,7 +17,6 @@
 
 .slide_container {
   height: 75dvh;
-
 }
 
 .banner-content {
@@ -37,9 +38,6 @@
   width: 100%;
   object-fit: cover;
 }
-
-
-
 
 .banner-text {
   text-align: center;

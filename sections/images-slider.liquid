@@ -1,0 +1,206 @@
+{{ 'images-slider.css' | asset_url | stylesheet_tag }}
+
+<div class="content-container">
+  <h2 class="title">{{ section.settings.title }}</h2>
+
+  <div class="image-slider-container">
+    <!-- First Slider (Left to Right) -->
+    <div class="swiper swiper-first">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          {% if block.settings.image != blank %}
+            <div class="swiper-slide">
+              <div class="image-item">
+                <img src="{{ block.settings.image | img_url: 'large' }}" alt="Slider Image">
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Slider (Right to Left) -->
+  <div class="swiper swiper-second">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {% if block.settings.image != blank %}
+          <div class="swiper-slide">
+            <div class="image-item">
+              <img src="{{ block.settings.image | img_url: 'large' }}" alt="Slider Image">
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="slider-buttons-container">
+      {% if section.settings['how-to'] != blank %}
+        <a href="{{ section.settings.how-to-link }}" class="slider-button how-to-button">
+          {{- section.settings['how-to'] -}}
+        </a>
+      {% endif %}
+
+      {% if section.settings['see-all'] != blank %}
+        <a href="{{ section.settings.see-all-link }}" class="slider-button see-all-button">
+          {{- section.settings['see-all'] -}}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Infinite Image Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Edit Title",
+      "default": "الفائزون بمسابقة أفضل صورة لهذا الأسبوع!"
+    },
+    {
+      "type": "range",
+      "id": "slides_per_view",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Slides per view (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "space_between",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 40,
+      "label": "Space between slides (px)"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 1000,
+      "max": 5000,
+      "step": 500,
+      "default": 3000,
+      "label": "Autoplay speed (ms)"
+    },
+    {
+      "type": "text",
+      "id": "how-to",
+      "label": "Edit first button label",
+      "default": "كيف أشارك؟"
+    },
+    {
+      "type": "url",
+      "id": "how-to-link",
+      "label": "First button link"
+    },
+    {
+      "type": "text",
+      "id": "see-all",
+      "label": "Edit second button label",
+      "default": "مشاهدة جميع الصور"
+    },
+    {
+      "type": "url",
+      "id": "see-all-link",
+      "label": "Second button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Upload Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite Image Slider",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Determine slides per view based on screen size
+    const getResponsiveSlidesPerView = () => {
+      return window.innerWidth <= 767 ? 1.5 : 3.5;
+    };
+
+    // First slider (left to right)
+    const swiperFirst = new Swiper('.swiper-first', {
+      slidesPerView: getResponsiveSlidesPerView(),
+      centeredSlides: true,
+      spaceBetween: {{ section.settings.space_between | default: 50 }},
+      loop: true,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: false,
+        stopOnLastSlide: false
+      },
+      speed: 5000,
+      freeMode: true,
+      freeModeMomentum: false,
+      allowTouchMove: true,
+      on: {
+        touchEnd: function() {
+          this.autoplay.start();
+        },
+        click: function() {
+          this.autoplay.start();
+        }
+      }
+    });
+
+    // Second slider (right to left)
+    const swiperSecond = new Swiper('.swiper-second', {
+      slidesPerView: getResponsiveSlidesPerView(),
+      centeredSlides: true,
+      spaceBetween: {{ section.settings.space_between | default: 10 }},
+      loop: true,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: false,
+        stopOnLastSlide: false,
+        reverseDirection: true
+      },
+      speed: 8000,
+      freeMode: true,
+      freeModeMomentum: false,
+      allowTouchMove: true,
+      on: {
+        touchEnd: function() {
+          this.autoplay.start();
+        },
+        click: function() {
+          this.autoplay.start();
+        }
+      }
+    });
+
+    // Update slides per view on window resize
+    window.addEventListener('resize', function() {
+      swiperFirst.params.slidesPerView = getResponsiveSlidesPerView();
+      swiperFirst.params.centeredSlides = true;
+      swiperFirst.update();
+
+      swiperSecond.params.slidesPerView = getResponsiveSlidesPerView();
+      swiperSecond.params.centeredSlides = true;
+      swiperSecond.update();
+    });
+  });
+</script>

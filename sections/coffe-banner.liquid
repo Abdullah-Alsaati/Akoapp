@@ -1,0 +1,80 @@
+{{ 'coffe-banner.css' | asset_url | stylesheet_tag }}
+
+<section class="coffee-section">
+  <div class="coffee-container">
+    <div class="content">
+      <div class="box">
+        <h2>{{ section.settings.heading_1 }}</h2>
+        <p>{{ section.settings.text_1 }}</p>
+      </div>
+      <div class="box">
+        <h2>{{ section.settings.heading_2 }}</h2>
+        <p>{{ section.settings.text_2 }}</p>
+      </div>
+      <div class="box">
+        <h2>{{ section.settings.heading_3 }}</h2>
+        <p>{{ section.settings.text_3 }}</p>
+      </div>
+    </div>
+
+    <div class="image-container">
+      {% if section.settings.image != blank %}
+        <img src="{{ section.settings.image | img_url: '500x' }}" alt="كوب القهوة" class="coffee-image">
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "coffe-banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "صورة المنتج"
+    },
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "العنوان الأول",
+      "default": "جودة فائقة"
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": "النص الأول",
+      "default": "مواد متينة مقاومة للحرارة وقابلة للاستخدام، صديقة للبيئة ومصممة لتدوم طويلًا."
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "العنوان الثاني",
+      "default": "تصاميم عصرية وفريدة"
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "label": "النص الثاني",
+      "default": "أنماط حديثة وأنيقة تناسب كل الأذواق، مثالية للحظات اليومية وجلسات التصوير."
+    },
+    {
+      "type": "text",
+      "id": "heading_3",
+      "label": "العنوان الثالث",
+      "default": "مثالية لكل المناسبات"
+    },
+    {
+      "type": "textarea",
+      "id": "text_3",
+      "label": "النص الثالث",
+      "default": "متعدد الاستخدامات للمشروبات الساخنة والباردة، يأتي بتغليف أنيق ومناسب للهدايا."
+    }
+  ],
+  "presets": [
+    {
+      "name": "coffe-banner"
+    }
+  ]
+}
+{% endschema %}
