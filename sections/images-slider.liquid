@@ -142,8 +142,8 @@
     // First slider (left to right)
     const swiperFirst = new Swiper('.swiper-first', {
       slidesPerView: getResponsiveSlidesPerView(),
-      centeredSlides: true,
-      spaceBetween: {{ section.settings.space_between | default: 50 }},
+      // centeredSlides: true,
+      spaceBetween: {{ section.settings.space_between | default: 40 }},
       loop: true,
       autoplay: {
         delay: 0,
@@ -153,7 +153,7 @@
       },
       speed: 5000,
       freeMode: true,
-      freeModeMomentum: false,
+      
       allowTouchMove: true,
       on: {
         touchEnd: function() {
@@ -168,8 +168,8 @@
     // Second slider (right to left)
     const swiperSecond = new Swiper('.swiper-second', {
       slidesPerView: getResponsiveSlidesPerView(),
-      centeredSlides: true,
-      spaceBetween: {{ section.settings.space_between | default: 10 }},
+      // centeredSlides: true,
+      spaceBetween: {{ section.settings.space_between | default: 40 }},
       loop: true,
       autoplay: {
         delay: 0,
@@ -178,9 +178,9 @@
         stopOnLastSlide: false,
         reverseDirection: true
       },
-      speed: 8000,
+      speed: 5000,
       freeMode: true,
-      freeModeMomentum: false,
+     
       allowTouchMove: true,
       on: {
         touchEnd: function() {
@@ -195,11 +195,11 @@
     // Update slides per view on window resize
     window.addEventListener('resize', function() {
       swiperFirst.params.slidesPerView = getResponsiveSlidesPerView();
-      swiperFirst.params.centeredSlides = true;
+      // swiperFirst.params.centeredSlides = true;
       swiperFirst.update();
 
       swiperSecond.params.slidesPerView = getResponsiveSlidesPerView();
-      swiperSecond.params.centeredSlides = true;
+      // swiperSecond.params.centeredSlides = true;
       swiperSecond.update();
     });
   });

@@ -1,0 +1,124 @@
+{{ 'faq-accordion.css' | asset_url | stylesheet_tag }}
+
+<div class="faq-container">
+  <h2 class="faq-title">{{ section.settings.title }}</h2>
+  <p class="faq-subtitle">{{ section.settings.subtitle }}</p>
+
+  <div class="faq-accordion">
+    {% for block in section.blocks %}
+      <div class="faq-item" >
+        <div class="faq-question">
+            <div class="faq-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="#1e1e1e" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 3.33334V12.6667" stroke="currentColor" stroke-width="2" stroke="#000000" stroke-linecap="round"/>
+                <path d="M3.33331 8H12.6666" stroke="currentColor" stroke-width="2" stroke="#000000" stroke-linecap="round"/>
+              </svg>
+            </div>
+          <div class="faq-question-title">{{ block.settings.question }}</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "الأسئلة الأكثر شيوعا"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "إذا لم تجد سؤالك هنا، يمكنك إضافة سؤال بالتواصل معنا من الإيميل support@akoapp.net"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "ماذا لو وصلني الكوب مكسورة؟"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>يمكنك التواصل معنا وسنقوم بإرسال بديل لك.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "faq"
+        },
+        {
+          "type": "faq"
+        },
+        {
+          "type": "faq"
+        }
+      ]
+    }
+  ],
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      const icon = item.querySelector('.faq-icon');
+      
+      // Set initial height to 0
+      answer.style.height = '0px';
+      
+      question.addEventListener('click', () => {
+        // Toggle active class
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+            otherItem.querySelector('.faq-answer').style.height = '0px';
+            otherItem.querySelector('.faq-icon').classList.remove('rotate');
+          }
+        });
+        
+        // Toggle current item
+        if (isActive) {
+          item.classList.remove('active');
+          answer.style.height = '0px';
+          icon.classList.remove('rotate');
+        } else {
+          item.classList.add('active');
+          answer.style.height = answer.querySelector('.faq-answer-content').offsetHeight + 'px';
+          icon.classList.add('rotate');
+        }
+      });
+    });
+  });
+</script>

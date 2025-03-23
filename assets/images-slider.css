@@ -30,7 +30,7 @@
 }
 
 .image-item img {
-  width: 100%;
+  width: 30dvw;
   height: 40dvh;
   object-fit: cover;
   border-radius: 15px;
