@@ -11,9 +11,13 @@
   "sections": {
     "custom-banner": {
       "type": "custom-banner",
+    },
+    "coffe-banner": {
+      "type": "coffe-banner"
     }
   },
   "order": [
-    "custom-banner"
+    "custom-banner",
+    "coffe-banner"
   ]
 }
