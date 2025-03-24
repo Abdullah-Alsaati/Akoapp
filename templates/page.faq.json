@@ -1,0 +1,10 @@
+{
+    "sections": {
+      "faq-accordion": {
+        "type": "faq-accordion"
+      }
+    },
+    "order": [
+      "faq-accordion"
+    ]
+  }
