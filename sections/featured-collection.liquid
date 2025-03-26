@@ -14,9 +14,30 @@
           <div class="product-card">
             <div class="product-image"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt=""></div>
             <div class="product-information">
+              <p class="product-title">
+                {% assign words = product.title | split: " " %}
+                  {% for word in words %}
+                    {{ word }}  
+                    {% assign mod_result = forloop.index | modulo: 5 %}
+                    {% if mod_result == 0 %}<br>{% endif %}
+                  {% endfor %}
+              </p>
 
+              <div class="product-prices">
+                <p class="product-price">{{ product.price |  money }}</p>
+                {% if product.compare_at_price %}
+                  <p class="product-compare-to-price">{{ product.compare_at_price | money }}</p>
+                {% endif %}
+              </div>
             </div>
-            <div class="buttons"></div>
+            <div class="buttons">
+              <form class="buttons" method="post" action="/cart/add">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="buy-now-button">شراء الاٌن</button>
+                <button type="submit" class="add-to-cart-button"><img width="auto" height="100%"  src="{{ 'cart.svg' |  asset_url  }}" alt=""></button>
+              </form>
+            </div>
           </div>
         {% endfor %}
 
@@ -68,7 +89,7 @@
 
       const x = e.pageX - scrollContainer.offsetLeft;
       const delta = x - startX;
-      velocity = delta * 0.2; // Adjust multiplier for smoothness
+      velocity = delta * 0.2; // smoothness
       scrollContainer.scrollLeft = scrollLeft - delta;
     });
 
@@ -82,6 +103,20 @@
       }
     }
   });
+
+  document.querySelector(".buy-now-button").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevents the default form submission
+    let form = event.target.closest("form");
+    
+    fetch("/cart/add", {
+      method: "POST",
+      body: new FormData(form)
+    }).then(() => {
+      window.location.href = "/checkout"; // Redirects to checkout
+    });
+  });
+
+  
 </script>
 
 
