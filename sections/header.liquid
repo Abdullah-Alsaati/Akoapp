@@ -4,10 +4,12 @@
 <section class="header_container">
   <div class="header">
 
+
+
     <div class="header_content">
        <div class="nav_icons">
-        <a class="nav_icon" href="/cart"><img width="auto" height="100%" src="{{ "cart.svg" |  asset_url }}" alt="Logo"></a>
-        <a class="nav_icon" href="{{ routes.account_url }}"><img width="auto" height="100%" src="{{ "accounts.svg" |  asset_url }}" alt="Logo"></a>
+        <a class="nav_icon cart" href="/cart"><img width="auto" height="100%" src="{{ "cart.svg" |  asset_url }}" alt="Logo"></a>
+        <a class="nav_icon account" href="{{ routes.account_url }}"><img width="auto" height="100%" src="{{ "accounts.svg" |  asset_url }}" alt="Logo"></a>
         <div class="nav_icon search"><img width="auto" height="100%" src="{{ "search.svg" |  asset_url }}" alt="Logo"></div>
        </div>
     </div>
@@ -17,34 +19,46 @@
       <form class="search_box_content" action="{{ routes.search_url }}" method="get" role="search">
         <img class="search_close_icon" width="30px" height="auto" src="{{ 'close-icon.svg' |  asset_url }}" alt="Close Icon" aria-label="Close">
         <input class="search_field" type="text" name="q" placeholder="أبحث عن منتج" aria-label="Search">
-        <button class="search_button" type="submit">Search</button>
+        <button class="search_button" type="submit">أبحث</button>
       </form>
       
     </div>
 
-    <div class="header_content">
-      <nav class="navlinks">
+
+
+    <div class="header_content"> 
+      <div class="logo_container_middle">
+        <a class="logo_mobile" href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a>
+      </div>
+      <nav class="nav_links">
         <ul class="main-menu">
           {% for link in linklists.main-menu.links %}
             <li class="menu-item">
               <a class="nav_link" href="{{ link.url }}">{{ link.title }}</a>
-
+  
               {% if link.links != blank %}
                 <ul class="submenu">
+
                   {% for sub_link in link.links %}
+                    
                     <li>
-                      <a href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+                      <a class="sub_link" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
 
                       {% if sub_link.links != blank %}
                         <ul class="sub-submenu">
                           {% for sub_sub_link in sub_link.links %}
-                            <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+                            <li>
+                              <a class="sub_sub_link" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
+                            </li>
+
                           {% endfor %}
+
                         </ul>
                       {% endif %}
 
                     </li>
                   {% endfor %}
+
                 </ul>
               {% endif %}
 
@@ -54,11 +68,16 @@
       </nav>
     </div>
 
+
+
     <div class="header_content">
-      <div class="logo_container">
-        <a href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a>
+      <div class="logo_container_left">
+        <img class="hamburger_menu" width="auto" height="100%" src="{{ 'hamburger-menu.svg' |  asset_url  }}" alt="hamburger menu" aria-label="navigation menu">
+        <a class="logo_desktop" href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a>
       </div>
     </div>
+
+
 
   </div>
 </section>
@@ -89,9 +108,6 @@ blackBackground?.addEventListener('click', closeSearch);
 document.addEventListener("keydown", function(event) {
     if (event.key === "Enter") openSearch();
 });
-
-
-
 
 
 

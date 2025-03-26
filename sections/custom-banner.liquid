@@ -1,8 +1,7 @@
 {{ 'custom-banner.css' | asset_url | stylesheet_tag }}
 
-
 <div class="banner-container">
-  <div class="custom-mug-banner swiper">
+  <div class="custom-mug-banner">
     <div class="slide_container swiper-wrapper">
 
       {% for block in section.blocks %}
@@ -10,7 +9,7 @@
         <div class="banner-content swiper-slide">
 
           <div class="image_banner">
-            <img width="100%" height="auto" src="{{ block.settings.banner_image |  img_url: 'master' }}" alt="">
+            <img width="100%" height="auto" src="{{ block.settings.banner_image |  image_url }}" alt="">
           </div>
 
           <div class="banner-text">
@@ -30,7 +29,7 @@
       {% endfor %}
 
     </div>
-    <div class="swiper-pagination"></div>  
+    <div class="custom-banner-pagination"></div>  
   </div>
 </div>
 
@@ -38,11 +37,12 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
-  const swiper = new Swiper('.swiper', {
+  const swiper = new Swiper('.custom-mug-banner', {
     direction: 'horizontal',
     loop: true,
     pagination: {
-      el: '.swiper-pagination',
+      el: '.custom-banner-pagination',
+      clickable: true,
     },
   });
 });
