@@ -1,0 +1,144 @@
+{{ 'custom-contact-form.css' | asset_url | stylesheet_tag }}
+
+<div class="heading-container">
+<h1 class="contact-form-heading">{{section.settings.contact_form_heading}}</h1>
+<p class="contact-form-subheading">{{section.settings.contact_form_subheading}}</p>
+</div>
+{% comment %}  {% endcomment %}
+<div class="contact-container">
+  <div class="contact-form">
+    {%- form 'contact'
+      , id: 'ContactForm'
+      , class: 'contact-form-element'
+      , onsubmit: "return false;" -%}
+      <div
+        id="form-status"
+        class="form-status"
+        style="display: none;"></div>
+
+      <div class="form-field">
+        <label for="ContactForm-firstName">الاسم الأول</label>
+        <input
+          type="text"
+          id="ContactForm-firstName"
+          name="contact[first_name]"
+          placeholder="الاسم الأول"
+          required>
+      </div>
+
+      <div class="form-field">
+        <label for="ContactForm-lastName">الاسم الثاني / الكنية</label>
+        <input
+          type="text"
+          id="ContactForm-lastName"
+          name="contact[last_name]"
+          placeholder="الكنية"
+          required>
+      </div>
+
+      <div class="form-field">
+        <label for="ContactForm-email">عنوان البريد الإلكتروني - Email</label>
+        <input
+          type="email"
+          id="ContactForm-email"
+          name="contact[email]"
+          placeholder="john-doe@gmail.com مثال:"
+          required>
+      </div>
+
+      <div class="form-field">
+        <label for="ContactForm-body">الرسالة</label>
+        <textarea
+          rows="5"
+          id="ContactForm-body"
+          name="contact[body]"
+          placeholder="محتوى الرسالة"
+          required></textarea>
+      </div>
+
+      <div class="form-button">
+        <button type="submit" id="submit-btn">
+          <span id="btn-text">إرسال الرسالة</span>
+          <span
+            id="loading-spinner"
+            class="spinner"
+            style="display: none;"></span>
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Custom Contact Form",
+    "settings": [
+      {
+        "type": "text",
+        "id": "contact_form_heading",
+        "label": "Edit Title", 
+      },
+      {
+        "type": "text",
+        "id": "contact_form_subheading",
+        "label": "Edit Subtitle", 
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Contact Form"
+      }
+    ]
+  }
+{% endschema %}
+
+{% javascript %}
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("ContactForm");
+    const statusMessage = document.getElementById("form-status");
+    const submitButton = document.getElementById("submit-btn");
+    const buttonText = document.getElementById("btn-text");
+    const spinner = document.getElementById("loading-spinner");
+
+    submitButton.addEventListener("click", function(event) {
+      event.preventDefault();
+
+// Show loading state
+      statusMessage.style.display = "none";
+      buttonText.style.display = "none";
+      spinner.style.display = "inline-block";
+      submitButton.disabled = true;
+
+// Get form data
+      const formData = new FormData(form);
+
+// Send data using fetch
+      fetch('/contact', {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          statusMessage.textContent = "تم إرسال رسالتك بنجاح!";
+          statusMessage.className = "form-status success";
+          statusMessage.style.display = "block";
+          form.reset();
+        } else {
+          throw new Error("حدث خطأ أثناء الإرسال. حاول مرة أخرى.");
+        }
+      }).catch(error => {
+        statusMessage.textContent = error.message;
+        statusMessage.className = "form-status error";
+        statusMessage.style.display = "block";
+      }). finally(() => {
+        buttonText.style.display = "inline";
+        spinner.style.display = "none";
+        submitButton.disabled = false;
+      });
+
+      return false;
+    });
+  });
+{% endjavascript %}
