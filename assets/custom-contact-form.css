@@ -46,7 +46,7 @@
 .form-field label {
   display: block;
   margin-bottom: 8px;
-  font-size: clamp(12px, 16px, 16px);
+  font-size: 12px;
   font-weight: 500;
   color: #333;
   text-align: right;
@@ -59,17 +59,17 @@ input:focus-visible {
 .form-field input,
 .form-field textarea {
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #ddd;
   border-radius: 7px;
-  font-size: 16px;
+  font-size: 14px;
   background-color: #fff;
 }
 
 .form-field input::placeholder,
 .form-field textarea::placeholder {
   color: #aaa;
-  font-size: clamp(12px, 16px, 16px);
+  font-size: 13px;
 }
 
 .form-button {
@@ -83,7 +83,7 @@ input:focus-visible {
   border: none;
   border-radius: 20px;
   padding: 6px 7dvw;
-  font-size: clamp(12px, 16px, 16px);
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
   display: flex;

@@ -25,7 +25,6 @@
 
 .image-item {
   width: 100%;
-  height: 32dvh;
   border-radius: 25px;
   overflow: hidden;
 }
@@ -80,13 +79,9 @@
 @media screen and (max-width: 767px) {
   .swiper-slide {
     /* Center slide will be fully visible */
-    width: 100% !important;
+    width: 60% !important;
     /* Show quarter of previous/next slides */
     /* margin: 0 -5% !important; */
-  }
-
-  .image-item img {
-    width: 100%;
   }
 
   .swiper-slide-prev,
