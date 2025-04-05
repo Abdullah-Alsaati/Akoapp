@@ -5,7 +5,7 @@
     <div class="collection-image">
         <p class="collection-name">{{ section.settings.featured_collection.title }}</p>
         <a href="{{ section.settings.featured_collection.url }}" class="collection-image-link">
-        <img width="100%" height="auto" src="{{ section.settings.featured_collection.featured_image | img_url: 'medium' }}" alt="Collection image">
+        <img width="100%" height="auto" src="{{ section.settings.featured_collection.featured_image | img_url: 'medium' }} loading=" alt="Collection image" loading="lazy">
         </a>
     </div>
     <div class="collection-products-wrapper">
@@ -14,7 +14,7 @@
       
         {% for product in collections[section.settings.featured_collection].products %}
           <div class="product-card">
-            <div class="product-image"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt=""></div>
+            <div class="product-image"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt="" loading="lazy"></div>
             <div class="product-information">
               <p class="product-title">
                 {{ product.title | truncatewords: 10 }}
@@ -49,13 +49,13 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const scrollContainer = document.querySelector(".collection-products-wrapper");
+document.addEventListener("DOMContentLoaded", function () {
+  // Add inertia scroll behavior per section
+  document.querySelectorAll(".collection-products-wrapper").forEach((scrollContainer) => {
     let isDown = false;
     let startX;
     let scrollLeft;
     let velocity = 0;
-    let isScrolling = false;
     let animationFrame;
 
     scrollContainer.addEventListener("mousedown", (e) => {
@@ -64,7 +64,7 @@
       startX = e.pageX - scrollContainer.offsetLeft;
       scrollLeft = scrollContainer.scrollLeft;
       velocity = 0;
-      cancelAnimationFrame(animationFrame); // Stop inertia while dragging
+      cancelAnimationFrame(animationFrame);
     });
 
     scrollContainer.addEventListener("mouseleave", () => {
@@ -83,44 +83,52 @@
     scrollContainer.addEventListener("mousemove", (e) => {
       if (!isDown) return;
       e.preventDefault();
-      isScrolling = true;
-
       const x = e.pageX - scrollContainer.offsetLeft;
       const delta = x - startX;
-      velocity = delta * 0.2; // smoothness
+      velocity = delta * 0.2;
       scrollContainer.scrollLeft = scrollLeft - delta;
     });
 
     function applyInertia() {
       if (Math.abs(velocity) > 0.1) {
         scrollContainer.scrollLeft -= velocity;
-        velocity *= 0.95; // Add friction
+        velocity *= 0.95;
         animationFrame = requestAnimationFrame(applyInertia);
-      } else {
-        isScrolling = false;
       }
     }
   });
 
-  document.querySelector(".buy-now-button").addEventListener("click", function(event) {
-    event.preventDefault(); // Prevents the default form submission
-    let form = event.target.closest("form");
-    
-    fetch("/cart/add", {
-      method: "POST",
-      body: new FormData(form)
-    }).then(() => {
-      window.location.href = "/checkout"; // Redirects to checkout
+  // Fix Buy Now button (only affects visible/active section)
+  document.querySelectorAll(".buy-now-button").forEach(button => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      let form = event.target.closest("form");
+
+      fetch("/cart/add", {
+        method: "POST",
+        body: new FormData(form)
+      }).then(() => {
+        window.location.href = "/checkout";
+      });
     });
   });
 
-  document.querySelector(".prev_button").addEventListener("click", function () {
-  const scrollContainer = document.querySelector(".collection-products-wrapper");
-  scrollContainer.scrollBy({
-    left: -500, // Change this value to scroll more/less
-    behavior: "smooth"
+  // Attach next button logic per section
+  document.querySelectorAll(".featured-collection-wrapper").forEach(section => {
+    const scrollContainer = section.querySelector(".collection-products-wrapper");
+    const nextButton = section.querySelector(".next_button");
+
+    if (nextButton && scrollContainer) {
+      nextButton.addEventListener("click", () => {
+        scrollContainer.scrollBy({
+          left: -500,
+          behavior: "smooth"
+        });
+      });
+    }
   });
 });
+
 
   
 </script>

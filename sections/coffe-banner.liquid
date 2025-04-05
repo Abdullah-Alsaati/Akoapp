@@ -19,7 +19,7 @@
 
     <div class="image-container">
       {% if section.settings.image != blank %}
-        <img src="{{ section.settings.image | img_url: '500x' }}" alt="كوب القهوة" class="coffee-image">
+        <img src="{{ section.settings.image | img_url: '500x' }}" alt="كوب القهوة" class="coffee-image" loading="lazy">
       {% endif %}
     </div>
   </div>
