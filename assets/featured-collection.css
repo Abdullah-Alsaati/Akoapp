@@ -18,7 +18,7 @@
 }
 
 .collection-image {
-    width: 35%;
+    width: 500px;
     height: auto;
     border-radius: 30px;
     overflow: hidden;
@@ -45,12 +45,15 @@
 
 .collection-image img {
     height: 100%;
-    width: auto;
+    width: 100%;
     object-fit: cover;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 
 .collection-products-wrapper {
     width: 75%;
+    border-radius: 30px;
     overflow-y: hidden;
     overflow-x: scroll;
     white-space: normal;
