@@ -4,7 +4,9 @@
   <div class="featured-collection">
     <div class="collection-image">
         <p class="collection-name">{{ section.settings.featured_collection.title }}</p>
+        <a href="{{ section.settings.featured_collection.url }}" class="collection-image-link">
         <img width="100%" height="auto" src="{{ section.settings.featured_collection.featured_image | img_url: 'medium' }}" alt="Collection image">
+        </a>
     </div>
     <div class="collection-products-wrapper">
 
@@ -15,18 +17,13 @@
             <div class="product-image"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt=""></div>
             <div class="product-information">
               <p class="product-title">
-                {% assign words = product.title | split: " " %}
-                  {% for word in words %}
-                    {{ word }}  
-                    {% assign mod_result = forloop.index | modulo: 5 %}
-                    {% if mod_result == 0 %}<br>{% endif %}
-                  {% endfor %}
+                {{ product.title | truncatewords: 10 }}
               </p>
 
               <div class="product-prices">
                 <p class="product-price">{{ product.price |  money }}</p>
                 {% if product.compare_at_price %}
-                  <p class="product-compare-to-price">{{ product.compare_at_price | money }}</p>
+                  <p class="product-compare-to-price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</p>
                 {% endif %}
               </div>
             </div>
@@ -45,6 +42,7 @@
 
     </div>
   </div>
+  <button class="prev_button">&larr;</button>
 </section>
 
 
@@ -115,6 +113,14 @@
       window.location.href = "/checkout"; // Redirects to checkout
     });
   });
+
+  document.querySelector(".prev_button").addEventListener("click", function () {
+  const scrollContainer = document.querySelector(".collection-products-wrapper");
+  scrollContainer.scrollBy({
+    left: -500, // Change this value to scroll more/less
+    behavior: "smooth"
+  });
+});
 
   
 </script>
