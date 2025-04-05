@@ -49,7 +49,7 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
   // Add inertia scroll behavior per section
   document.querySelectorAll(".collection-products-wrapper").forEach((scrollContainer) => {
     let isDown = false;
@@ -116,10 +116,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Attach next button logic per section
   document.querySelectorAll(".featured-collection-wrapper").forEach(section => {
     const scrollContainer = section.querySelector(".collection-products-wrapper");
-    const nextButton = section.querySelector(".next_button");
+    const prevButton = section.querySelector(".prev_button");
 
-    if (nextButton && scrollContainer) {
-      nextButton.addEventListener("click", () => {
+    if (prevButton && scrollContainer) {
+      prevButton.addEventListener("click", () => {
         scrollContainer.scrollBy({
           left: -500,
           behavior: "smooth"
