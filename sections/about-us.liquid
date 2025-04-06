@@ -1,0 +1,234 @@
+{{ 'section-about-us.css' | asset_url | stylesheet_tag }}
+
+  <div class="about-us-container">
+  <h1 class="about-us__title">{{ section.settings.title }}</h1>
+  <div class="content-wrapper">
+
+    <div class="about-us__story">
+      <div class="about-us__story-image">
+        {%- if section.settings.story_image != blank -%}
+          <img
+            src="{{ section.settings.story_image | image_url: width: 535 }}"
+            sizes="(min-width: 1100px) 535px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+            alt="{{ section.settings.story_image.alt | escape }}"
+            width="100%"
+            height="auto">
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="about-us__story-content">
+        <h2 class="about-us__story-title">{{ section.settings.story_title }}</h2>
+        <p class="about-us__story-text">
+          {{ section.settings.story_text }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Goals Section -->
+    <h2 class="about-us__goals-title">{{ section.settings.goals_title }}</h2>
+    <div class="about-us__goals">
+
+      <div class="goals-cards-container">
+        <div class="goal-card {% if section.settings.highlight_first_goal %}highlighted{% endif %}">
+          <h3 class="goal-card-title">{{ section.settings.goal_1_title }}</h3>
+          <p class="goal-card-description">{{ section.settings.goal_1_description }}</p>
+        </div>
+
+        <div class="goal-card {% if section.settings.highlight_second_goal %}highlighted{% endif %}">
+          <h3 class="goal-card-title">{{ section.settings.goal_2_title }}</h3>
+          <p class="goal-card-description">{{ section.settings.goal_2_description }}</p>
+        </div>
+
+        <div class="goal-card {% if section.settings.highlight_third_goal %}highlighted{% endif %}">
+          <h3 class="goal-card-title">{{ section.settings.goal_3_title }}</h3>
+          <p class="goal-card-description">{{ section.settings.goal_3_description }}</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Features Section -->
+    <div class="about-us__features">
+      <div class="features-header">
+        <h2 class="features-heading">{{ section.settings.features_heading }}</h2>
+        <p class="features-subheading">{{ section.settings.features_subheading }}</p>
+      </div>
+
+      <div class="features-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'feature' and forloop.index <= 4 %}
+            <div class="feature-card">
+              <div class="feature-title-container">
+                <div class="feature-icon">
+                  <img src="../assets/featured-icon.svg" alt="">
+                </div>
+                <h3 class="feature-title">{{ block.settings.title }}</h3>
+              </div>
+              <p class="feature-description">{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+
+      <div class="features-bottom">
+        {% for block in section.blocks %}
+          {% if block.type == 'feature' and forloop.index > 4 and forloop.index <= 6 %}
+            <div class="feature-card feature-card-wide">
+              <div class="feature-title-container">
+                <div class="feature-icon">
+                  <img src="../assets/featured-icon.svg" alt="">
+                </div>
+                <h3 class="feature-title">{{ block.settings.title }}</h3>
+              </div>
+              <p class="feature-description">{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+
+  </div>
+  <!-- Conclusion Section -->
+
+  <div class="conclusion-wrapper">
+    <div class="texts-container">
+      <h3 class="conclusion-title">{{ section.settings.conc_title }}</h3>
+      <p class="conclusion-description">{{ section.settings.conc_description }}</p>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "About Us",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "default": "عن Akoapp",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "story_title",
+        "default": "قصتنا",
+        "label": "Story Title"
+      },
+      {
+        "type": "richtext",
+        "id": "story_text",
+        "default": "<p>النص الأول</p>",
+        "label": "Story Text"
+      },
+      {
+        "type": "image_picker",
+        "id": "story_image",
+        "label": "Story Image"
+      }, {
+        "type": "header",
+        "content": "Goals Section"
+      }, {
+        "type": "text",
+        "id": "goals_title",
+        "default": "أهدافنا",
+        "label": "Goals Section Title"
+      }, {
+        "type": "text",
+        "id": "goal_1_title",
+        "default": "عنوان",
+        "label": "First Goal Title"
+      }, {
+        "type": "text",
+        "id": "goal_1_description",
+        "default": "شرح طويل",
+        "label": "First Goal Description"
+      }, {
+        "type": "checkbox",
+        "id": "highlight_first_goal",
+        "default": false,
+        "label": "Highlight First Goal"
+      }, {
+        "type": "text",
+        "id": "goal_2_title",
+        "default": "عنوان",
+        "label": "Second Goal Title"
+      }, {
+        "type": "text",
+        "id": "goal_2_description",
+        "default": "شرح طويل",
+        "label": "Second Goal Description"
+      }, {
+        "type": "checkbox",
+        "id": "highlight_second_goal",
+        "default": true,
+        "label": "Highlight Second Goal"
+      }, {
+        "type": "text",
+        "id": "goal_3_title",
+        "default": "عنوان",
+        "label": "Third Goal Title"
+      }, {
+        "type": "text",
+        "id": "goal_3_description",
+        "default": "شرح طويل",
+        "label": "Third Goal Description"
+      }, {
+        "type": "checkbox",
+        "id": "highlight_third_goal",
+        "default": false,
+        "label": "Highlight Third Goal"
+      }, {
+        "type": "header",
+        "content": "Features Section"
+      }, {
+        "type": "text",
+        "id": "features_heading",
+        "default": "Heading",
+        "label": "Features Heading"
+      }, {
+        "type": "text",
+        "id": "features_subheading",
+        "default": "Subheading",
+        "label": "Features Subheading"
+      }, {
+        "type": "text",
+        "id": "conc_title",
+        "default": "ختامية",
+        "label": "Conclusion Title"
+      }, {
+        "type": "text",
+        "id": "conc_description",
+        "default": "شرح",
+        "label": "Conclusion description"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "feature",
+        "name": "Feature",
+        "limit": 6,
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "default": "Title",
+            "label": "Feature Title"
+          }, {
+            "type": "textarea",
+            "id": "description",
+            "default": "Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a very very short story.",
+            "label": "Feature Description"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "About Us"
+      }
+    ]
+  }
+{% endschema %}

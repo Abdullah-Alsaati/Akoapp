@@ -1,0 +1,239 @@
+.about-us-container {
+  direction: rtl;
+  text-align: right;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f2f2f2;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 85%;
+}
+
+.about-us__title {
+  text-align: center;
+  width: 100%;
+  padding: 10rem;
+  margin: 0;
+  font-size: calc(var(--font-heading-scale) * 3.2rem);
+  background-color: #d9d9d9;
+  font-weight: bolder;
+}
+
+.about-us__story {
+  margin-top: 4rem;
+  display: grid;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-us__story-title {
+  font-size: calc(var(--font-heading-scale) * 2.4rem);
+  margin: 0 0 1.5rem;
+  font-weight: bolder;
+}
+
+.about-us__story-text {
+  font-size: 12px;
+}
+
+.about-us__story-image img {
+  width: 100%;
+  height: 60dvh;
+  object-fit: cover;
+}
+
+/* Goals Section Styles */
+.about-us__goals {
+  background-color: white;
+  padding: 4rem;
+  width: 100%;
+}
+
+.about-us__goals-title {
+  text-align: center;
+  font-size: calc(var(--font-heading-scale) * 2.8rem);
+  margin-bottom: 4rem;
+  font-weight: bolder;
+}
+
+.goals-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.goal-card {
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.highlighted .goal-card-title {
+  color: white;
+}
+
+.goal-card.highlighted {
+  background-color: #2b2b2b;
+  color: white;
+}
+
+.goal-card-title {
+  font-size: 36px;
+  font-weight: bolder;
+  margin-bottom: 1rem;
+}
+
+.goal-card-description {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: inherit;
+}
+
+/* Features Section Styles */
+.about-us__features {
+  margin: 6rem 0;
+  padding: 5rem;
+  background-color: white;
+  width: 100%;
+}
+
+.features-header {
+  text-align: right;
+  margin-bottom: 4rem;
+}
+
+.features-heading {
+  font-size: 2.4rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.features-subheading {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.features-bottom {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 3rem;
+  width: 100% !important;
+}
+
+.feature-card {
+  border-radius: 8px;
+  padding-block: 2rem;
+}
+
+.feature-title-container {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.feature-title-container h3 {
+  font-size: clamp(12px, 20px, 20px);
+}
+
+.feature-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.feature-icon img {
+  color: #0a3d3f;
+  width: 24px;
+  height: 24px;
+}
+
+.feature-description {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #666;
+  margin: 0;
+}
+
+.conclusion-wrapper {
+  background-color: #d9d9d9;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-block: 2rem;
+}
+
+.texts-container {
+  max-width: 85%;
+}
+
+.conclusion-title {
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.conclusion-title {
+  font-size: 24px;
+  text-align: center;
+}
+
+@media screen and (min-width: 767px) {
+  .about-us__story {
+    grid-template-columns: 1fr 1fr;
+  }
+  .features-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .features-bottom {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-us__title {
+    font-size: calc(var(--font-heading-scale) * 4rem);
+  }
+
+  .about-us__story-title {
+    font-size: calc(var(--font-heading-scale) * 3rem);
+  }
+
+  .about-us__story-text {
+    font-size: 1.8rem;
+  }
+
+  .goals-cards-container {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .goal-card {
+    width: calc(33.33% - 1.33rem);
+  }
+
+  .about-us__goals-title {
+    font-size: calc(var(--font-heading-scale) * 3.2rem);
+  }
+}
