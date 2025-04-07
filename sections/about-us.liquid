@@ -1,8 +1,8 @@
 {{ 'section-about-us.css' | asset_url | stylesheet_tag }}
 
   <div class="about-us-container">
-  <h1 class="about-us__title">{{ section.settings.title }}</h1>
-  <div class="content-wrapper">
+    <h1 class="about-us__title">{{ section.settings.title }}</h1>
+    <div class="content-wrapper">
 
     <div class="about-us__story">
       <div class="about-us__story-image">
@@ -61,7 +61,7 @@
             <div class="feature-card">
               <div class="feature-title-container">
                 <div class="feature-icon">
-                  <img src="../assets/featured-icon.svg" alt="">
+                  <img src="{{ "featured-icon.svg" |  asset_url }}" alt="">
                 </div>
                 <h3 class="feature-title">{{ block.settings.title }}</h3>
               </div>
@@ -78,7 +78,7 @@
             <div class="feature-card feature-card-wide">
               <div class="feature-title-container">
                 <div class="feature-icon">
-                  <img src="../assets/featured-icon.svg" alt="">
+                  <img src="{{ "featured-icon.svg" |  asset_url }}" alt="">
                 </div>
                 <h3 class="feature-title">{{ block.settings.title }}</h3>
               </div>
