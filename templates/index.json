@@ -12,12 +12,17 @@
     "custom-banner": {
       "type": "custom-banner",
     },
+    "featured-collection": {
+      "type": "featured-collection"
+    },
     "coffe-banner": {
       "type": "coffe-banner"
     }
+
   },
   "order": [
     "custom-banner",
+    "featured-collection",
     "coffe-banner"
   ]
 }
