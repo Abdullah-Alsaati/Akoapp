@@ -5,7 +5,6 @@
 
     {{ 'swiper.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'swiper.js' |  asset_url }}" defer="defer"></script>
-    
     {% if request.locale.iso_code == 'ar' or request.locale.iso_code == 'he' or request.locale.iso_code == 'fa' %}
       <link rel="stylesheet" href="{{ 'rtl.css' | asset_url }}">
     {% endif %}
