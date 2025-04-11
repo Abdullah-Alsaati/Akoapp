@@ -32,22 +32,24 @@
       </div>
       <nav class="nav_links">
         <ul class="main-menu">
-          {% for link in linklists.main-menu.links %}
+          {% for link in linklists.main-menu.links limit: 5 %}
             <li class="menu-item">
               <a class="nav_link" href="{{ link.url }}">{{ link.title }}</a>
   
               {% if link.links != blank %}
                 <ul class="submenu">
 
-                  {% for sub_link in link.links %}
+                  <div class="sub_links_container">
+
+                  {% for sub_link in link.links limit: 10 %}
                     
-                    <li>
+                    <li class="sub_link_container">
                       <a class="sub_link" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
 
                       {% if sub_link.links != blank %}
                         <ul class="sub-submenu">
-                          {% for sub_sub_link in sub_link.links %}
-                            <li>
+                          {% for sub_sub_link in sub_link.links limit: 4 %}
+                            <li class="sub_sub_link_container">
                               <a class="sub_sub_link" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
                             </li>
 
@@ -58,6 +60,8 @@
 
                     </li>
                   {% endfor %}
+
+                  </div>
 
                 </ul>
               {% endif %}
@@ -76,15 +80,49 @@
         <a class="logo_desktop" href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a>
       </div>
     </div>
-
-
+    
+    
 
   </div>
+  
+  <nav class="navigation_mobile">
+    <div class="logo_mobile_nav"><a class="logo_mobile" href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a></div>
+    <div class="close_button"><img class="close_icon" width="30px" height="auto" src="{{ 'close-icon.svg' |  asset_url }}" alt="Close Icon" aria-label="Close"></div>
+    <ul class="main_links_list_m">
+      {% for link in linklists.main-menu.links %}
+        <li class="main_link_container_m">
+          <a class="main_link_m" href="{{ link.url }}">{{ link.title }}</a>
+          <ul class="sub_links_container_m">
+
+            {% for sub_link in link.links %}
+              
+              <li class="sub_link_m">
+                <a href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+                <ul class="sub_sub_links_container_m">
+                  {% for sub_sub_link in sub_link.links %}
+                    
+                    <li class="sub_sub_link_m">
+                      <a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
+                    </li>
+
+                  {% endfor %}
+                </ul>
+              </li>
+
+            {% endfor %}
+          </ul>
+        </li>
+
+    {% endfor %}
+    </ul>
+  </nav>
+
 </section>
 
 
 <script>
 
+// Search functionality
 const searchButton = document.querySelector('.search');
 const searchBox = document.querySelector('.search_box');
 const closeButton = document.querySelector('.search_close_icon');
@@ -100,14 +138,39 @@ function closeSearch() {
     searchBox.classList.remove('active');
 }
 
-// Event Listeners
 searchButton?.addEventListener('click', openSearch);
 closeButton?.addEventListener('click', closeSearch);
 blackBackground?.addEventListener('click', closeSearch);
-
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", event => {
     if (event.key === "Enter") openSearch();
 });
+
+// Mobile menu functionality
+const menuButton = document.querySelector('.logo_container_left');
+const mobileNavMenu = document.querySelector('.navigation_mobile');
+const closeMenuButton = document.querySelector('.close_button');
+
+menuButton?.addEventListener("click", () => {
+  mobileNavMenu.classList.remove('slide-out');
+  mobileNavMenu.classList.add('slide-in');
+});
+
+closeMenuButton?.addEventListener("click", () => {
+  mobileNavMenu.classList.remove('slide-in');
+  mobileNavMenu.classList.add('slide-out');
+});
+
+// 'active' class for (mainLinks, subLinks, subSubLinks)
+const toggleActiveOnClicked = (links) => {
+  links.forEach(link => {
+    link.addEventListener('click', () => link.classList.toggle('active'));
+  });
+};
+
+
+toggleActiveOnClicked(document.querySelectorAll('.main_link_container_m'));
+toggleActiveOnClicked(document.querySelectorAll('.sub_links_container_m'));
+toggleActiveOnClicked(document.querySelectorAll('.sub_sub_links_container_m'));
 
 
 

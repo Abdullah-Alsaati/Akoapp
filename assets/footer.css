@@ -46,7 +46,7 @@
 .copyright {
     background-color: #1b1b1b;
     height: 35px;
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
