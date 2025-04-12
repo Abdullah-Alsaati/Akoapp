@@ -2,8 +2,13 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 
 <style>
+
   .announcement_bar_body{
     background-color: {{ section.settings.announcement_bar_color }};
+  }
+
+  .announcement-bar__message {
+    color: {{ section.settings.announcement_bar_text_color }};
   }
 </style>
 
@@ -181,8 +186,13 @@
   "settings": [
     {
       "type": "color",
-      "id": "announcement_color",
-      "label": "Choose the color"
+      "id": "announcement_bar_color",
+      "label": "Choose the Background color"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_text_color",
+      "label": "Choose the Text color"
     },
     {
       "type": "checkbox",

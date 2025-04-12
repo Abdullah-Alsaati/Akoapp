@@ -86,18 +86,23 @@
   </div>
   
   <nav class="navigation_mobile">
-    <div class="logo_mobile_nav"><a class="logo_mobile" href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a></div>
-    <div class="close_button"><img class="close_icon" width="30px" height="auto" src="{{ 'close-icon.svg' |  asset_url }}" alt="Close Icon" aria-label="Close"></div>
+    <div class="controls_container">
+      <div class="logo_mobile_nav"><a class="logo_mobile" href="/"><img width="auto" height="100%" src="{{ settings.logo | img_url: 'medium' }}" alt="{{ shop.name }} logo"></a></div>
+      <div class="close_button"><img class="close_icon" width="30px" height="auto" src="{{ 'close-icon.svg' |  asset_url }}" alt="Close Icon" aria-label="Close"></div>
+    </div>
     <ul class="main_links_list_m">
       {% for link in linklists.main-menu.links %}
         <li class="main_link_container_m">
-          <a class="main_link_m" href="{{ link.url }}">{{ link.title }}</a>
+          <div class="main_link_m">
+            <p>{{ link.title }}</p>
+            <img class="arrow_icon" height="100%" width="auto" src="{{ 'arrow_left.svg' |  asset_url }}" alt="Open" aria-label="Open">
+          </div>
           <ul class="sub_links_container_m">
 
             {% for sub_link in link.links %}
               
               <li class="sub_link_m">
-                <a href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+                <p>{{ sub_link.title }}</p>
                 <ul class="sub_sub_links_container_m">
                   {% for sub_sub_link in sub_link.links %}
                     
@@ -168,9 +173,10 @@ const toggleActiveOnClicked = (links) => {
 };
 
 
-toggleActiveOnClicked(document.querySelectorAll('.main_link_container_m'));
-toggleActiveOnClicked(document.querySelectorAll('.sub_links_container_m'));
+toggleActiveOnClicked(document.querySelectorAll('.main_link_m'));
+toggleActiveOnClicked(document.querySelectorAll('.sub_link_m'));
 toggleActiveOnClicked(document.querySelectorAll('.sub_sub_links_container_m'));
+toggleActiveOnClicked(document.querySelectorAll('.controls_container'));
 
 
 
