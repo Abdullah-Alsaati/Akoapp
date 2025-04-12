@@ -3,9 +3,13 @@
   "sections": {
     "product-1": {
       "type": "product-1",
+    },
+    "reviews": {
+      "type": "reviews"
     }
   },
   "order": [
-    "product-1"
+    "product-1",
+    "reviews"
   ]
 }
