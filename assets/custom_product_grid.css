@@ -74,16 +74,12 @@
 .product-image {
     height: 60%;
     -webkit-user-drag: none;
-    user-select: none;
-    pointer-events: none;
 }
 
 .product-image img {
     border-radius: 30px;
     object-fit: cover;
     -webkit-user-drag: none;
-    user-select: none;
-    pointer-events: none;
 }
 
 .product-card p {
@@ -99,6 +95,8 @@
 
 .product-title {
     width: 100%;
+    color: #0d3135;
+    font-weight: bold;
 }
 
 .product-prices {

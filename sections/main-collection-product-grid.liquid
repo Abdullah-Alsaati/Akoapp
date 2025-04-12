@@ -3,13 +3,14 @@
 <div class="collection-products-wrapper">
   <div class="collection-products">
         
-          {% for product in collection.products %}
-            <div class="product-card">
-              <div class="product-image"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt="" loading="lazy"></div>
+          {% for product in collections.all.products %}
+            <div class="product-card"
+            data-collection="{% if product.collections.first %}{{ product.collections.first.handle }}{% else %}none{% endif %}" data-tags="{{ product.tags | join: ',' }}" data-price="{{ product.price | money_without_currency | replace: ',', '' }}">
+              <div class="product-image"><a href="{{ product.url }}"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt="" loading="lazy"></a></div>
               <div class="product-information">
-                <p class="product-title">
+                <a href="{{ product.url }}" class="product-title">
                   {{ product.title | truncatewords: 10 }}
-                </p>
+                </a>
 
                 <div class="product-prices">
                   <p class="product-price">{{ product.price |  money }}</p>

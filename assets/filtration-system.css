@@ -1,0 +1,86 @@
+.filteration-system-wrapper {
+    padding-top: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: max-content;
+  }
+  
+  .filteration-system {
+    width: 75dvw;
+    max-width: 1400px;
+  }
+  
+  .product-filters-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .filters-title {
+    font-size: 25px;
+    line-height: 25px;
+    font-weight: bold;
+  }
+  
+  .filters-dropdowns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .filters-dropdowns select,
+  .price-filter input {
+    appearance: none;
+    border: 1px solid #ddd;
+    border-radius: 9999px;
+    padding: 5px 30px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 140px;
+  }
+  
+  .filters-dropdowns select:hover,
+  .price-filter input:hover {
+    border-color: #aaa;
+  }
+  
+  .filters-dropdowns select:focus,
+  .price-filter input:focus {
+    outline: none;
+    border-color: #24a754; /* match hero green */
+    box-shadow: 0 0 0 2px #24a75433;
+  }
+  
+  .price-filter {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .price-filter input {
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .filters-dropdowns {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .filters-dropdowns select,
+    .price-filter input {
+      width: 100%;
+    }
+  
+    .price-filter {
+      flex-direction: column;
+    }
+  }
+  
