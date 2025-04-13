@@ -25,7 +25,7 @@
 }
 
 .product_1_wrapper {
-    width: 75%;
+    width: 80%;
     padding: 40px 0px;
     overflow: hidden;
     max-width: 1400px;
@@ -71,7 +71,7 @@
 }
 
 .product_variants {
-    padding: 20px 0px;
+    padding: 25px 0px;
 }
 
 .variant-options {
@@ -99,6 +99,9 @@
   font-weight: bold;
 }
 
+.product_buttons {
+  padding-top: 5px;
+}
 
 .product_buttons form {
     display: flex;
