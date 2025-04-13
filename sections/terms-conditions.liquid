@@ -1,0 +1,66 @@
+{{ 'section-terms-conditions.css' | asset_url | stylesheet_tag }}
+
+<div class="terms-conditions-container">
+  <div class="terms-header">
+    <h1 class="terms-title">{{ section.settings.title }}</h1>
+  </div>
+  
+  <div class="terms-content">
+    {% for block in section.blocks %}
+      <div class="terms-section" {{ block.shopify_attributes }}>
+        <h2 class="terms-section-title">{{ block.settings.section_title }}</h2>
+        <div class="terms-section-content">{{ block.settings.section_content }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Terms and Conditions",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "Terms and Conditions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_section",
+      "name": "Content Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Section Title"
+        },
+        {
+          "type": "richtext",
+          "id": "section_content",
+          "label": "Section Content",
+          "default": "<p>Enter your terms and conditions content here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Terms and Conditions",
+      "blocks": [
+        {
+          "type": "text_section"
+        },
+        {
+          "type": "text_section"
+        },
+        {
+          "type": "text_section"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
