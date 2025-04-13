@@ -108,6 +108,10 @@
 
 @media (max-width: 450px) {
 
+    .footer_main_wrapper {
+        overflow: hidden;
+    }
+
     .footer {
         font-size: 14px;
     }
@@ -115,11 +119,10 @@
     .logo_image_container {
         position: absolute;
         top: 30px;
-        left: -50px;
     }
 
     .logo_image {
-        height: 180px;
+        height: 130px;
     }
 }
 

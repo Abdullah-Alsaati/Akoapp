@@ -1,30 +1,38 @@
 {{ 'main_collection_banner.css' |  asset_url |  stylesheet_tag }}
 
-<section class="collection-page-banner-wrapper swiper">
-    <div class="collection-page-banner swiper-wrapper">
-        <div class="swiper-slide"><p>hello</p></div>
-        <div class="swiper-slide"><p>hello</p></div>
-        <div class="swiper-slide"><p>hello</p></div>
-        <div class="swiper-slide"><p>hello</p></div>
+<section class="collection-page-banner-wrapper">
+  <div class="swiper collection-page-banner">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <img width="100%" height="100%" src="{{ block.settings.image_slide | image_url }}" alt="">
+        </div>
+      {% endfor %}
     </div>
-    <button class="next-slide">next</button>
-    <button class="prev-slide">previuos</button>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
 </section>
 
 <script>
-
-const swiper = new Swiper('.swiper', {
-  // Optional parameters
-  direction: 'horizontal',
-  loop: true,
-
-  // Navigation arrows
-  navigation: {
-    nextEl: '.next-slide',
-    prevEl: '.prev-slide',
-  }
-});
-
+  document.addEventListener("DOMContentLoaded", function () {
+    const swiper = new Swiper('.collection-page-banner', {
+      direction: 'horizontal',
+      autoplay: {
+      delay: 4000,
+      },
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: 'true'
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  });
 </script>
 
 {% schema %}
@@ -33,6 +41,19 @@ const swiper = new Swiper('.swiper', {
   "settings": [
     
     ],
+  "blocks": [
+    {
+      "name": "image slide",
+      "type": "image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_slide",
+          "label": "أختر صورة"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "main_collection_banner"
