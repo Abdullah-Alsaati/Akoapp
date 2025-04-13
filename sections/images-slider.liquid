@@ -11,7 +11,7 @@
           {% if block.settings.image != blank %}
             <div class="swiper-slide">
               <div class="image-item">
-                <img src="{{ block.settings.image | img_url: 'large' }}" alt="Slider Image">
+                <img src="{{ block.settings.image | img_url: 'medium' }}" alt="Slider Image">
               </div>
             </div>
           {% endif %}
@@ -21,13 +21,13 @@
   </div>
 
   <!-- Second Slider (Right to Left) -->
-  <div class="swiper swiper-second">
+  <div class="swiper swiper-second reverse-slider">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
         {% if block.settings.image != blank %}
           <div class="swiper-slide">
             <div class="image-item">
-              <img src="{{ block.settings.image | img_url: 'large' }}" alt="Slider Image">
+              <img src="{{ block.settings.image | img_url: 'medium' }}" alt="Slider Image">
             </div>
           </div>
         {% endif %}
@@ -132,13 +132,12 @@
   document.addEventListener('DOMContentLoaded', function () {
     // Determine slides per view based on screen size
     const getResponsiveSlidesPerView = () => {
-      return window.innerWidth <= 767 ? 1.5 : 3.5;
+      return window.innerWidth <= 767 ? 1 : 3.5;
     };
   
     // First slider (left to right)
     const swiperFirst = new Swiper('.swiper-first', {
       slidesPerView: getResponsiveSlidesPerView(),
-      // centeredSlides: true,
       spaceBetween: {{ section.settings.space_between | default: 40 }},
       loop: true,
       autoplay: {
@@ -150,7 +149,7 @@
       speed: 5000,
       freeMode: true,
       
-      allowTouchMove: true,
+      allowTouchMove: false,
       on: {
         touchEnd: function() {
           this.autoplay.start();
@@ -164,7 +163,6 @@
     // Second slider (right to left)
     const swiperSecond = new Swiper('.swiper-second', {
       slidesPerView: getResponsiveSlidesPerView(),
-      // centeredSlides: true,
       spaceBetween: {{ section.settings.space_between | default: 40 }},
       loop: true,
       autoplay: {
@@ -177,7 +175,7 @@
       speed: 5000,
       freeMode: true,
      
-      allowTouchMove: true,
+      allowTouchMove: false,
       on: {
         touchEnd: function() {
           this.autoplay.start();
