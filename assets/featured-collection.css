@@ -113,6 +113,12 @@
 
 .product-title {
     width: 100%;
+    color: #0d3135;
+    font-weight: bold;
+}
+
+.product-title:hover {
+    color: #0d3135c7;
 }
 
 .product-prices {

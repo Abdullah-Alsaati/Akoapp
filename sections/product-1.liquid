@@ -13,9 +13,11 @@
                     <p>{{ product.title }}</p>
                 </div>
                 <div class="product_prices">
-                    <p class="original_price">{{ product.price |  money }}</p>
+                    <p class="original_price">{{ product.price | money_with_currency }}</p>
                     {% if product.compare_at_price %}
-                        <p class="compare_at_price" style="text-decoration: line-through;">{{ product.compare_at_price |  money }}</p>
+                        <p class="compare_at_price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</p>
+                    {% else %}
+                        <p class="compare_at_price" style="display: none;"></p>
                     {% endif %}
                 </div>
             </div>
@@ -24,36 +26,138 @@
                 {{ product.description }}
             </div>
 
-            <div class="product_variants">
-
+               
+            <!-- product variants -->
+            {% if product.variants.size > 0 %}
+                <div class="product_variants">
+                  <div class="variant-options">
                     {% for variant in product.variants %}
-                        <div class="variant_container">
-                            <p class="variant_name">{{ variant.title }}</p>
-                        </div>
+                      {% unless variant.title == "Default Title" %}
+                        <button 
+                          type="button"
+                          class="variant-button"
+                          data-id="{{ variant.id }}"
+                          data-price="{{ variant.price | money_without_currency | replace: ',', '' }}"
+                          data-compare-at-price="{{ variant.compare_at_price | money_without_currency | replace: ',', '' }}">
+                          {{ variant.title }}
+                        </button>
+                      {% else %}
+                        <button 
+                          type="button"
+                          class="variant-button hidden"
+                          style="display: none;"
+                          data-id="{{ variant.id }}"
+                          data-price="{{ variant.price | money_without_currency | replace: ',', '' }}"
+                          data-compare-at-price="{{ variant.compare_at_price | money_without_currency | replace: ',', '' }}">
+                          Default
+                        </button>
+                      {% endunless %}
                     {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
 
-            </div>
+
 
             <div class="product_buttons">
                 <form method="post" action="/cart/add">
-                <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
-              
-                <!-- Quantity Selector -->
-                <div class="quantity-wrapper">
-                  <label for="quantity">Quantity:</label>
-                  <input type="number" id="quantity" name="quantity" value="1" min="1"/>
-                </div>
-              
-                <!-- Buy Now Button -->
-                <button type="submit" name="add" class="buy-now-button">
-                  الشراء الأٌن
-                </button>
-              </form>
+                    <input type="hidden" name="id" id="selected-variant-id" value="{{ product.variants.first.id }}">
+                
+                    <!-- Quantity Selector -->
+                    <div class="custom-quantity-selector">
+                        <button type="button" class="qty-btn" id="increase">+</button>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" readonly />
+                        <button type="button" class="qty-btn" id="decrease">−</button>
+                    </div>
+                
+                    <!-- Buy Now Button -->
+                    <button type="submit" name="add" class="buy-now-button">
+                    الشراء الأٌن
+                    </button>
+                </form>
             </div>
 
         </div>
     </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const variantButtons = document.querySelectorAll('.variant-button');
+    const hiddenInput = document.getElementById('selected-variant-id');
+    const priceEl = document.querySelector('.original_price');
+    const comparePriceEl = document.querySelector('.compare_at_price');
+    const quantityInput = document.getElementById('quantity');
+
+    const increaseBtn = document.getElementById('increase');
+    const decreaseBtn = document.getElementById('decrease');
+
+    increaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value, 10);
+    quantityInput.value = current + 1;
+    quantityInput.dispatchEvent(new Event('input'));
+    });
+
+    decreaseBtn.addEventListener('click', () => {
+    let current = parseInt(quantityInput.value, 10);
+    if (current > 1) {
+        quantityInput.value = current - 1;
+        quantityInput.dispatchEvent(new Event('input'));
+    }
+    });
+
+    function formatPrice(price) {
+      return new Intl.NumberFormat('ar-SA', {
+        style: 'currency',
+        currency: 'SAR'
+      }).format(price);
+    }
+
+    function updatePrices(price, comparePrice, quantity) {
+      priceEl.textContent = formatPrice(price * quantity);
+      if (comparePrice > 0) {
+        comparePriceEl.textContent = formatPrice(comparePrice * quantity);
+        comparePriceEl.style.display = 'block';
+      } else {
+        comparePriceEl.style.display = 'none';
+      }
+    }
+
+    variantButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        // Remove active from all
+        variantButtons.forEach(b => b.classList.remove('active'));
+        // Add active to selected
+        this.classList.add('active');
+
+        // Update hidden input for form submission
+        const variantId = this.getAttribute('data-id');
+        hiddenInput.value = variantId;
+
+        const price = parseFloat(this.getAttribute('data-price'));
+        const comparePrice = parseFloat(this.getAttribute('data-compare-at-price')) || 0;
+        const quantity = parseInt(quantityInput.value, 10) || 1;
+
+        updatePrices(price, comparePrice, quantity);
+      });
+    });
+
+    quantityInput.addEventListener('input', function () {
+      const activeBtn = document.querySelector('.variant-button.active');
+      if (activeBtn) {
+        const price = parseFloat(activeBtn.getAttribute('data-price'));
+        const comparePrice = parseFloat(activeBtn.getAttribute('data-compare-at-price')) || 0;
+        const quantity = parseInt(quantityInput.value, 10) || 1;
+        updatePrices(price, comparePrice, quantity);
+      }
+    });
+
+    // Trigger default selection
+    if (variantButtons.length) {
+      variantButtons[0].click();
+    }
+  });
+</script>
 
 
 {% schema %}

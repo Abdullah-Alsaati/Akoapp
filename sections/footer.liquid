@@ -22,7 +22,9 @@
             {% if block.settings.footer_link_group == "links_1" %}
                   {% case block.type %}
                     {% when 'social_link' %}
-                      <a class="footer_social_link" href="{{ block.settings.footer_social_link_url }}"><img class="footer_social_link_icon" src="{{ block.settings.footer_social_link_icon }}" alt="social link"></a>
+                      <a class="footer_social_link" href="{{ block.settings.footer_social_link_url }}">
+                        <img width="25px" height="auto" class="footer_social_link_icon" src="{{ block.settings.social_link_icon |  image_url }}" alt="social link">
+                      </a>
                   {% endcase %} 
             {% endif %}
         {% endfor %}
@@ -100,7 +102,7 @@
       "settings": [
         {
           "type": "image_picker",
-          "id": "footer_social_title_icon",
+          "id": "social_link_icon",
           "label": "Choose a social icon"
         },
         {
