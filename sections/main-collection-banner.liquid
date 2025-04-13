@@ -1,8 +1,31 @@
 {{ 'main_collection_banner.css' |  asset_url |  stylesheet_tag }}
 
-<h1>to be continued</h1>
+<section class="collection-page-banner-wrapper swiper">
+    <div class="collection-page-banner swiper-wrapper">
+        <div class="swiper-slide"><p>hello</p></div>
+        <div class="swiper-slide"><p>hello</p></div>
+        <div class="swiper-slide"><p>hello</p></div>
+        <div class="swiper-slide"><p>hello</p></div>
+    </div>
+    <button class="next-slide">next</button>
+    <button class="prev-slide">previuos</button>
+</section>
 
+<script>
 
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.next-slide',
+    prevEl: '.prev-slide',
+  }
+});
+
+</script>
 
 {% schema %}
 {

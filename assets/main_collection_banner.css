@@ -1,0 +1,22 @@
+.collection-page-banner-wrapper {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.swiper {
+    width: 100%;
+    height: 500px;
+}
+
+
+.swiper-wrapper {
+    width: 80%;
+    height: 500px;
+}
+
+.swiper-slide {
+    width: 100%;
+    height: 100%;
+}
