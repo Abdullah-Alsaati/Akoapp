@@ -23,7 +23,7 @@
 
 
 .swiper-wrapper {
-    height: 300px;
+    height: 350px;
 }
 
 .swiper-slide {
@@ -42,25 +42,43 @@
 
 .swiper-button-next {
     margin-left: 20px;
-    color: rgb(0, 0, 0);
-    text-shadow: rgb(255, 255, 255) 0px 0px 7px;
+    text-shadow: rgba(0, 0, 0, 0.664) 1px 1px 2px;
 }
 
 .swiper-button-prev {
     margin-right: 20px;
-    color: rgb(0, 0, 0);
-    text-shadow: rgb(255, 255, 255) 0px 0px 7px;
+    text-shadow: rgba(0, 0, 0, 0.664) 1px 1px 2px;
 }
 
 .swiper-pagination span.swiper-pagination-bullet {
-    background-color: black;
     width: 10px;
     height: 10px;
-    opacity: 1;
+    box-shadow: rgba(0, 0, 0, 0.664) 1px 1px 1px;
 }
 
 .swiper-pagination span.swiper-pagination-bullet-active {
-    background-color: white;
     width: 10px;
     height: 10px;
+    box-shadow: rgba(0, 0, 0, 0.664) 1px 1px 1px;
 }
+
+
+/* responsiveness */
+
+
+@media (max-width: 1200px) {
+
+    .swiper {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .swiper {
+        width: 90dvw;
+        height: 150px;
+    }
+}
+
+

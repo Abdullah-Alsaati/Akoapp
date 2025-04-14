@@ -1,42 +1,52 @@
-{{ 'custom_product_grid.css' |  asset_url |  stylesheet_tag }}
+{{ 'custom_product_grid.css' | asset_url | stylesheet_tag }}
 
 <div class="collection-products-wrapper">
   <div class="collection-products">
-        
-          {% for product in collections.all.products %}
-            <div class="product-card"
-            data-collection="{% if product.collections.first %}{{ product.collections.first.handle }}{% else %}none{% endif %}" data-tags="{{ product.tags | join: ',' }}" data-price="{{ product.price | money_without_currency | replace: ',', '' }}">
-              <div class="product-image"><a href="{{ product.url }}"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt="" loading="lazy"></a></div>
-              <div class="product-information">
-                <a href="{{ product.url }}" class="product-title">
-                  {{ product.title | truncatewords: 10 }}
-                </a>
+    {% for product in collection.products %}
+      {% assign product_collection = collection.handle %}
+      <div class="product-card"
+        data-collection="{{ product_collection }}"
+        data-tags="{{ product.tags | join: ',' }}"
+        data-price="{{ product.price | divided_by: 100.0 }}">
 
-                <div class="product-prices">
-                  <p class="product-price">{{ product.price |  money }}</p>
-                  {% if product.compare_at_price %}
-                    <p class="product-compare-to-price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</p>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="buttons">
-                <form class="buttons" method="post" action="/cart/add">
-                  <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                  <input type="hidden" name="quantity" value="1">
-                  <button type="submit" class="buy-now-button">شراء الاٌن</button>
-                  <button type="submit" class="add-to-cart-button"><img width="auto" height="100%"  src="{{ 'cart.svg' |  asset_url  }}" alt=""></button>
-                </form>
-              </div>
-            </div>
-          {% endfor %}
+        <div class="product-image">
+          <a href="{{ product.url }}">
+            <img width="100%" height="100%" src="{{ product.featured_image | image_url }}" alt="{{ product.title }}" loading="lazy">
+          </a>
+        </div>
 
-    </div>
+        <div class="product-information">
+          <a href="{{ product.url }}" class="product-title">
+            {{ product.title | truncatewords: 10 }}
+          </a>
+
+          <div class="product-prices">
+            <p class="product-price">{{ product.price | money }}</p>
+            {% if product.compare_at_price %}
+              <p class="product-compare-to-price" style="text-decoration: line-through;">
+                {{ product.compare_at_price | money }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="buttons">
+          <form class="buttons" method="post" action="/cart/add">
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="buy-now-button">شراء الاٌن</button>
+            <button type="submit" class="add-to-cart-button">
+              <img width="auto" height="100%" src="{{ 'cart.svg' | asset_url }}" alt="إضافة إلى السلة">
+            </button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
   </div>
+</div>
 
-
-  <script>
-
-document.querySelectorAll(".buy-now-button").forEach(button => {
+<script>
+  document.querySelectorAll(".buy-now-button").forEach(button => {
     button.addEventListener("click", function (event) {
       event.preventDefault();
       let form = event.target.closest("form");
@@ -49,15 +59,12 @@ document.querySelectorAll(".buy-now-button").forEach(button => {
       });
     });
   });
-
-  </script>
+</script>
 
 {% schema %}
 {
   "name": "custom_product_grid",
-  "settings": [
-
-    ],
+  "settings": [],
   "presets": [
     {
       "name": "custom_product_grid"

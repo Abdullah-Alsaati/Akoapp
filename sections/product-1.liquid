@@ -29,7 +29,7 @@
                
             <!-- product variants -->
             {% if product.variants.size > 0 %}
-                <div class="product_variants">
+            <div  {% for variant in product.variants %} {% assign value = variant.title %} {% if value == "Default Title" %}style="padding: 0px;" {% endif %} {% endfor %} class="product_variants">
                   <div class="variant-options">
                     {% for variant in product.variants %}
                       {% unless variant.title == "Default Title" %}
@@ -45,7 +45,7 @@
                         <button 
                           type="button"
                           class="variant-button hidden"
-                          style="display: none;"
+                          style="display: none; padding: 0px;"
                           data-id="{{ variant.id }}"
                           data-price="{{ variant.price | money_without_currency | replace: ',', '' }}"
                           data-compare-at-price="{{ variant.compare_at_price | money_without_currency | replace: ',', '' }}">
@@ -79,6 +79,8 @@
 
         </div>
     </div>
+    <button onclick=".next-section" class="scroll-button">المزيد من المعلومات</button>
+
 </section>
 
 <script>
@@ -157,6 +159,21 @@
       variantButtons[0].click();
     }
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const button = document.querySelector(".scroll-button");
+    if (button) {
+      button.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(".next-section");
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    }
+  });
+
+
 </script>
 
 

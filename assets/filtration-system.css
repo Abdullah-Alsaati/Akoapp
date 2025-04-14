@@ -34,7 +34,7 @@
   .filters-dropdowns select,
   .price-filter input {
     appearance: none;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     border-radius: 9999px;
     padding: 5px 30px;
     font-family: sans-serif;

@@ -1,172 +1,162 @@
-{{ 'filtration-system.css' |  asset_url |  stylesheet_tag }}
-
-
+{{ 'filtration-system.css' | asset_url | stylesheet_tag }}
 
 <section class="filteration-system-wrapper">
-    <div class="filteration-system">
-        <div class="product-filters-wrapper">
-            <h2 class="filters-title">صنف حسب:</h2>
-            <div class="filters-dropdowns">
-                
-                <!-- Collections Dropdown -->
-                <select id="filter-collection">
-                <option value="all">جميع المنتجات</option>
-                    {% assign handles = '' | split: ',' %}
-                    {% for product in collections.all.products %}
-                        {% if product.collections.first %}
-                        {% unless handles contains product.collections.first.handle %}
-                            {% assign handles = handles | push: product.collections.first.handle %}
-                        {% endunless %}
-                        {% endif %}
-                    {% endfor %}
-                    {% for handle in handles %}
-                        <option value="{{ handle }}">{{ collections[handle].title }}</option>
-                    {% endfor %}
-                </select>
+  <div class="filteration-system" data-current-collection="{{ collection.handle }}">
+    <div class="product-filters-wrapper">
+      <h2 class="filters-title">صنف حسب:</h2>
+      <div class="filters-dropdowns">
 
-                <!-- Categories Dropdown (based on tag: category:xyz) -->
-                <select id="filter-category">
-                <option value="">الصنف</option>
-                {% assign categories = '' | split: ',' %}
-                {% for product in collections.all.products %}
-                    {% for tag in product.tags %}
-                    {% if tag contains 'category:' %}
-                        {% assign cat = tag | split: ':' | last %}
-                        {% unless categories contains cat %}
-                        {% assign categories = categories | push: cat %}
-                        {% endunless %}
-                    {% endif %}
-                    {% endfor %}
-                {% endfor %}
-                {% for category in categories %}
-                    <option value="category:{{ category }}">{{ category }}</option>
-                {% endfor %}
-                </select>
+        <!-- Collection Dropdown that redirects -->
+        <select id="filter-collection">
+            <option value="/collections">جميع التصنيفات</option>
+            {% if collections.size > 0 %}
+              {% for coll in collections %}
+                <option value="{{ coll.url }}" {% if collection and collection.handle == coll.handle %}selected{% endif %}>
+                  {{ coll.title }}
+                </option>
+              {% endfor %}
+            {% else %}
+              <option disabled>لا توجد مجموعات</option>
+            {% endif %}
+          </select>
 
-                <!-- Occasion Dropdown (tag: occasion:xyz) -->
-                <select id="filter-occasion">
-                <option value="">المناسبة</option>
-                {% assign occasions = '' | split: ',' %}
-                {% for product in collections.all.products %}
-                    {% for tag in product.tags %}
-                    {% if tag contains 'occasion:' %}
-                        {% assign occ = tag | split: ':' | last %}
-                        {% unless occasions contains occ %}
-                        {% assign occasions = occasions | push: occ %}
-                        {% endunless %}
-                    {% endif %}
-                    {% endfor %}
-                {% endfor %}
-                {% for occasion in occasions %}
-                    <option value="occasion:{{ occasion }}">{{ occasion }}</option>
-                {% endfor %}
-                </select>
+        <!-- Category Dropdown -->
+        <select id="filter-category">
+          <option value="">الصنف</option>
+          {% assign categories = '' %}
+          {% for product in collection.products %}
+            {% for tag in product.tags %}
+              {% if tag contains 'category:' %}
+                {% assign cat = tag | split: ':' | last %}
+                {% unless categories contains cat %}
+                  {% assign categories = categories | append: cat | append: ',' %}
+                {% endunless %}
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+          {% assign category_array = categories | split: ',' %}
+          {% for category in category_array %}
+            {% if category != '' %}
+              <option value="category:{{ category }}">{{ category }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        
 
-                <!-- Color Dropdown (tag: color:xyz) -->
-                <select id="filter-color">
-                <option value="">اللون</option>
-                {% assign colors = '' | split: ',' %}
-                {% for product in collections.all.products %}
-                    {% for tag in product.tags %}
-                    {% if tag contains 'color:' %}
-                        {% assign col = tag | split: ':' | last %}
-                        {% unless colors contains col %}
-                        {% assign colors = colors | push: col %}
-                        {% endunless %}
-                    {% endif %}
-                    {% endfor %}
-                {% endfor %}
-                {% for color in colors %}
-                    <option value="color:{{ color }}">{{ color }}</option>
-                {% endfor %}
-                </select>
+        <!-- Occasion Dropdown -->
+        <select id="filter-occasion">
+          <option value="">المناسبة</option>
+          {% assign occasions = '' %}
+          {% for product in collection.products %}
+            {% for tag in product.tags %}
+              {% if tag contains 'occasion:' %}
+                {% assign occ = tag | split: ':' | last %}
+                {% unless occasions contains occ %}
+                  {% assign occasions = occasions | append: occ | append: ',' %}
+                {% endunless %}
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+          {% assign occasion_array = occasions | split: ',' %}
+          {% for occasion in occasion_array %}
+            {% if occasion != '' %}
+              <option value="occasion:{{ occasion }}">{{ occasion }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        
 
-                <!-- Price Filter -->
-                <div class="price-filter">
-                <input type="number" id="min-price" placeholder="السعر الأدنى">
-                <input type="number" id="max-price" placeholder="السعر الأعلى">
-                </div>
+        <!-- Color Dropdown -->
+        <select id="filter-color">
+          <option value="">اللون</option>
+          {% assign colors = '' %}
+          {% for product in collection.products %}
+            {% for tag in product.tags %}
+              {% if tag contains 'color:' %}
+                {% assign col = tag | split: ':' | last %}
+                {% unless colors contains col %}
+                  {% assign colors = colors | append: col | append: ',' %}
+                {% endunless %}
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+          {% assign color_array = colors | split: ',' %}
+          {% for color in color_array %}
+            {% if color != '' %}
+              <option value="color:{{ color }}">{{ color }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
 
-            </div>
+        <!-- Price Inputs -->
+        <div class="price-filter">
+          <input type="number" id="min-price" placeholder="السعر الأدنى">
+          <input type="number" id="max-price" placeholder="السعر الأعلى">
         </div>
 
-
+      </div>
     </div>
+  </div>
 </section>
 
-
-
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const collectionSelect = document.getElementById("filter-collection");
-  const categorySelect = document.getElementById("filter-category");
-  const occasionSelect = document.getElementById("filter-occasion");
-  const colorSelect = document.getElementById("filter-color");
-  const minPriceInput = document.getElementById("min-price");
-  const maxPriceInput = document.getElementById("max-price");
+  document.addEventListener("DOMContentLoaded", function () {
+    const collectionSelect = document.getElementById("filter-collection");
+    const categorySelect = document.getElementById("filter-category");
+    const occasionSelect = document.getElementById("filter-occasion");
+    const colorSelect = document.getElementById("filter-color");
+    const minPriceInput = document.getElementById("min-price");
+    const maxPriceInput = document.getElementById("max-price");
 
-  const productCards = document.querySelectorAll(".product-card");
+    const productCards = document.querySelectorAll(".product-card");
 
-  function filterProducts() {
-    const selectedCollection = collectionSelect.value;
-    const selectedCategory = categorySelect.value;
-    const selectedOccasion = occasionSelect.value;
-    const selectedColor = colorSelect.value;
-    const minPrice = parseFloat(minPriceInput.value) || 0;
-    const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
-
-    productCards.forEach((card) => {
-      const cardCollection = card.dataset.collection;
-      const tags = card.dataset.tags?.split(",") || [];
-      const price = parseFloat(card.dataset.price);
-
-      const matchCollection =
-        selectedCollection === "all" || selectedCollection === cardCollection;
-
-      const matchCategory =
-        !selectedCategory || tags.includes(selectedCategory);
-
-      const matchOccasion =
-        !selectedOccasion || tags.includes(selectedOccasion);
-
-      const matchColor = !selectedColor || tags.includes(selectedColor);
-
-      const matchPrice = price >= minPrice && price <= maxPrice;
-
-      const shouldShow =
-        matchCollection &&
-        matchCategory &&
-        matchOccasion &&
-        matchColor &&
-        matchPrice;
-
-      card.style.display = shouldShow ? "block" : "none";
+    // Redirect to selected collection
+    collectionSelect?.addEventListener("change", function () {
+      const selectedUrl = this.value;
+      if (selectedUrl) {
+        window.location.href = selectedUrl;
+      }
     });
-  }
 
-  // Bind events
-  collectionSelect.addEventListener("change", filterProducts);
-  categorySelect.addEventListener("change", filterProducts);
-  occasionSelect.addEventListener("change", filterProducts);
-  colorSelect.addEventListener("change", filterProducts);
-  minPriceInput.addEventListener("input", filterProducts);
-  maxPriceInput.addEventListener("input", filterProducts);
-});
+    function filterProducts() {
+      const selectedCategory = categorySelect.value;
+      const selectedOccasion = occasionSelect.value;
+      const selectedColor = colorSelect.value;
+      const minPrice = parseFloat(minPriceInput.value) || 0;
+      const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+      productCards.forEach((card) => {
+        const tags = card.dataset.tags?.split(",") || [];
+        const price = parseFloat(card.dataset.price);
+
+        const matchCategory = !selectedCategory || tags.includes(selectedCategory);
+        const matchOccasion = !selectedOccasion || tags.includes(selectedOccasion);
+        const matchColor = !selectedColor || tags.includes(selectedColor);
+        const matchPrice = price >= minPrice && price <= maxPrice;
+
+        const shouldShow = matchCategory && matchOccasion && matchColor && matchPrice;
+        card.style.display = shouldShow ? "block" : "none";
+      });
+    }
+
+    // Bind filtering events
+    [categorySelect, occasionSelect, colorSelect].forEach((el) =>
+      el?.addEventListener("change", filterProducts)
+    );
+    [minPriceInput, maxPriceInput].forEach((el) =>
+      el?.addEventListener("input", filterProducts)
+    );
+  });
 </script>
-
-
 
 {% schema %}
 {
-    "name": "filtration-system",
-    "settings": [
-        
-        ],
-    "presets": [
-        {
-            "name": "filtration-system"
-        }
-    ]
+  "name": "filtration-system",
+  "settings": [],
+  "presets": [
+    {
+      "name": "filtration-system"
+    }
+  ]
 }
 {% endschema %}

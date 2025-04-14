@@ -59,8 +59,8 @@
 }
 
 
-
 .product-card {
+    border: rgba(228, 228, 228, 0.836) solid 2px;
     height: 500px;
     width: 280px;
     background-color: #f2f2f2;
@@ -69,6 +69,11 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: 150ms ease-in-out;
+}
+
+.product-card:hover {
+    border: rgba(161, 161, 161, 0.836) solid 2px;
 }
 
 .product-image {
@@ -202,7 +207,8 @@ button.add-to-cart-button:hover > img {
     .featured-collection {
         flex-direction: column;
         gap: 15px;
-        width: 90dvw;
+        width: 80dvw;
+        max-width: 1400px;
     }
 
 
