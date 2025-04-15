@@ -9,6 +9,7 @@
   align-items: center;
   height: 400px;
   padding: 40px 0px;
+  overflow: hidden;
 }
 
 .background-container-coffee {

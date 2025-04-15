@@ -1,0 +1,176 @@
+{{ 'fun-quiz.css' | asset_url | stylesheet_tag }}
+
+<section class="fun-quiz">
+  <div class="quiz-discount" id="quiz-discount-section">
+    <h2 class="welcome-text">جاوب و احصل على جوائز قيمة!</h2>
+    <h3 class="question-text">{{ section.settings.question }}</h3>
+    <form id="quiz-form">
+        <div class="quiz-answers">
+            {% for block in section.blocks %}
+                <label class="quiz-option">
+                <input type="radio" name="quiz-answer" value="{{ block.settings.answer }}" />
+                <span class="option-text">{{ block.settings.answer }}</span>
+                </label>
+            {% endfor %}
+        </div>
+      <button class="answer-button" type="button" onclick="checkQuizAnswer()">جاوب</button>
+      <button type="button" onclick="resetQuiz()" id="reset-button" style="display:none;">إعادة الإجابة</button>
+
+    </form>
+
+    <p id="quiz-result" style="display:none; color: green; font-weight: bold;">
+      🎉 صحيح استخدم الكود <strong>{{ section.settings.discount_code }}</strong>
+    </p>
+    <p id="quiz-thanks" style="display:none; color: gray;">شكرا للمشاركة</p>
+
+    <canvas id="confetti-canvas"></canvas>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+const quizKey = "quiz_discount_answered";
+const quizTimeKey = "quiz_answered_time";
+
+const correctAnswer = "{{ section.settings.correct_answer }}".toLowerCase().trim();
+const discountCode = "{{ section.settings.discount_code }}";
+
+// Check the user's selected answer
+function checkQuizAnswer() {
+  const selected = document.querySelector('input[name="quiz-answer"]:checked');
+  const result = document.getElementById("quiz-result");
+  const thanks = document.getElementById("quiz-thanks");
+  const quizForm = document.getElementById("quiz-form");
+
+  const lastAnsweredTime = localStorage.getItem(quizTimeKey);
+  const now = Date.now();
+
+  if (lastAnsweredTime && now - parseInt(lastAnsweredTime) < 24 * 60 * 60 * 1000) {
+    alert("عذرًا، لقد أجبت على هذا السؤال بالفعل اليوم. حاول مرة أخرى بعد 24 ساعة.");
+    quizForm.style.display = "none";
+    return;
+  }
+
+  if (!selected) {
+    alert("الرجاء اختيار جواب");
+    return;
+  }
+
+  const userAnswer = selected.value.toLowerCase().trim();
+  quizForm.style.display = "none";
+  localStorage.setItem(quizTimeKey, now);
+
+  if (userAnswer === correctAnswer) {
+    result.innerHTML = `🎉 صحيح استخدم الكود <strong>${discountCode}</strong>`;
+    result.style.display = "block";
+    localStorage.setItem(quizKey, "correct");
+    fireConfetti();
+  } else {
+    thanks.style.display = "block";
+    localStorage.setItem(quizKey, "wrong");
+  }
+}
+
+// Confetti animation
+function fireConfetti() {
+  const duration = 3 * 1000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+  const interval = setInterval(() => {
+    const timeLeft = animationEnd - Date.now();
+    if (timeLeft <= 0) return clearInterval(interval);
+
+    const particleCount = 50 * (timeLeft / duration);
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+  }, 250);
+}
+
+// On page load: check if quiz was answered in the last 24h and hide form if so
+window.onload = () => {
+  const quizForm = document.getElementById("quiz-form");
+  const result = document.getElementById("quiz-result");
+  const thanks = document.getElementById("quiz-thanks");
+
+  const lastAnsweredTime = localStorage.getItem(quizTimeKey);
+  const savedStatus = localStorage.getItem(quizKey);
+  const now = Date.now();
+
+  if (lastAnsweredTime && now - parseInt(lastAnsweredTime) < 24 * 60 * 60 * 1000) {
+    quizForm.style.display = "none";
+
+    if (savedStatus === "correct") {
+      result.innerHTML = `🎉 صحيح استخدم الكود <strong>${discountCode}</strong>`;
+      result.style.display = "block";
+    } else if (savedStatus === "wrong") {
+      thanks.style.display = "block";
+    }
+  }
+};
+</script>
+
+
+{% schema %}
+{
+  "name": "Quiz Discount (MCQ)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "question",
+      "label": "Quiz Question",
+      "default": "What color is the Shopify logo?"
+    },
+    {
+      "type": "text",
+      "id": "correct_answer",
+      "label": "Correct Answer",
+      "default": "Green"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount Code",
+      "default": "GREEN15"
+    },
+    {
+    "type": "checkbox",
+    "id": "allow_reset",
+    "label": "Allow users to reset the quiz",
+    "default": true
+    },
+    {
+    "type": "checkbox",
+    "id": "reset_quiz_question",
+    "label": "Reset Quiz Question",
+    "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "answer",
+      "name": "Answer Option",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "answer",
+          "label": "Answer Text",
+          "default": "Green"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Quiz Discount (MCQ)",
+      "blocks": [
+        { "type": "answer" },
+        { "type": "answer" },
+        { "type": "answer" }
+      ]
+    }
+  ]
+}
+{% endschema %}
