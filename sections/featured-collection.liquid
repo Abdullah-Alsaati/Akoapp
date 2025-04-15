@@ -23,7 +23,17 @@
               </a>
 
               <div class="product-prices">
-                <p class="product-price">{{ product.price |  money }}</p>
+
+                {% if cart.currency.iso_code == "SAR" %}
+                  <div class="saudi-price-holder">
+                    <p class="product-price">{{ product.price |  money_without_currency }}</p>
+                    <img width="auto" height="20px" src="{{ 'sar.svg' |  asset_url }}" alt="">
+                  </div>
+                  {% else %}
+                  <p class="product-price">{{ product.price |  money_with_currency }}</p>
+                {% endif %}
+
+
                 {% if product.compare_at_price %}
                   <p class="product-compare-to-price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</p>
                 {% endif %}

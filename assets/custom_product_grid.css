@@ -194,6 +194,13 @@ button.add-to-cart-button:hover > img {
     align-items: center;
 }
 
+.saudi-price-holder {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-top: 5px;
+}
+
 
 /* Responiveness */
 

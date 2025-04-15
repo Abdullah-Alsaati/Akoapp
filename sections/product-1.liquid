@@ -13,7 +13,13 @@
                     <p>{{ product.title }}</p>
                 </div>
                 <div class="product_prices">
-                    <p class="original_price">{{ product.price | money_with_currency }}</p>
+                  {% if cart.currency.iso_code == "SAR" %}
+                    <div class="saudi-price-holder">
+                      <p class="original_price">{{ product.price |  money_without_currency }}</p>
+                    </div>
+                    {% else %}
+                    <p class="original_price">{{ product.price |  money_with_currency }}</p>
+                  {% endif %}
                     {% if product.compare_at_price %}
                         <p class="compare_at_price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</p>
                     {% else %}
@@ -94,45 +100,59 @@
     const increaseBtn = document.getElementById('increase');
     const decreaseBtn = document.getElementById('decrease');
 
+    // Check if SAR is the currency from Shopify
+    const isSAR = '{{ cart.currency.iso_code }}' === 'SAR';
+    const sarIcon = '<img class="sar-currency" src="{{ "sar.svg" | asset_url }}" alt="SAR" height="20px">';
+
     increaseBtn.addEventListener('click', () => {
-    let current = parseInt(quantityInput.value, 10);
-    quantityInput.value = current + 1;
-    quantityInput.dispatchEvent(new Event('input'));
+      let current = parseInt(quantityInput.value, 10);
+      quantityInput.value = current + 1;
+      quantityInput.dispatchEvent(new Event('input'));
     });
 
     decreaseBtn.addEventListener('click', () => {
-    let current = parseInt(quantityInput.value, 10);
-    if (current > 1) {
+      let current = parseInt(quantityInput.value, 10);
+      if (current > 1) {
         quantityInput.value = current - 1;
         quantityInput.dispatchEvent(new Event('input'));
-    }
+      }
     });
 
     function formatPrice(price) {
       return new Intl.NumberFormat('ar-SA', {
-        style: 'currency',
-        currency: 'SAR'
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
       }).format(price);
     }
 
     function updatePrices(price, comparePrice, quantity) {
-      priceEl.textContent = formatPrice(price * quantity);
-      if (comparePrice > 0) {
-        comparePriceEl.textContent = formatPrice(comparePrice * quantity);
-        comparePriceEl.style.display = 'block';
+      const formattedPrice = formatPrice(price * quantity);
+      const formattedCompare = formatPrice(comparePrice * quantity);
+
+      if (isSAR) {
+        priceEl.innerHTML = `${formattedPrice} ${sarIcon}`;
+        if (comparePrice > 0) {
+          comparePriceEl.innerHTML = `${formattedCompare} ${sarIcon}`;
+          comparePriceEl.style.display = 'block';
+        } else {
+          comparePriceEl.style.display = 'none';
+        }
       } else {
-        comparePriceEl.style.display = 'none';
+        priceEl.textContent = formattedPrice;
+        if (comparePrice > 0) {
+          comparePriceEl.textContent = formattedCompare;
+          comparePriceEl.style.display = 'block';
+        } else {
+          comparePriceEl.style.display = 'none';
+        }
       }
     }
 
     variantButtons.forEach(btn => {
       btn.addEventListener('click', function () {
-        // Remove active from all
         variantButtons.forEach(b => b.classList.remove('active'));
-        // Add active to selected
         this.classList.add('active');
 
-        // Update hidden input for form submission
         const variantId = this.getAttribute('data-id');
         hiddenInput.value = variantId;
 
@@ -154,7 +174,7 @@
       }
     });
 
-    // Trigger default selection
+    // Trigger default variant selection
     if (variantButtons.length) {
       variantButtons[0].click();
     }
@@ -172,9 +192,8 @@
       });
     }
   });
-
-
 </script>
+
 
 
 {% schema %}
