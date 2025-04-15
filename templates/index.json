@@ -17,12 +17,24 @@
     },
     "coffe-banner": {
       "type": "coffe-banner"
+    },
+    "images-slider": {
+      "type": "images-slider"
+    },
+    "featured-collection-2": {
+      "type": "featured-collection"
+    },
+    "fun-quiz": {
+      "type": "fun-quiz"
     }
 
   },
   "order": [
     "custom-banner",
     "featured-collection",
-    "coffe-banner"
+    "coffe-banner",
+    "images-slider",
+    "featured-collection-2",
+    "fun-quiz"
   ]
 }
