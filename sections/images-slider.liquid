@@ -50,6 +50,80 @@
   </div>
 </div>
 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Determine slides per view based on screen size
+    const getResponsiveSlidesPerView = () => {
+      return window.innerWidth <= 767 ? 1 : 3.5;
+    };
+  
+    // First slider (left to right)
+    const swiperFirst = new Swiper('.swiper-first', {
+      slidesPerView: getResponsiveSlidesPerView(),
+      spaceBetween: {{ section.settings.space_between | default: 40 }},
+      loop: true,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: false,
+        stopOnLastSlide: false
+      },
+      speed: 5000,
+      freeMode: true,
+      
+      allowTouchMove: false,
+      on: {
+        touchEnd: function() {
+          this.autoplay.start();
+        },
+        click: function() {
+          this.autoplay.start();
+        }
+      }
+    });
+  
+    // Second slider (right to left)
+    const swiperSecond = new Swiper('.swiper-second', {
+      slidesPerView: getResponsiveSlidesPerView(),
+      spaceBetween: {{ section.settings.space_between | default: 40 }},
+      loop: true,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: false,
+        stopOnLastSlide: false,
+        reverseDirection: true
+      },
+      speed: 5000,
+      freeMode: true,
+     
+      allowTouchMove: false,
+      on: {
+        touchEnd: function() {
+          this.autoplay.start();
+        },
+        click: function() {
+          this.autoplay.start();
+        }
+      }
+    });
+  
+    // Update slides per view on window resize
+    window.addEventListener('resize', function() {
+      swiperFirst.params.slidesPerView = getResponsiveSlidesPerView();
+      // swiperFirst.params.centeredSlides = true;
+      swiperFirst.update();
+  
+      swiperSecond.params.slidesPerView = getResponsiveSlidesPerView();
+      // swiperSecond.params.centeredSlides = true;
+      swiperSecond.update();
+    });
+  });
+</script>
+
+
+
 {% schema %}
   {
     "name": "Infinite Image Slider",
@@ -127,74 +201,3 @@
     ]
   }
 {% endschema %}
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Determine slides per view based on screen size
-    const getResponsiveSlidesPerView = () => {
-      return window.innerWidth <= 767 ? 1 : 3.5;
-    };
-  
-    // First slider (left to right)
-    const swiperFirst = new Swiper('.swiper-first', {
-      slidesPerView: getResponsiveSlidesPerView(),
-      spaceBetween: {{ section.settings.space_between | default: 40 }},
-      loop: true,
-      autoplay: {
-        delay: 0,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: false,
-        stopOnLastSlide: false
-      },
-      speed: 5000,
-      freeMode: true,
-      
-      allowTouchMove: false,
-      on: {
-        touchEnd: function() {
-          this.autoplay.start();
-        },
-        click: function() {
-          this.autoplay.start();
-        }
-      }
-    });
-  
-    // Second slider (right to left)
-    const swiperSecond = new Swiper('.swiper-second', {
-      slidesPerView: getResponsiveSlidesPerView(),
-      spaceBetween: {{ section.settings.space_between | default: 40 }},
-      loop: true,
-      autoplay: {
-        delay: 0,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: false,
-        stopOnLastSlide: false,
-        reverseDirection: true
-      },
-      speed: 5000,
-      freeMode: true,
-     
-      allowTouchMove: false,
-      on: {
-        touchEnd: function() {
-          this.autoplay.start();
-        },
-        click: function() {
-          this.autoplay.start();
-        }
-      }
-    });
-  
-    // Update slides per view on window resize
-    window.addEventListener('resize', function() {
-      swiperFirst.params.slidesPerView = getResponsiveSlidesPerView();
-      // swiperFirst.params.centeredSlides = true;
-      swiperFirst.update();
-  
-      swiperSecond.params.slidesPerView = getResponsiveSlidesPerView();
-      // swiperSecond.params.centeredSlides = true;
-      swiperSecond.update();
-    });
-  });
-</script>
