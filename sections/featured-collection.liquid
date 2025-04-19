@@ -3,9 +3,9 @@
 <section class="featured-collection-wrapper">
   <div class="featured-collection">
     <div class="collection-image">
-        <p class="collection-name">{{ section.settings.featured_collection.title }}</p>
-        <a href="{{ section.settings.featured_collection.url }}" class="collection-image-link">
-        <img width="100%" height="auto" src="{{ section.settings.featured_collection.featured_image | img_url: 'medium' }} loading=" alt="Collection image" loading="lazy">
+        <a href="{{ section.settings.featured_collection.url }}" class="collection-name-link">
+          <p class="collection-name">{{ section.settings.featured_collection.title }}</p>
+          <img width="100%" height="auto" src="{{ section.settings.featured_collection.featured_image | img_url: 'medium' }} loading=" alt="Collection image" loading="lazy">
         </a>
     </div>
     <div class="collection-products-wrapper">
@@ -53,8 +53,8 @@
         </div>
 
     </div>
+    <button class="prev_button">&larr;</button>
   </div>
-  <button class="prev_button">&larr;</button>
 </section>
 
 
