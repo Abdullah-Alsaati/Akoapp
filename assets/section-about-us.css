@@ -99,7 +99,6 @@
 
 .goal-card-description {
   font-size: 1.2rem;
-  line-height: 1.5;
   color: inherit;
 }
 
@@ -173,7 +172,6 @@
 
 .feature-description {
   font-size: 1.2rem;
-  line-height: 1.5;
   color: #666;
   margin: 0;
 }

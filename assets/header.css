@@ -44,7 +44,6 @@
     font-weight: bold;
     color: #F2F2F2;
     font-size: 16px;
-    line-height: 16px;
     padding: 0px 10px;
 }
 
@@ -110,14 +109,12 @@
 
 .sub_link {
     font-size: 17px;
-    line-height: 17px;
     color: white;
     font-weight: bold;
 }
 
 .sub_sub_link {
     font-size: 12px;
-    line-height: 12px;
     color: white;
 }
 
@@ -141,7 +138,6 @@
 
 .sub_sub_link:hover {
     font-size: 11.5px;
-    line-height: 11.5px;
     opacity: 0.5;
 }
 

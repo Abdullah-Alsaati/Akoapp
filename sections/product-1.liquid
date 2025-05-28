@@ -1,7 +1,7 @@
 {{ 'product_page.css' |  asset_url |  stylesheet_tag }}
 
-<section class="product_1">
-    <div class="product_1_wrapper">
+<section class="main-product-wrapper">
+    <div class="main-product">
 
         <div class="product_image">
             <img height="auto" width="90%" src="{{ product.featured_image |  image_url  }}" alt="{{ product.featured_image.alt }}">
@@ -35,7 +35,7 @@
                
             <!-- product variants -->
             {% if product.variants.size > 0 %}
-            <div  {% for variant in product.variants %} {% assign value = variant.title %} {% if value == "Default Title" %}style="padding: 0px;" {% endif %} {% endfor %} class="product_variants">
+              <div  {% for variant in product.variants %} {% assign value = variant.title %} {% if value == "Default Title" %}style="padding: 0px;" {% endif %} {% endfor %} class="product_variants">
                   <div class="variant-options">
                     {% for variant in product.variants %}
                       {% unless variant.title == "Default Title" %}
@@ -85,7 +85,6 @@
 
         </div>
     </div>
-    <button onclick=".next-section" class="scroll-button">المزيد من المعلومات</button>
 
 </section>
 

@@ -42,7 +42,6 @@
     top: 50%;
     bottom: 50%;
     font-size: 35px;
-    line-height: 35px;
     font-weight: bold;
 }
 
@@ -126,7 +125,6 @@
 
 .product-prices {
     font-size: 21px;
-    line-height: 21px;
     font-weight: bold;
 }
 
@@ -153,7 +151,6 @@
     font-size: 20px;
     height: 20px;
     width: 20px;
-    line-height: 20px;
     padding: 10px;
     background-color: #f2f2f223;
     border-radius: 999px;
@@ -265,7 +262,6 @@ button.add-to-cart-button:hover > img {
 
     .product-title {
         font-size: 15px;
-        line-height: 20px;
     }
 
     .product-prices {
@@ -276,7 +272,6 @@ button.add-to-cart-button:hover > img {
     .buttons {
         padding: 0px;
         font-size: 13px;
-        line-height: 13px;
         gap: 5px;
         bottom: 7px;
         left: -5px;

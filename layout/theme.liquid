@@ -56,6 +56,21 @@
     %}
 
     {% style %}
+      @font-face {
+                  font-family: 'janna';
+                  src: url('{{ "janna_regular.ttf" | asset_url }}') format('truetype');
+                  font-weight: normal;
+                  font-style: normal;
+                  font-display: swap;
+                }
+      @font-face {
+                  font-family: 'janna';
+                  src: url('{{ "janna_bold.ttf" | asset_url }}') format('truetype');
+                  font-weight: bold;
+                  font-style: normal;
+                  font-display: swap;
+                }
+
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
       {{ body_font_italic | font_face: font_display: 'swap' }}
