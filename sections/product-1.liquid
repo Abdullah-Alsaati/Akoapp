@@ -3,14 +3,15 @@
 <section class="main-product-wrapper">
     <div class="main-product">
 
-        <div class="product_image">
-            <img height="auto" width="90%" src="{{ product.featured_image |  image_url  }}" alt="{{ product.featured_image.alt }}">
+        <div class="product_image_container">
+            <img class="product_image" height="auto" width="90%" src="{{ product.featured_image |  image_url  }}" alt="{{ product.featured_image.alt }}">
         </div>
 
-        <div class="product_info">
+        <div class="product_info_container">
             <div class="product_title_prices">
-                <div class="product_title">
-                    <p>{{ product.title }}</p>
+                <div class="product_titles">
+                    <h2 class="short_title">{{ product.metafields.custom.product_short_title }}</h2>
+                    <p class="normal_title">{{ product.title }}</p>
                 </div>
                 <div class="product_prices">
                   {% if cart.currency.iso_code == "SAR" %}
@@ -99,7 +100,7 @@
     const increaseBtn = document.getElementById('increase');
     const decreaseBtn = document.getElementById('decrease');
 
-    // Check if SAR is the currency from Shopify
+    // Check SAR
     const isSAR = '{{ cart.currency.iso_code }}' === 'SAR';
     const sarIcon = '<img class="sar-currency" src="{{ "sar.svg" | asset_url }}" alt="SAR" height="20px">';
 

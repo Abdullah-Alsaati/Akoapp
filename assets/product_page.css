@@ -8,4 +8,23 @@
 
 .main-product {
   width: 80dvw;
+  max-width: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product_image_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product_image {
+  width: 500px;
+  height: max-content;
+}
+
+.product-info-container {
+  width: 60%;
 }
