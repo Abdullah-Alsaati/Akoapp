@@ -57,20 +57,27 @@
 
     {% style %}
       @font-face {
-                  font-family: 'janna';
-                  src: url('{{ "janna_regular.ttf" | asset_url }}') format('truetype');
-                  font-weight: normal;
+                  font-family: 'all-genders';
+                  src: url('{{ "all-genders-light.otf" | asset_url }}') format('opentype');
+                  font-weight: 25;
                   font-style: normal;
                   font-display: swap;
                 }
       @font-face {
-                  font-family: 'janna';
-                  src: url('{{ "janna_bold.ttf" | asset_url }}') format('truetype');
-                  font-weight: bold;
+                  font-family: 'all-genders';
+                  src: url('{{ "all-genders-regular.otf" | asset_url }}') format('opentype');
+                  font-weight: 50;
                   font-style: normal;
                   font-display: swap;
                 }
-
+      @font-face {
+                  font-family: 'all-genders';
+                  src: url('{{ "all-genders-bold.otf" | asset_url }}') format('opentype');
+                  font-weight: 100;
+                  font-style: normal;
+                  font-display: swap;
+                }
+      
       {{ settings.type_body_font | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
       {{ body_font_italic | font_face: font_display: 'swap' }}

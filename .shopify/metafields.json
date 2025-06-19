@@ -49,6 +49,16 @@
         "name": "list.metaobject_reference",
         "category": "REFERENCE"
       }
+    },
+    {
+      "key": "product_short_title",
+      "namespace": "custom",
+      "name": "عنوان قصير",
+      "description": "لقب للمنتج بما لا يزيد عن 3 كلمات",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
     }
   ],
   "variant": [],

@@ -1,108 +1,118 @@
 {{ 'product_page.css' |  asset_url |  stylesheet_tag }}
 
 <section class="main-product-wrapper">
-    <div class="main-product">
+  <div class="main-product">
 
-        <div class="product_image_container">
-            <img class="product_image" height="auto" width="90%" src="{{ product.featured_image |  image_url  }}" alt="{{ product.featured_image.alt }}">
-        </div>
-
-        <div class="product_info_container">
-            <div class="product_title_prices">
-                <div class="product_titles">
-                    <h2 class="short_title">{{ product.metafields.custom.product_short_title }}</h2>
-                    <p class="normal_title">{{ product.title }}</p>
-                </div>
-                <div class="product_prices">
-                  {% if cart.currency.iso_code == "SAR" %}
-                    <div class="saudi-price-holder">
-                      <p class="original_price">{{ product.price |  money_without_currency }}</p>
-                    </div>
-                    {% else %}
-                    <p class="original_price">{{ product.price |  money_with_currency }}</p>
-                  {% endif %}
-                    {% if product.compare_at_price %}
-                        <p class="compare_at_price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</p>
-                    {% else %}
-                        <p class="compare_at_price" style="display: none;"></p>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="product_description">
-                {{ product.description }}
-            </div>
-
-               
-            <!-- product variants -->
-            {% if product.variants.size > 0 %}
-              <div  {% for variant in product.variants %} {% assign value = variant.title %} {% if value == "Default Title" %}style="padding: 0px;" {% endif %} {% endfor %} class="product_variants">
-                  <div class="variant-options">
-                    {% for variant in product.variants %}
-                      {% unless variant.title == "Default Title" %}
-                        <button 
-                          type="button"
-                          class="variant-button"
-                          data-id="{{ variant.id }}"
-                          data-price="{{ variant.price | money_without_currency | replace: ',', '' }}"
-                          data-compare-at-price="{{ variant.compare_at_price | money_without_currency | replace: ',', '' }}">
-                          {{ variant.title }}
-                        </button>
-                      {% else %}
-                        <button 
-                          type="button"
-                          class="variant-button hidden"
-                          style="display: none; padding: 0px;"
-                          data-id="{{ variant.id }}"
-                          data-price="{{ variant.price | money_without_currency | replace: ',', '' }}"
-                          data-compare-at-price="{{ variant.compare_at_price | money_without_currency | replace: ',', '' }}">
-                          Default
-                        </button>
-                      {% endunless %}
-                    {% endfor %}
-                  </div>
-                </div>
-              {% endif %}
-
-
-
-            <div class="product_buttons">
-                <form method="post" action="/cart/add">
-                    <input type="hidden" name="id" id="selected-variant-id" value="{{ product.variants.first.id }}">
-                
-                    <!-- Quantity Selector -->
-                    <div class="custom-quantity-selector">
-                        <button type="button" class="qty-btn" id="increase">+</button>
-                        <input type="number" id="quantity" name="quantity" value="1" min="1" readonly />
-                        <button type="button" class="qty-btn" id="decrease">−</button>
-                    </div>
-                
-                    <!-- Buy Now Button -->
-                    <button type="submit" name="add" class="buy-now-button">
-                    الشراء الأٌن
-                    </button>
-                </form>
-            </div>
-
-        </div>
+    <div class="product_image_container">
+      <img class="product_image" height="auto" width="90%" src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}">
     </div>
 
+    <div class="product_info_container">
+      <div class="product_title_prices">
+        <div class="product_titles">
+          <h2 class="short_title">{{ product.metafields.custom.product_short_title }}</h2>
+          <p class="normal_title">{{ product.title }}</p>
+          <div class="product_description">
+            {{ product.description }}
+          </div>    
+        </div>
+
+        <div class="product_prices">
+          <p class="original_price">
+            {% if cart.currency.iso_code == "SAR" %}
+              <span class="price_value">{{ product.price | money_without_currency }}</span>
+              <img class="sar_currency_og" src="{{ 'sar.svg' | asset_url }}" alt="SAR">
+            {% else %}
+              {{ product.price | money_with_currency }}
+            {% endif %}
+          </p>
+
+          {% if product.compare_at_price %}
+            <p class="compare_at_price">
+              {% if cart.currency.iso_code == "SAR" %}
+                <span class="compare_value">{{ product.compare_at_price | money_without_currency }}</span>
+                <img class="sar_currency_cg" src="{{ 'sar.svg' | asset_url }}" alt="SAR">
+              {% else %}
+                {{ product.compare_at_price | money_with_currency }}
+              {% endif %}
+            </p>
+
+            {% if product.compare_at_price > product.price %}
+              {% assign discount = product.compare_at_price | minus: product.price %}
+              {% assign discount_percentage = discount | times: 100 | divided_by: product.compare_at_price %}
+              <span class="discount-badge">
+                خصم {{ discount_percentage | round }}%
+              </span>
+            {% endif %}
+          {% else %}
+            <p class="compare_at_price" style="display: none;"></p>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if product.variants.size > 0 %}
+        <div class="product_variants" {% for variant in product.variants %} {% if variant.title == "Default Title" %}style="padding: 0px;"{% endif %} {% endfor %}>
+          <div class="variant-options">
+            {% for variant in product.variants %}
+              <button 
+                type="button"
+                class="variant-button {% if variant.title == "Default Title" %}hidden{% endif %}"
+                style="{% if variant.title == "Default Title" %}display:none; padding: 0px;{% endif %}"
+                data-id="{{ variant.id }}"
+                data-price="{{ variant.price | money_without_currency | replace: ',', '' }}"
+                data-compare="{{ variant.compare_at_price | money_without_currency | replace: ',', '' }}">
+                {{ variant.title }}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="product_buttons">
+        <form method="post" action="/cart/add">
+          <input type="hidden" name="id" id="selected-variant-id" value="{{ product.variants.first.id }}">
+
+          <!-- Quantity Selector -->
+          <div class="custom-quantity-selector">
+            <button type="button" class="qty-btn" id="increase">+</button>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" readonly />
+            <button type="button" class="qty-btn" id="decrease">−</button>
+          </div>
+
+          <!-- Add to Cart Button -->
+          <button type="submit" name="add" class="add-to-cart-button">
+            أضف إلى السلة
+          </button>
+
+          <!-- Buy Now Button -->
+          <button type="submit" name="add" class="buy-now-button" formaction="/checkout">
+            الشراء الآن
+          </button>
+        </form>
+
+        <button class="st-wishlist-button" data-type="details" data-handle="{{ product.handle }}"></button>
+      </div>
+
+    </div>
+  </div>
 </section>
+
+<style>
+  .main-product-wrapper {
+    background-color: {{ section.settings.product_background_color }};
+  }
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const variantButtons = document.querySelectorAll('.variant-button');
     const hiddenInput = document.getElementById('selected-variant-id');
-    const priceEl = document.querySelector('.original_price');
+    const priceValueEl = document.querySelector('.price_value');
+    const compareValueEl = document.querySelector('.compare_value');
     const comparePriceEl = document.querySelector('.compare_at_price');
     const quantityInput = document.getElementById('quantity');
-
     const increaseBtn = document.getElementById('increase');
     const decreaseBtn = document.getElementById('decrease');
-
-    // Check SAR
-    const isSAR = '{{ cart.currency.iso_code }}' === 'SAR';
-    const sarIcon = '<img class="sar-currency" src="{{ "sar.svg" | asset_url }}" alt="SAR" height="20px">';
 
     increaseBtn.addEventListener('click', () => {
       let current = parseInt(quantityInput.value, 10);
@@ -119,32 +129,22 @@
     });
 
     function formatPrice(price) {
-      return new Intl.NumberFormat('ar-SA', {
+      return new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }).format(price);
     }
 
-    function updatePrices(price, comparePrice, quantity) {
-      const formattedPrice = formatPrice(price * quantity);
-      const formattedCompare = formatPrice(comparePrice * quantity);
+    function updatePrices(price, compare, quantity) {
+      const totalPrice = price * quantity;
+      const totalCompare = compare * quantity;
 
-      if (isSAR) {
-        priceEl.innerHTML = `${formattedPrice} ${sarIcon}`;
-        if (comparePrice > 0) {
-          comparePriceEl.innerHTML = `${formattedCompare} ${sarIcon}`;
-          comparePriceEl.style.display = 'block';
-        } else {
-          comparePriceEl.style.display = 'none';
-        }
+      if (priceValueEl) priceValueEl.textContent = formatPrice(totalPrice);
+      if (compare > 0) {
+        if (compareValueEl) compareValueEl.textContent = formatPrice(totalCompare);
+        comparePriceEl.style.display = 'block';
       } else {
-        priceEl.textContent = formattedPrice;
-        if (comparePrice > 0) {
-          comparePriceEl.textContent = formattedCompare;
-          comparePriceEl.style.display = 'block';
-        } else {
-          comparePriceEl.style.display = 'none';
-        }
+        comparePriceEl.style.display = 'none';
       }
     }
 
@@ -156,56 +156,44 @@
         const variantId = this.getAttribute('data-id');
         hiddenInput.value = variantId;
 
-        const price = parseFloat(this.getAttribute('data-price'));
-        const comparePrice = parseFloat(this.getAttribute('data-compare-at-price')) || 0;
+        const price = parseFloat(this.getAttribute('data-price')) || 0;
+        const compare = parseFloat(this.getAttribute('data-compare')) || 0;
         const quantity = parseInt(quantityInput.value, 10) || 1;
 
-        updatePrices(price, comparePrice, quantity);
+        updatePrices(price, compare, quantity);
       });
     });
 
     quantityInput.addEventListener('input', function () {
       const activeBtn = document.querySelector('.variant-button.active');
       if (activeBtn) {
-        const price = parseFloat(activeBtn.getAttribute('data-price'));
-        const comparePrice = parseFloat(activeBtn.getAttribute('data-compare-at-price')) || 0;
+        const price = parseFloat(activeBtn.getAttribute('data-price')) || 0;
+        const compare = parseFloat(activeBtn.getAttribute('data-compare')) || 0;
         const quantity = parseInt(quantityInput.value, 10) || 1;
-        updatePrices(price, comparePrice, quantity);
+        updatePrices(price, compare, quantity);
       }
     });
 
-    // Trigger default variant selection
     if (variantButtons.length) {
       variantButtons[0].click();
     }
   });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const button = document.querySelector(".scroll-button");
-    if (button) {
-      button.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = document.querySelector(".next-section");
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    }
-  });
 </script>
-
-
 
 {% schema %}
 {
-    "name": "product_1",
-    "settings": [
-        
-        ],
-    "presets": [
-        {
-            "name": "product_1"
-        }
-    ]
+  "name": "product_1",
+  "settings": [
+    {
+      "type": "color",
+      "id": "product_background_color",
+      "label": "أختر لون خلفية المنتج"
+    }
+  ],
+  "presets": [
+    {
+      "name": "product_1"
+    }
+  ]
 }
 {% endschema %}
