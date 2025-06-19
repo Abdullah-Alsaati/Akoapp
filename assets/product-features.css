@@ -1,0 +1,29 @@
+.features-wrapper {
+    width: 100%;
+    background: #121212;
+    background: -webkit-linear-gradient(180deg, rgba(18, 18, 18, 1) 50%, rgba(255, 255, 255, 1) 50%);
+    background: -moz-linear-gradient(180deg, rgba(18, 18, 18, 1) 50%, rgba(255, 255, 255, 1) 50%);
+    background: linear-gradient(180deg, #121212 50%, rgba(255, 255, 255, 1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#121212", endColorstr="#FFFFFF", GradientType=0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0px;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.feature {
+    background-color: #19b271;
+    color: #121212;
+    font-weight: 100;
+    font-size: 17px;
+    line-height: 17px;
+    padding: 17px 30px;
+    border-radius: 999px;
+}

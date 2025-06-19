@@ -1,45 +1,19 @@
 {{ 'product-2.css' |  asset_url |  stylesheet_tag }}
-{% unless product.images == 1 %}
-    <section class="product-image-gallery-wrapper next-section">
-        <div class="swiper product-image-gallery">
-            <div class="swiper-wrapper images-wrapper">
-                
-                    {% for image in product.images  %}
-                        <div class="swiper-slide">
-                            <div class="image-container"><img width="100%" height="100%" src="{{ image.src |  image_url  }}" alt="{{ image.alt |  escape }}" class="image"></div>
-                        </div>
-                    {% endfor %}
 
+
+{% if product.images %}
+    <section class="product-image-gallery-wrapper">
+        <div class="product-image-gallery">
+            <div class="images-wrapper">
+                <img class="image" src="{{ product.images[1] |  image_url }}" alt="">
+                <div class="image-grid">
+                  <img class="image-1" src="{{ product.images[2] |  image_url }}" alt="">
+                  <img class="image-2" src="{{ product.images[3] |  image_url }}" alt="">
+                </div>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
         </div>
     </section>
-{% endunless %}
-
-
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-  const swiper = new Swiper('.swiper', {
-    direction: 'horizontal',
-    loop: true,
-    autoplay: {
-      delay: 4000
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true 
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    }
-  });
-});
-
-</script>
+  {% endif %}
 
 
 {% schema %}

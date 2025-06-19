@@ -1,0 +1,33 @@
+.product-image-gallery-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0px;
+}
+
+.product-image-gallery {
+    max-width: 1300px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.image-grid {
+    display: flex;
+    gap: 2%;
+    padding-top: 12px;
+}
+
+.image-1,.image-2 {
+    width: 49%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
