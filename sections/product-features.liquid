@@ -2,12 +2,21 @@
 
 <div class="features-wrapper">
     <div class="features">
+        {% if product.metafields.custom.product_features %}
 
-        <p class="feature">حافِظ للحرارة</p>
-        <p class="feature">أمن للمايكرويف</p>
-        <p class="feature">مصنوع من مواد طبيعية</p>
-        <p class="feature">سهل التنظيف</p>
-        <p class="feature">خفيف الوزن</p>
+            {% if product.metafields.heat_perserving.value %}
+                <p class="feature">حافِظ للحرارة</p>
+            {% endif %}
+
+            {% if product.metafields.microwave_safe.value %}
+                <p class="feature">أمن للمكايرويف</p>
+            {% endif %}
+
+            {% if product.metafields.eco_friendly.value %}
+                <p class="feature">صديق للبيئة</p>
+            {% endif %}
+
+        {% endif %}
 
     </div>
 </div>
