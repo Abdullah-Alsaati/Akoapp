@@ -8,25 +8,5 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {
-    "product-1": {
-      "type": "product-1",
-      "settings": {
-        "product_background_color": "#121212"
-      }
-    },
-    "product-2": {
-      "type": "product-2",
-      "settings": {}
-    },
-    "reviews": {
-      "type": "reviews",
-      "settings": {}
-    }
-  },
-  "order": [
-    "product-1",
-    "product-2",
-    "reviews"
-  ]
+  "markets": {}
 }
