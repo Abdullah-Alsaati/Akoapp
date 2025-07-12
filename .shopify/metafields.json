@@ -1,7 +1,6 @@
 {
   "article": [],
   "blog": [],
-  "brand": [],
   "collection": [],
   "company": [],
   "company_location": [],
@@ -88,6 +87,16 @@
       "type": {
         "name": "number_integer",
         "category": "NUMBER"
+      }
+    },
+    {
+      "key": "product_search_id",
+      "namespace": "custom",
+      "name": "رقم المنتج التعريفي",
+      "description": "الرقم المستخد للبحث عن المنتج ضمن النظام الداخلي",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     }
   ],
