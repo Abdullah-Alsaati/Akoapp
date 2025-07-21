@@ -11,23 +11,54 @@
   "sections": {
     "custom-banner": {
       "type": "custom-banner",
+      "settings": {}
     },
     "featured-collection": {
-      "type": "featured-collection"
+      "type": "featured-collection",
+      "settings": {
+        "featured_collection": "top-products"
+      }
     },
     "coffe-banner": {
-      "type": "coffe-banner"
+      "type": "coffe-banner",
+      "settings": {
+        "heading_1": "جودة فائقة",
+        "text_1": "مواد متينة مقاومة للحرارة وقابلة للاستخدام، صديقة للبيئة ومصممة لتدوم طويلًا.",
+        "heading_2": "تصاميم عصرية وفريدة",
+        "text_2": "أنماط حديثة وأنيقة تناسب كل الأذواق، مثالية للحظات اليومية وجلسات التصوير.",
+        "heading_3": "مثالية لكل المناسبات",
+        "text_3": "متعدد الاستخدامات للمشروبات الساخنة والباردة، يأتي بتغليف أنيق ومناسب للهدايا."
+      }
     },
     "images-slider": {
-      "type": "images-slider"
+      "type": "images-slider",
+      "settings": {
+        "title": "الفائزون بمسابقة أفضل صورة لهذا الأسبوع!",
+        "slides_per_view": 4,
+        "space_between": 40,
+        "autoplay_speed": 3000,
+        "how-to": "كيف أشارك؟",
+        "how-to-link": "",
+        "see-all": "مشاهدة جميع الصور",
+        "see-all-link": ""
+      }
     },
     "featured-collection-2": {
-      "type": "featured-collection"
+      "type": "featured-collection",
+      "settings": {
+        "featured_collection": ""
+      }
     },
     "fun-quiz": {
-      "type": "fun-quiz"
+      "type": "fun-quiz",
+      "settings": {
+        "question": "What color is the Shopify logo?",
+        "correct_answer": "Green",
+        "discount_code": "GREEN15",
+        "allow_reset": true,
+        "reset_quiz_question": false
+      }
     }
-
   },
   "order": [
     "custom-banner",
