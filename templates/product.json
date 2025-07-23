@@ -12,7 +12,7 @@
     "product-1": {
       "type": "product-1",
       "settings": {
-        "product_background_color": "#121212"
+        "product_background_color": "#000000"
       }
     },
     "product-2": {
