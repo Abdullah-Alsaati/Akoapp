@@ -185,7 +185,7 @@ button {
   padding: 0px 10px !important;
 }
 .st-wishlist-icon {
-  color: black !important;
+  color: revert !important;
 }
 .st-label {
   font-weight: 500;
