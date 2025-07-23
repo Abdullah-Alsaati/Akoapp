@@ -195,6 +195,12 @@ button {
   display: none !important;
 }
 
+/* header */
+
+.header_container {
+  background-color: black !important;
+}
+
 /* Responsive Styles */
 
 @media (max-width: 576px) {
