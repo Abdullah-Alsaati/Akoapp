@@ -4,8 +4,19 @@
   <div class="main-product">
 
     <div class="product_image_container">
-      <img class="product_image" height="auto" width="90%" src="{{ product.featured_image | image_url }}" alt="{{ product.featured_image.alt }}">
+      {% if product.featured_media.media_type == "video" %}
+        <video autoplay loop muted playsinline style="max-width: 100%;">
+          {% for source in product.featured_media.sources %}
+            <source src="{{ source.url }}" type="video/webm">
+          {% endfor %}
+          Your browser does not support the video tag.
+        </video>
+      {% else %}
+        <p>This is not a video</p>
+      {% endif %}
     </div>
+
+
 
     <div class="product_info_container">
       <div class="product_title_prices">
