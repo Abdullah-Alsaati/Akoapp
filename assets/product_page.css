@@ -191,6 +191,10 @@ button {
   font-weight: 500;
 }
 
+.st-image {
+  display: none !important;
+}
+
 /* Responsive Styles */
 
 @media (max-width: 576px) {
