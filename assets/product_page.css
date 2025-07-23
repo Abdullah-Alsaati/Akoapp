@@ -37,6 +37,7 @@
 .short_title {
   color: white;
   font-size: 4.3dvw;
+  line-height: 1;
   font-family: "DIN";
   font-weight: 500;
 }
@@ -44,7 +45,7 @@
 .normal_title {
   font-size: 20px;
   font-weight: 400;
-  margin-top: 15px;
+  margin-top: 20px;
   
 }
 
