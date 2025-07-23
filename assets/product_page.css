@@ -63,7 +63,6 @@
   align-items: center;
   gap: 15px;
   font-size: clamp(30px, 3.2vw, 50px);
-  font-weight: 400;
   padding-top: 20px;
   line-height: 1 !important;
 }
@@ -83,7 +82,7 @@
 }
 
 .price_value {
-  font-weight: 100;
+  font-weight: 400;
   font-size: clamp(20px, 3.2vw, 40px);
 }
 
