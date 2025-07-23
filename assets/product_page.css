@@ -63,6 +63,7 @@
   align-items: center;
   gap: 15px;
   font-size: clamp(30px, 3.2vw, 50px);
+  font-weight: 400;
   padding-top: 20px;
   line-height: 1 !important;
 }
