@@ -43,7 +43,7 @@
 }
 
 .normal_title {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 400;
   margin-top: 20px;
   
@@ -83,7 +83,7 @@
 }
 
 .price_value {
-  font-weight: 500;
+  font-weight: 600;
   font-size: clamp(20px, 3.2vw, 40px);
 }
 
