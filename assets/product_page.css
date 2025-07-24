@@ -213,4 +213,8 @@ button {
     justify-content: center;
     width: 90dvw;
   }
+
+  .product_buttons {
+    flex-wrap: wrap;
+  }
 }
