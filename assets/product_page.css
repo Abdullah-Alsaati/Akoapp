@@ -223,5 +223,7 @@ button {
 
   .product_buttons form {
     flex-wrap: wrap;
+    max-width: 90dvw;
+    width: 90dvw;
   }
 }
