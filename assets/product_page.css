@@ -209,6 +209,7 @@ button {
     flex-wrap: wrap;
     max-width: 90dvw;
     width: 90dvw;
+    gap: 25px;
   }
 
   .product_image_container,.product_info_container {
@@ -224,5 +225,12 @@ button {
 
   .product_buttons form {
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .short_title {
+    font-size: 10dvw;
+    font-weight: 600;
   }
 }
