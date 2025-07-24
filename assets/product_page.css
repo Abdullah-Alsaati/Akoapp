@@ -234,7 +234,11 @@ button {
     font-weight: 600;
   }
 
-  .product_description p,.normal_title {
+  .product_description p {
     font-size: 16px;
+  }
+
+  .normal_title {
+    font-size: 18px;
   }
 }
