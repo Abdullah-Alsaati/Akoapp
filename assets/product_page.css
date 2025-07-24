@@ -221,7 +221,7 @@ button {
 
   }
 
-  .product_buttons {
+  .product_buttons form {
     flex-wrap: wrap;
   }
 }
