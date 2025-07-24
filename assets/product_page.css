@@ -204,7 +204,13 @@ button {
 /* Responsive Styles */
 
 @media (max-width: 576px) {
+
   .main-product {
     flex-wrap: wrap;
+  }
+
+  .product_image_container,.product_info_container {
+    justify-content: center;
+    width: 90dvw;
   }
 }
