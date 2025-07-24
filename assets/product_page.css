@@ -164,6 +164,7 @@ button {
   width: 40px;
   text-align: center;
   font-size: 16px;
+  line-height: 1;
   color: white;
   background: transparent;
   border: none;
@@ -182,13 +183,14 @@ button {
 .st-wishlist-button.st-initialized {
   background-color: white !important;
   color: black !important;
-  padding: 0px 10px !important;
+  padding: 5px 10px !important;
+  font-weight: 600;
 }
 .st-wishlist-icon {
   color: revert !important;
 }
 .st-label {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .st-image {
@@ -241,5 +243,13 @@ button {
   .normal_title {
     font-size: 18px;
     font-weight: 500;
+  }
+
+  .price_value {
+    font-size: 40px;
+  }
+
+  .qty-btn {
+    height: 16px;
   }
 }

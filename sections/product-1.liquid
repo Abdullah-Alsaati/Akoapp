@@ -7,12 +7,12 @@
       {% if product.featured_media.media_type == "video" %}
         <video autoplay loop muted playsinline style="max-width: 100%;">
           {% for source in product.featured_media.sources %}
-            <source src="{{ source.url }}" type="video/webm">
+            <source src="{{ source.url }}" type="{{ source.mime_type }}">
           {% endfor %}
           Your browser does not support the video tag.
         </video>
-      {% else %}
-        <p>This is not a video</p>
+      {% elsif product.featured_media.media_type == "image" %}
+        <img src="{{ product.featured_media | image_url }}" alt="{{ product.title }}" style="max-width: 100%;">
       {% endif %}
     </div>
 
