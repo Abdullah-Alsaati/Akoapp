@@ -207,11 +207,18 @@ button {
 
   .main-product {
     flex-wrap: wrap;
+    max-width: 90dvw;
   }
 
   .product_image_container,.product_info_container {
     justify-content: center;
     width: 90dvw;
+  }
+
+  .product_info_container {
+    min-width: 0px;
+    max-width: max-content;
+
   }
 
   .product_buttons {
