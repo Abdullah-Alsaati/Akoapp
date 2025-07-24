@@ -233,4 +233,8 @@ button {
     font-size: 10dvw;
     font-weight: 600;
   }
+
+  .product_description p,.normal_title {
+    font-size: 16px;
+  }
 }
