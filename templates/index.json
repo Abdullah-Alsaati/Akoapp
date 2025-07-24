@@ -16,7 +16,7 @@
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
-        "featured_collection": "top-products"
+        "featured_collection": ""
       }
     },
     "coffe-banner": {
