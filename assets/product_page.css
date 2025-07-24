@@ -208,6 +208,7 @@ button {
   .main-product {
     flex-wrap: wrap;
     max-width: 90dvw;
+    width: 90dvw;
   }
 
   .product_image_container,.product_info_container {
@@ -223,7 +224,5 @@ button {
 
   .product_buttons form {
     flex-wrap: wrap;
-    max-width: 90dvw;
-    width: 90dvw;
   }
 }
