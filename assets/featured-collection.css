@@ -92,11 +92,12 @@
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
+    padding: 15px;
 }
 
 .product-image img {
     border-radius: 20px;
-    object-fit: cover;
+    object-fit: contain;
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
