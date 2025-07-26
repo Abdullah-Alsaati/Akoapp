@@ -26,7 +26,8 @@
         "announcement-bar-0"
       ],
       "settings": {
-        "color_scheme": "scheme-1",
+        "announcement_bar_color": "#171717",
+        "announcement_bar_text_color": "#ffffff",
         "show_line_separator": true,
         "show_social": false,
         "auto_rotate": false,
