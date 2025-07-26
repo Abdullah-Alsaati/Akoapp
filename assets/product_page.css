@@ -212,6 +212,7 @@ button {
     max-width: 90dvw;
     width: 90dvw;
     gap: 25px;
+    padding: 75px 0px;
   }
 
   .product_image_container,.product_info_container {
