@@ -17,13 +17,37 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "أكواب متنوعة و حصرية",
+            "link": ""
+          }
+        },
+        "announcement_PJpwrG": {
+          "type": "announcement",
+          "settings": {
+            "text": "جودة متينة",
+            "link": ""
+          }
+        },
+        "announcement_aWntpD": {
+          "type": "announcement",
+          "settings": {
+            "text": "تصاميم فريدة من نوعها",
+            "link": ""
+          }
+        },
+        "announcement_yPJjrn": {
+          "type": "announcement",
+          "settings": {
+            "text": "توصيل مجاني للطلبات بقيمة 200 ريال فما فوق",
             "link": ""
           }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement-bar-0",
+        "announcement_PJpwrG",
+        "announcement_aWntpD",
+        "announcement_yPJjrn"
       ],
       "settings": {
         "announcement_bar_color": "#171717",
