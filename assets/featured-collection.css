@@ -126,7 +126,7 @@
     font-weight: bold;
 }
 
-.product-title:hover {
+.product-title:hover,.short_title:hover {
     color: #0d3135c7;
 }
 
