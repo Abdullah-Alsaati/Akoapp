@@ -17,6 +17,9 @@
             <div class="product-image"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt="" loading="lazy"></div>
             <div class="product-information">
               <a href="{{ product.url }}">
+                <h2 class="short_title">
+                  {{ product.metafields.custom.product_short_title }}
+                </h2>
                 <p class="product-title">
                   {{ product.title | truncatewords: 10 }}
                 </p>

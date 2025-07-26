@@ -30,6 +30,10 @@
     justify-content: center;
 }
 
+.short_title {
+    color: #0d3135;
+    font-size: 20px;
+}
 
 .collection-name {
     padding: 0px;
