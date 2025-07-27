@@ -31,6 +31,16 @@
   </div>
 </div>
 
+<style>
+  {% for block in section.blocks %}
+
+      .banner-text {
+        color: {{ block.settings.text_color }};
+      }
+
+  {% endfor %}
+</style>
+
 
 <script>
 
@@ -72,6 +82,11 @@ document.addEventListener("DOMContentLoaded", function () {
           "type": "image_picker",
           "id": "banner_image",
           "label": "Choose a banner image"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Edit the text color"
         },
         {
           "type": "text",
