@@ -16,10 +16,10 @@
           "type": "image_slide",
           "settings": {
             "banner_image": "shopify://shop_images/Image_2.jpg",
-            "main-text": "",
-            "secondary-text": "",
-            "url-text": "",
-            "url": ""
+            "main-text": "أكواب كل يوم",
+            "secondary-text": "حلي يومك بجموعة كبيرة من الأكواب الفريدة",
+            "url-text": "أكتشف الأن",
+            "url": "shopify://collections"
           }
         },
         "image_slide_J98LNg": {
