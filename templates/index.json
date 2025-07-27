@@ -16,8 +16,9 @@
           "type": "image_slide",
           "settings": {
             "banner_image": "shopify://shop_images/Image_2.jpg",
+            "text_color": "#ffffff",
             "main-text": "أكواب كل يوم",
-            "secondary-text": "حلي يومك بجموعة كبيرة من الأكواب الفريدة",
+            "secondary-text": "حلي يومك بجموعة كبيرة من الأكواب بتصميم عصري و فريد",
             "url-text": "أكتشف الأن",
             "url": "shopify://collections"
           }
@@ -26,8 +27,9 @@
           "type": "image_slide",
           "settings": {
             "banner_image": "shopify://shop_images/Image_4.jpg",
-            "main-text": "",
-            "secondary-text": "",
+            "text_color": "#ffffff",
+            "main-text": "أكواب أينما كنت",
+            "secondary-text": "تصاميمنا نتاسب جميع المناسبات و الأذواق",
             "url-text": "",
             "url": ""
           }
@@ -36,6 +38,7 @@
           "type": "image_slide",
           "settings": {
             "banner_image": "shopify://shop_images/Image_1.jpg",
+            "text_color": "",
             "main-text": "",
             "secondary-text": "",
             "url-text": "",
