@@ -16,6 +16,7 @@
           "type": "image_slide",
           "settings": {
             "banner_image": "shopify://shop_images/Image_2.jpg",
+            "text_color": "#ffffff",
             "main-text": "أكواب كل يوم",
             "secondary-text": "حلي يومك بجموعة كبيرة من الأكواب الفريدة",
             "url-text": "أكتشف الأن",
@@ -26,6 +27,7 @@
           "type": "image_slide",
           "settings": {
             "banner_image": "shopify://shop_images/Image_4.jpg",
+            "text_color": "",
             "main-text": "",
             "secondary-text": "",
             "url-text": "",
@@ -36,6 +38,7 @@
           "type": "image_slide",
           "settings": {
             "banner_image": "shopify://shop_images/Image_1.jpg",
+            "text_color": "",
             "main-text": "",
             "secondary-text": "",
             "url-text": "",
