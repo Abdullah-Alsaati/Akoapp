@@ -21,7 +21,7 @@
               <div class="product-information">
                 <a href="{{ product.url }}">
                   <h2 class="short_title">{{ product.metafields.custom.product_short_title }}</h2>
-                  <p class="product-title">{{ product.title | truncatewords: 7 }}</p>
+                  <p class="product-title">{{ product.title | truncatewords: 6 }}</p>
                 </a>
                 <div class="product-prices">
                   {% if cart.currency.iso_code == "SAR" %}
@@ -73,15 +73,19 @@
       breakpoints: {
         10:{
           slidesPerView: 2,
+          slidesPerGroup: 1,
         },
         450: {
           slidesPerView: 2,
+          slidesPerGroup: 1,
         },
         768: {
           slidesPerView: 3,
+          slidesPerGroup: 3,
         },
         1024: {
           slidesPerView: 5,
+          slidesPerGroup: 3,
         }
       },
       navigation: {
