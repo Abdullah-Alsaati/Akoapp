@@ -302,7 +302,7 @@ button.add-to-cart-button:hover img {
 
 
 @media (max-width: 450px) {
-    .swiper-button-prev::after, .swiper-button-next::after {
+    .swiper-button-prev, .swiper-button-next {
         display: none;
     }
 }
