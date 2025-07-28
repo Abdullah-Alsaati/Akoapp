@@ -90,7 +90,7 @@
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
-    padding: 15px;
+    padding: 20px;
 }
 
 .product-image img {
