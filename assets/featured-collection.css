@@ -78,7 +78,7 @@
     height: 100%;
     display: flex;
     justify-content: flex-start;
-    gap: 1%;
+    gap: 0.5%;
     flex-shrink: 0;
 }
 
