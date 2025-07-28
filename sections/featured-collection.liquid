@@ -1,154 +1,111 @@
 {{ 'featured-collection.css' | asset_url | stylesheet_tag }}
 
 <section class="featured-collection-wrapper">
+
   <div class="featured-collection">
     <div class="collection-image">
-        <a href="{{ section.settings.featured_collection.url }}" class="collection-name-link">
-          <p class="collection-name">{{ section.settings.featured_collection.title }}</p>
-          <img width="100%" height="auto" src="{{ section.settings.featured_collection.featured_image | img_url: 'medium' }} loading=" alt="Collection image" loading="lazy">
-        </a>
+      <a href="{{ section.settings.featured_collection.url }}" class="collection-name-link">
+        <p class="collection-name">{{ section.settings.featured_collection.title }}</p>
+      </a>
     </div>
-    <div class="collection-products-wrapper">
 
-      <div class="collection-products">
-      
-        {% for product in collections[section.settings.featured_collection].products %}
-          <div class="product-card">
-            <div class="product-image"><img width="100%" height="100%" src="{{ product.featured_image |  image_url }}" alt="" loading="lazy"></div>
-            <div class="product-information">
-              <a href="{{ product.url }}">
-                <h2 class="short_title">
-                  {{ product.metafields.custom.product_short_title }}
-                </h2>
-                <p class="product-title">
-                  {{ product.title | truncatewords: 6 }}
-                </p>
-              </a>
-
-              <div class="product-prices">
-
-                {% if cart.currency.iso_code == "SAR" %}
-                  <div class="saudi-price-holder">
-                    <p class="product-price">{{ product.price |  money_without_currency }}</p>
-                    <img width="auto" height="20px" src="{{ 'sar.svg' |  asset_url }}" alt="">
-                  </div>
-                  {% else %}
-                  <p class="product-price">{{ product.price |  money_with_currency }}</p>
-                {% endif %}
-
-
-                {% if product.compare_at_price %}
-                  <p class="product-compare-to-price" style="text-decoration: line-through;">{{ product.compare_at_price | money }}</p>
-                {% endif %}
+    <!-- Swiper Container -->
+    <div class="swiper featured-collection-swiper">
+      <div class="swiper-wrapper">
+        {% for product in collections[section.settings.featured_collection].products limit: 15 %}
+          <div class="swiper-slide">
+            <div class="product-card">
+              <div class="product-image">
+                <img width="100%" height="100%" src="{{ product.featured_image | image_url }}" alt="" loading="lazy">
               </div>
-            </div>
-            <div class="buttons">
-              <form class="buttons" method="post" action="/cart/add">
-                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                <input type="hidden" name="quantity" value="1">
-                <button type="submit" class="buy-now-button">شراء الاٌن</button>
-                <button type="submit" class="add-to-cart-button"><img width="auto" height="100%"  src="{{ 'cart.svg' |  asset_url  }}" alt=""></button>
-              </form>
+              <div class="product-information">
+                <a href="{{ product.url }}">
+                  <h2 class="short_title">{{ product.metafields.custom.product_short_title }}</h2>
+                  <p class="product-title">{{ product.title | truncatewords: 6 }}</p>
+                </a>
+                <div class="product-prices">
+                  {% if cart.currency.iso_code == "SAR" %}
+                    <div class="saudi-price-holder">
+                      <p class="product-price">{{ product.price | money_without_currency }}</p>
+                      <img width="auto" height="20px" src="{{ 'sar.svg' | asset_url }}" alt="">
+                    </div>
+                  {% else %}
+                    <p class="product-price">{{ product.price | money_with_currency }}</p>
+                  {% endif %}
+
+                  {% if product.compare_at_price %}
+                    <p class="product-compare-to-price" style="text-decoration: line-through;">
+                      {{ product.compare_at_price | money }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="buttons">
+                <form class="buttons" method="post" action="/cart/add">
+                  <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="buy-now-button">شراء الاٌن</button>
+                  <button type="submit" class="add-to-cart-button">
+                    <img width="auto" height="100%" src="{{ 'cart.svg' | asset_url }}" alt="">
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         {% endfor %}
+      </div>
 
-        </div>
-
+      <!-- Navigation Buttons -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
     </div>
-    <button class="prev_button">&larr;</button>
   </div>
 </section>
 
 
-
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-  // Add inertia scroll behavior per section
-  document.querySelectorAll(".collection-products-wrapper").forEach((scrollContainer) => {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let velocity = 0;
-    let animationFrame;
-
-    scrollContainer.addEventListener("mousedown", (e) => {
-      isDown = true;
-      scrollContainer.classList.add("active");
-      startX = e.pageX - scrollContainer.offsetLeft;
-      scrollLeft = scrollContainer.scrollLeft;
-      velocity = 0;
-      cancelAnimationFrame(animationFrame);
+    new Swiper(".featured-collection-swiper", {
+      loop: true,
+      slidesPerView: 1.2,
+      spaceBetween: 15,
+      breakpoints: {
+        10:{
+          slidesPerView: 2,
+        },
+        450: {
+          slidesPerView: 2,
+        },
+        768: {
+          slidesPerView: 3,
+        },
+        1024: {
+          slidesPerView: 5,
+        }
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      grabCursor: true,
+      lazyPreloadPrevNext: 2
     });
 
-    scrollContainer.addEventListener("mouseleave", () => {
-      if (isDown) {
-        isDown = false;
-        applyInertia();
-      }
-    });
-
-    scrollContainer.addEventListener("mouseup", () => {
-      isDown = false;
-      scrollContainer.classList.remove("active");
-      applyInertia();
-    });
-
-    scrollContainer.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - scrollContainer.offsetLeft;
-      const delta = x - startX;
-      velocity = delta * 0.2;
-      scrollContainer.scrollLeft = scrollLeft - delta;
-    });
-
-    function applyInertia() {
-      if (Math.abs(velocity) > 0.1) {
-        scrollContainer.scrollLeft -= velocity;
-        velocity *= 0.95;
-        animationFrame = requestAnimationFrame(applyInertia);
-      }
-    }
-  });
-
-  //Buy Now button (only affects visible/active section)
-  document.querySelectorAll(".buy-now-button").forEach(button => {
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-      let form = event.target.closest("form");
-
-      fetch("/cart/add", {
-        method: "POST",
-        body: new FormData(form)
-      }).then(() => {
-        window.location.href = "/checkout";
-      });
-    });
-  });
-
-  // Attach next button logic per section
-  document.querySelectorAll(".featured-collection-wrapper").forEach(section => {
-    const scrollContainer = section.querySelector(".collection-products-wrapper");
-    const prevButton = section.querySelector(".prev_button");
-
-    if (prevButton && scrollContainer) {
-      prevButton.addEventListener("click", () => {
-        scrollContainer.scrollBy({
-          left: -500,
-          behavior: "smooth"
+    // Buy Now button logic
+    document.querySelectorAll(".buy-now-button").forEach(button => {
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        const form = event.target.closest("form");
+        fetch("/cart/add", {
+          method: "POST",
+          body: new FormData(form)
+        }).then(() => {
+          window.location.href = "/checkout";
         });
       });
-    }
+    });
   });
-});
-
-
-  
 </script>
-
-
 
 {% schema %}
 {
