@@ -53,7 +53,7 @@
 
 .collection-products-wrapper {
     width: 75%;
-    border-radius: 20px;
+    border-radius: 10px;
     overflow-y: hidden;
     overflow-x: scroll;
     white-space: normal;
@@ -79,7 +79,7 @@
     width: 300px;
     background-color: #f2f2f2;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -94,7 +94,7 @@
 }
 
 .product-image img {
-    border-radius: 20px;
+    border-radius: 10px;
     object-fit: contain;
     -webkit-user-drag: none;
     user-select: none;
@@ -116,7 +116,6 @@
 .short_title {
     color: #0d3135;
     font-size: 1.3dvw;
-    line-height: 1.4;
     font-weight: 400;
 }
 
@@ -124,7 +123,6 @@
     width: 100%;
     color: #0d3135;
     font-size: 1.05dvw;
-    line-height: 1.4;
     font-weight: 300;
 }
 
@@ -244,13 +242,17 @@ button.add-to-cart-button:hover > img {
 
     .collection-products-wrapper {
         width: 100%;
-        border-radius: 15px;
+        border-radius: 10px;
+    }
+
+    .product-information {
+        padding-top: 0%;
     }
 
     .collection-image {
         width: 100%;
         height: auto;
-        border-radius: 15px;
+        padding: 15px;
     }
 
     .collection-image a {
@@ -258,9 +260,9 @@ button.add-to-cart-button:hover > img {
     }
 
     .product-card {
-        height: 355px;
+        height: 335px;
         max-height: 500px;
-        border-radius: 15px;
+        border-radius: 10px;
     }
 
     .product-image {
@@ -268,7 +270,7 @@ button.add-to-cart-button:hover > img {
     }
 
     .product-image img {
-        border-radius: 15px;
+        border-radius: 10px;
     }
 
     .short_title {
@@ -281,7 +283,7 @@ button.add-to-cart-button:hover > img {
     }
 
     .product-prices {
-        font-size: 18px;
+        font-size: 20px;
         padding: 5px 0px;
     }
 
@@ -311,7 +313,7 @@ button.add-to-cart-button:hover > img {
 /* swiper */
 
 .featured-collection-swiper {
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .swiper {
@@ -329,6 +331,6 @@ button.add-to-cart-button:hover > img {
 
 @media (max-width: 450px) {
     .swiper-button-prev::after, .swiper-button-next::after {
-        font-size: 32px;
+        font-size: 30px;
     }
 }
