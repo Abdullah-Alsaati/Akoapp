@@ -92,6 +92,7 @@
     },
     "fun-quiz": {
       "type": "fun-quiz",
+      "disabled": true,
       "settings": {
         "question": "What color is the Shopify logo?",
         "correct_answer": "Green",
