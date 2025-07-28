@@ -91,7 +91,7 @@
     height: 180px;
     -webkit-user-drag: none;
     user-select: none;
-    pointer-events: none;
+    pointer-events: all;
     padding: 20px;
 }
 
