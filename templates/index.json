@@ -72,6 +72,7 @@
     },
     "images-slider": {
       "type": "images-slider",
+      "disabled": true,
       "settings": {
         "title": "الفائزون بمسابقة أفضل صورة لهذا الأسبوع!",
         "slides_per_view": 4,
@@ -86,7 +87,7 @@
     "featured-collection-2": {
       "type": "featured-collection",
       "settings": {
-        "featured_collection": ""
+        "featured_collection": "تصميم-بسيط"
       }
     },
     "fun-quiz": {
