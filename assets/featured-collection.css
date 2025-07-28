@@ -108,21 +108,22 @@
 
 
 .product-information {
-    padding: 3% 5%;
+    padding-top: 2%;
+    padding-right: 4%;
+    padding-left: 6%;
 }
 
 .short_title {
     color: #0d3135;
     font-size: 1.3dvw;
     font-weight: 400;
-    padding-bottom: 5px;
-
 }
 
 .product-title {
     width: 100%;
     color: #0d3135;
-    font-weight: bold;
+    font-size: 1.05dvw;
+    font-weight: 300;
 }
 
 .product-title:hover,.short_title:hover {
