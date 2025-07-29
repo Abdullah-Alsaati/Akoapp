@@ -49,14 +49,8 @@
         "social_link_gkHntJ": {
           "type": "social_link",
           "settings": {
-            "footer_social_link_url": "",
-            "footer_link_group": "links_1"
-          }
-        },
-        "social_link_jBgTPN": {
-          "type": "social_link",
-          "settings": {
-            "footer_social_link_url": "",
+            "social_link_icon": "shopify://shop_images/instagram.svg",
+            "footer_social_link_url": "https://www.instagram.com/akoapp/",
             "footer_link_group": "links_1"
           }
         },
@@ -91,7 +85,6 @@
         "link_TijzyD",
         "link_DRPaQ3",
         "social_link_gkHntJ",
-        "social_link_jBgTPN",
         "link_CyrdrC",
         "link_kxFWk6",
         "link_qii49C"
