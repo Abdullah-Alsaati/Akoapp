@@ -1,10 +1,7 @@
 {{ "header.css" |  asset_url |  stylesheet_tag }}
 
-
 <section class="header_container">
   <div class="header">
-
-
 
     <div class="header_content">
        <div class="nav_icons">
@@ -21,10 +18,7 @@
         <input class="search_field" type="text" name="q" placeholder="أبحث عن منتج" aria-label="Search">
         <button class="search_button" type="submit">أبحث</button>
       </form>
-      
     </div>
-
-
 
     <div class="header_content"> 
       <div class="logo_container_middle">
@@ -37,33 +31,69 @@
               <a class="nav_link" href="{{ link.url }}">{{ link.title }}</a>
   
               {% if link.links != blank %}
-                <ul class="submenu">
+                <div class="floating-dropdown">
+                    <div class="floating-dropdown-content multi-column">
 
-                  <div class="sub_links_container">
+                      <div class="floating-dropdown-column">
+                        {% for sub_link in link.links limit: 2 %}
+                          <a class="floating-dropdown-item" href="{{ sub_link.url }}">
+                            {{ sub_link.title }}
+                          </a>
+                          {% if sub_link.links != blank %}
+                            {% for sub_sub_link in sub_link.links limit: 4 %}
+                              <a class="floating-dropdown-subitem" href="{{ sub_sub_link.url }}">
+                                {{ sub_sub_link.title }}
+                              </a>
+                            {% endfor %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      <div class="floating-dropdown-column">
+                        {% for sub_link in link.links limit: 2 offset: 2 %}
+                          <a class="floating-dropdown-item" href="{{ sub_link.url }}">
+                            {{ sub_link.title }}
+                          </a>
+                          {% if sub_link.links != blank %}
+                            {% for sub_sub_link in sub_link.links limit: 4 %}
+                              <a class="floating-dropdown-subitem" href="{{ sub_sub_link.url }}">
+                                {{ sub_sub_link.title }}
+                              </a>
+                            {% endfor %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      <div class="floating-dropdown-column">
+                        {% for sub_link in link.links limit: 2 offset: 4 %}
+                          <a class="floating-dropdown-item" href="{{ sub_link.url }}">
+                            {{ sub_link.title }}
+                          </a>
+                          {% if sub_link.links != blank %}
+                            {% for sub_sub_link in sub_link.links limit: 4 %}
+                              <a class="floating-dropdown-subitem" href="{{ sub_sub_link.url }}">
+                                {{ sub_sub_link.title }}
+                              </a>
+                            {% endfor %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      <div class="floating-dropdown-column">
+                        {% for sub_link in link.links limit: 2 offset: 6 %}
+                          <a class="floating-dropdown-item" href="{{ sub_link.url }}">
+                            {{ sub_link.title }}
+                          </a>
+                          {% if sub_link.links != blank %}
+                            {% for sub_sub_link in sub_link.links limit: 4 %}
+                              <a class="floating-dropdown-subitem" href="{{ sub_sub_link.url }}">
+                                {{ sub_sub_link.title }}
+                              </a>
+                            {% endfor %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      
+                    </div>
 
-                  {% for sub_link in link.links limit: 10 %}
-                    
-                    <li class="sub_link_container">
-                      <a class="sub_link" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
-
-                      {% if sub_link.links != blank %}
-                        <ul class="sub-submenu">
-                          {% for sub_sub_link in sub_link.links limit: 4 %}
-                            <li class="sub_sub_link_container">
-                              <a class="sub_sub_link" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
-                            </li>
-
-                          {% endfor %}
-
-                        </ul>
-                      {% endif %}
-
-                    </li>
-                  {% endfor %}
-
-                  </div>
-
-                </ul>
+                </div>
               {% endif %}
 
             </li>
@@ -72,8 +102,6 @@
       </nav>
     </div>
 
-
-
     <div class="header_content">
       <div class="logo_container_left">
         <img class="hamburger_menu" width="auto" height="100%" src="{{ 'hamburger-menu.svg' |  asset_url  }}" alt="hamburger menu" aria-label="navigation menu">
@@ -81,8 +109,6 @@
       </div>
     </div>
     
-    
-
   </div>
   
   <nav class="navigation_mobile">
@@ -123,7 +149,6 @@
   </nav>
 
 </section>
-
 
 <script>
 
@@ -172,16 +197,12 @@ const toggleActiveOnClicked = (links) => {
   });
 };
 
-
 toggleActiveOnClicked(document.querySelectorAll('.main_link_m'));
 toggleActiveOnClicked(document.querySelectorAll('.sub_link_m'));
 toggleActiveOnClicked(document.querySelectorAll('.sub_sub_links_container_m'));
 toggleActiveOnClicked(document.querySelectorAll('.controls_container'));
 
-
-
 </script>
-
 
 {% schema %}
 {
