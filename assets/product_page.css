@@ -31,13 +31,13 @@
 }
 
 .product_info_container {
-  color: white;
+  color: black;
   min-width: 500px;
   max-width: 50%;
 }
 
 .short_title {
-  color: white;
+  color: black;
   font-size: 4.3dvw;
   line-height: 1;
   font-family: "DIN";
@@ -100,8 +100,8 @@
   font-size: clamp(10px, 1.2vw, 15px);
   font-weight: 100;
   padding: 5px 15px;
-  background-color: white;
-  color: black;
+  background-color: black;
+  color: white;
   border-radius: 5px;
 }
 
@@ -133,8 +133,8 @@ button {
   border: none;
   font-size: 16px;
   font-weight: 500;
-  background-color: #ffffff;
-  color: black;
+  background-color: black;
+  color: white;
   transition: background-color 0.2s ease;
 }
 
@@ -155,7 +155,7 @@ button {
   height: 28px;
   border: none;
   background: transparent;
-  color: white;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -167,7 +167,7 @@ button {
   text-align: center;
   font-size: 16px;
   line-height: 1;
-  color: white;
+  color: black;
   background: transparent;
   border: none;
   appearance: textfield;
@@ -183,8 +183,8 @@ button {
 /* Favorate Widget */
 
 .st-wishlist-button.st-initialized {
-  background-color: white !important;
-  color: black !important;
+  background-color: black !important;
+  color: white !important;
   padding: 5px 10px !important;
   font-weight: 600;
 }
@@ -202,7 +202,7 @@ button {
 /* header */
 
 .header_container {
-  background-color: black !important;
+  background-color: white !important;
 }
 
 /* Responsive Styles */
