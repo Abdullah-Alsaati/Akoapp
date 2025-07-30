@@ -53,6 +53,7 @@
 </div>
 
 <script>
+
 // Floating Cart Functionality
 class FloatingCart {
     constructor() {
@@ -221,11 +222,10 @@ class FloatingCart {
     }
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof window.floatingCart === 'undefined') {
-        window.floatingCart = new FloatingCart();
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  if (!window.floatingCart) {
+    window.floatingCart = new FloatingCart();
+  }
 });
 </script>
 

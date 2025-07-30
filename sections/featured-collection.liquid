@@ -47,7 +47,8 @@
                   <input type="hidden" name="id" value="{{ product.variants.first.id }}">
                   <input type="hidden" name="quantity" value="1">
                   <button type="submit" class="buy-now-button">أشتر الأن</button>
-                  <button type="submit" class="add-to-cart-button">
+                  <button type="button" class="add-to-cart-button">
+                    <span class="spinner" style="display: none;"></span>
                     <img width="auto" height="100%" src="{{ 'cart.svg' | asset_url }}" alt="">
                   </button>
                 </form>
@@ -66,52 +67,85 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    new Swiper(".featured-collection-swiper", {
-      loop: true,
-      slidesPerView: 1.2,
-      spaceBetween: 15,
-      slidesPerGroup: 3,
-      breakpoints: {
-        10:{
-          slidesPerView: 2,
-          slidesPerGroup: 1,
-        },
-        450: {
-          slidesPerView: 2,
-          slidesPerGroup: 1,
-        },
-        768: {
-          slidesPerView: 3,
-          slidesPerGroup: 3,
-        },
-        1024: {
-          slidesPerView: 5,
-          slidesPerGroup: 3,
-        }
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      },
-      grabCursor: true,
-      lazyPreloadPrevNext: 2
-    });
+document.addEventListener("DOMContentLoaded", function () {
+  // Swiper
+  new Swiper(".featured-collection-swiper", {
+    loop: true,
+    slidesPerView: 1.2,
+    spaceBetween: 15,
+    slidesPerGroup: 3,
+    breakpoints: {
+      10: { slidesPerView: 2, slidesPerGroup: 1 },
+      450: { slidesPerView: 2, slidesPerGroup: 1 },
+      768: { slidesPerView: 3, slidesPerGroup: 3 },
+      1024: { slidesPerView: 5, slidesPerGroup: 3 }
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev"
+    },
+    grabCursor: true,
+    lazyPreloadPrevNext: 2
+  });
 
-    // Buy Now button logic
-    document.querySelectorAll(".buy-now-button").forEach(button => {
-      button.addEventListener("click", function (event) {
-        event.preventDefault();
-        const form = event.target.closest("form");
-        fetch("/cart/add", {
-          method: "POST",
-          body: new FormData(form)
-        }).then(() => {
-          window.location.href = "/checkout";
-        });
+  // Buy Now logic
+  document.querySelectorAll(".buy-now-button").forEach(button => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      const form = event.target.closest("form");
+      fetch("/cart/add", {
+        method: "POST",
+        body: new FormData(form)
+      }).then(() => {
+        window.location.href = "/checkout";
       });
     });
   });
+
+  // Add to cart logic
+  document.querySelectorAll(".add-to-cart-button").forEach(button => {
+  button.addEventListener("click", function (event) {
+    const form = event.target.closest("form");
+
+    // Add loading class
+    button.classList.add("loading");
+
+    // Optimistically assume it's first item (or preload cart as shown earlier)
+    let cartWasEmpty = false;
+
+    fetch("/cart.js")
+      .then(response => response.json())
+      .then(cart => {
+        cartWasEmpty = cart.items.length === 0;
+
+        return fetch("/cart/add", {
+          method: "POST",
+          body: new FormData(form)
+        });
+      })
+      .then(() => fetch("/cart.js"))
+      .then(response => response.json())
+      .then(cart => {
+        document.dispatchEvent(new CustomEvent("cart:updated", { detail: cart }));
+
+        if (cartWasEmpty && window.floatingCart?.openCart) {
+          window.floatingCart.openCart();
+        }
+      })
+      .catch(error => {
+        console.error("Error adding to cart:", error);
+      })
+      .finally(() => {
+        button.classList.remove("loading");
+      });
+  });
+});
+
+
+});
+
+
+
 </script>
 
 {% schema %}
