@@ -1,0 +1,397 @@
+{{ 'floating-cart.css' | asset_url | stylesheet_tag }}
+
+<button 
+  class="floating-cart-icon" 
+  id="floatingCartIcon" 
+  style="
+    bottom: {{ section.settings.bottom_position }}px;
+    right: {{ section.settings.right_position }}px;
+    background: {{ section.settings.icon_bg_color }};
+    display: none;
+  "
+>
+  {{ section.settings.cart_icon }}
+  <span class="cart-badge" id="cartBadge">0</span>
+</button>
+
+<!-- Cart Overlay -->
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<!-- Cart Panel -->
+<div class="cart-panel" id="cartPanel" style="width: {{ section.settings.panel_width }}px;">
+  <div class="cart-header" style="background: {{ section.settings.header_bg_color }};">
+    <h3 class="cart-title" style="color: {{ section.settings.header_text_color }};">
+      {{ section.settings.cart_title }}
+    </h3>
+    <button class="cart-close" id="cartClose" style="color: {{ section.settings.header_text_color }};">×</button>
+  </div>
+  
+  <div class="cart-content" id="cartContent">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="cart-empty-icon">{{ section.settings.empty_cart_icon }}</div>
+      <p>{{ section.settings.empty_cart_text }}</p>
+    </div>
+    
+    <div id="cartItems" style="display: none;">
+      <!-- Cart items will be populated here -->
+    </div>
+  </div>
+  
+  <div class="cart-footer" id="cartFooter" style="display: none; background: {{ section.settings.footer_bg_color }};">
+    <div class="cart-subtotal" style="color: {{ section.settings.footer_text_color }};">
+      <span>{{ section.settings.subtotal_text }}:</span>
+      <span id="cartSubtotal">{{ cart.total_price | money }}</span>
+    </div>
+    <button 
+      class="cart-checkout" 
+      onclick="window.location.href='{{ section.settings.checkout_url }}'"
+      style="background: {{ section.settings.checkout_btn_color }};"
+    >
+      {{ section.settings.checkout_btn_text }}
+    </button>
+  </div>
+</div>
+
+<script>
+// Floating Cart Functionality
+class FloatingCart {
+    constructor() {
+        this.cartIcon = document.getElementById('floatingCartIcon');
+        this.cartBadge = document.getElementById('cartBadge');
+        this.cartOverlay = document.getElementById('cartOverlay');
+        this.cartPanel = document.getElementById('cartPanel');
+        this.cartClose = document.getElementById('cartClose');
+        this.cartContent = document.getElementById('cartContent');
+        this.cartEmpty = document.getElementById('cartEmpty');
+        this.cartItems = document.getElementById('cartItems');
+        this.cartFooter = document.getElementById('cartFooter');
+        this.cartSubtotal = document.getElementById('cartSubtotal');
+        
+        this.settings = {
+            showAnimation: {{ section.settings.show_animations | json }},
+            animationSpeed: {{ section.settings.animation_speed }},
+            enableQuantityControls: {{ section.settings.enable_quantity_controls | json }}
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        // Event listeners
+        this.cartIcon.addEventListener('click', () => this.openCart());
+        this.cartClose.addEventListener('click', () => this.closeCart());
+        this.cartOverlay.addEventListener('click', () => this.closeCart());
+        
+        // Initial cart check
+        this.updateCart();
+        
+        // Listen for Shopify cart updates
+        document.addEventListener('cart:updated', () => this.updateCart());
+        
+        // Listen for cart drawer updates (theme compatibility)
+        if (window.theme && window.theme.cart) {
+            document.addEventListener('cart:build', () => this.updateCart());
+        }
+    }
+    
+    async updateCart() {
+        try {
+            const response = await fetch('/cart.js');
+            const cart = await response.json();
+            this.renderCart(cart);
+        } catch (error) {
+            console.error('Error fetching cart:', error);
+        }
+    }
+    
+    renderCart(cart) {
+        const itemCount = cart.item_count;
+        
+        // Update badge
+        this.cartBadge.textContent = itemCount;
+        
+        // Show/hide cart icon based on item count
+        if (itemCount > 0) {
+            this.cartIcon.style.display = 'flex';
+            
+            if (this.settings.showAnimation) {
+                this.cartIcon.classList.add('show');
+                this.cartIcon.classList.add('bounce');
+                
+                setTimeout(() => {
+                    this.cartIcon.classList.remove('bounce');
+                }, this.settings.animationSpeed);
+            } else {
+                this.cartIcon.classList.add('show');
+            }
+            
+            // Render cart items
+            this.renderCartItems(cart);
+            this.cartEmpty.style.display = 'none';
+            this.cartItems.style.display = 'block';
+            this.cartFooter.style.display = 'block';
+            
+            // Update subtotal
+            this.cartSubtotal.textContent = this.formatMoney(cart.total_price);
+        } else {
+            this.cartIcon.classList.remove('show');
+            setTimeout(() => {
+                if (!this.cartIcon.classList.contains('show')) {
+                    this.cartIcon.style.display = 'none';
+                }
+            }, 300);
+            
+            // Show empty state
+            this.cartEmpty.style.display = 'block';
+            this.cartItems.style.display = 'none';
+            this.cartFooter.style.display = 'none';
+        }
+    }
+    
+    renderCartItems(cart) {
+        this.cartItems.innerHTML = cart.items.map((item, index) => `
+            <div class="cart-item" style="animation-delay: ${index * 0.1}s;">
+                <div class="cart-item-image">
+                    ${item.featured_image?.url ? `<img src="${item.featured_image.url}" alt="${item.product_title}" loading="lazy">` : ''}
+                </div>
+                <div class="cart-item-details">
+                    <div class="cart-item-title">${item.product_title}</div>
+                    ${item.variant_title ? `<div class="cart-item-variant">${item.variant_title}</div>` : ''}
+                    <div class="cart-item-price">${this.formatMoney(item.line_price)}</div>
+                    ${this.settings.enableQuantityControls ? `
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn" onclick="floatingCart.updateQuantity('${item.key}', ${item.quantity - 1})">-</button>
+                            <input type="text" class="qty-input" value="${item.quantity}" readonly>
+                            <button class="qty-btn" onclick="floatingCart.updateQuantity('${item.key}', ${item.quantity + 1})">+</button>
+                        </div>
+                    ` : `
+                        <div class="cart-item-quantity-display">Qty: ${item.quantity}</div>
+                    `}
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    async updateQuantity(key, quantity) {
+        if (!this.settings.enableQuantityControls) return;
+        
+        try {
+            const response = await fetch('/cart/change.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: key,
+                    quantity: Math.max(0, quantity)
+                })
+            });
+            
+            const cart = await response.json();
+            this.renderCart(cart);
+            
+            // Trigger cart updated event for theme compatibility
+            document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
+        } catch (error) {
+            console.error('Error updating cart:', error);
+        }
+    }
+    
+    openCart() {
+        this.cartOverlay.classList.add('active');
+        this.cartPanel.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    closeCart() {
+        this.cartOverlay.classList.remove('active');
+        this.cartPanel.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    formatMoney(cents) {
+        // Use Shopify's money format if available
+        if (window.Shopify && window.Shopify.formatMoney) {
+            return window.Shopify.formatMoney(cents, '{{ shop.money_format }}');
+        }
+        
+        // Fallback formatting
+        const money = (cents / 100).toFixed(2);
+        return '{{ shop.currency }}' + money;
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof window.floatingCart === 'undefined') {
+        window.floatingCart = new FloatingCart();
+    }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Floating Cart",
+  "tag": "section",
+  "class": "floating-cart-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cart Icon Settings"
+    },
+    {
+      "type": "text",
+      "id": "cart_icon",
+      "label": "Cart Icon",
+      "default": "🛒",
+      "info": "Use emoji or text for the cart icon"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon Background Color",
+      "default": "#ff6b6b"
+    },
+    {
+      "type": "range",
+      "id": "bottom_position",
+      "label": "Bottom Position (px)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "right_position",
+      "label": "Right Position (px)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Cart Panel Settings"
+    },
+    {
+      "type": "text",
+      "id": "cart_title",
+      "label": "Cart Title",
+      "default": "Shopping Cart"
+    },
+    {
+      "type": "range",
+      "id": "panel_width",
+      "label": "Panel Width (px)",
+      "min": 300,
+      "max": 500,
+      "step": 10,
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "header_bg_color",
+      "label": "Header Background Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color",
+      "label": "Header Text Color",
+      "default": "#2c3e50"
+    },
+    {
+      "type": "header",
+      "content": "Empty Cart Settings"
+    },
+    {
+      "type": "text",
+      "id": "empty_cart_icon",
+      "label": "Empty Cart Icon",
+      "default": "🛒"
+    },
+    {
+      "type": "text",
+      "id": "empty_cart_text",
+      "label": "Empty Cart Text",
+      "default": "Your cart is empty"
+    },
+    {
+      "type": "header",
+      "content": "Footer Settings"
+    },
+    {
+      "type": "color",
+      "id": "footer_bg_color",
+      "label": "Footer Background Color",
+      "default": "#f8f9fa"
+    },
+    {
+      "type": "color",
+      "id": "footer_text_color",
+      "label": "Footer Text Color",
+      "default": "#2c3e50"
+    },
+    {
+      "type": "text",
+      "id": "subtotal_text",
+      "label": "Subtotal Text",
+      "default": "Subtotal"
+    },
+    {
+      "type": "header",
+      "content": "Checkout Button"
+    },
+    {
+      "type": "text",
+      "id": "checkout_btn_text",
+      "label": "Checkout Button Text",
+      "default": "View Cart & Checkout"
+    },
+    {
+      "type": "color",
+      "id": "checkout_btn_color",
+      "label": "Checkout Button Color",
+      "default": "#667eea"
+    },
+    {
+      "type": "url",
+      "id": "checkout_url",
+      "label": "Checkout URL",
+      "default": "/cart"
+    },
+    {
+      "type": "header",
+      "content": "Functionality Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quantity_controls",
+      "label": "Enable Quantity Controls",
+      "default": true,
+      "info": "Allow users to change quantities directly in the floating cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_animations",
+      "label": "Enable Animations",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Animation Speed (ms)",
+      "min": 200,
+      "max": 1000,
+      "step": 100,
+      "default": 600
+    }
+  ],
+  "presets": [
+    {
+      "name": "Floating Cart"
+    }
+  ]
+}
+{% endschema %}
