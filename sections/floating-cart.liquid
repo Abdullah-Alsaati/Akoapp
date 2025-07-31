@@ -53,7 +53,6 @@
 </div>
 
 <script>
-
 // Floating Cart Functionality
 class FloatingCart {
     constructor() {
@@ -161,9 +160,9 @@ class FloatingCart {
                     <div class="cart-item-price">${this.formatMoney(item.line_price)}</div>
                     ${this.settings.enableQuantityControls ? `
                         <div class="cart-item-quantity">
-                            <button class="qty-btn" onclick="floatingCart.updateQuantity('${item.key}', ${item.quantity - 1})">-</button>
+                            <button class="qty-btn" data-key="${item.key}" data-variant-id="${item.variant_id}" data-action="decrease" data-current-qty="${item.quantity}">-</button>
                             <input type="text" class="qty-input" value="${item.quantity}" readonly>
-                            <button class="qty-btn" onclick="floatingCart.updateQuantity('${item.key}', ${item.quantity + 1})">+</button>
+                            <button class="qty-btn" data-key="${item.key}" data-variant-id="${item.variant_id}" data-action="increase" data-current-qty="${item.quantity}">+</button>
                         </div>
                     ` : `
                         <div class="cart-item-quantity-display">Qty: ${item.quantity}</div>
@@ -171,30 +170,112 @@ class FloatingCart {
                 </div>
             </div>
         `).join('');
+        
+        // Add event listeners for quantity buttons
+        if (this.settings.enableQuantityControls) {
+            this.attachQuantityListeners();
+        }
+    }
+    
+    attachQuantityListeners() {
+        const qtyButtons = this.cartItems.querySelectorAll('.qty-btn');
+        console.log('Found quantity buttons:', qtyButtons.length);
+        
+        qtyButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const key = button.getAttribute('data-key');
+                const action = button.getAttribute('data-action');
+                const currentQtyInput = button.parentElement.querySelector('.qty-input');
+                const currentQty = parseInt(currentQtyInput.value);
+                
+                console.log('Button clicked:', { key, action, currentQty });
+                
+                let newQty;
+                if (action === 'increase') {
+                    newQty = currentQty + 1;
+                } else if (action === 'decrease') {
+                    newQty = Math.max(0, currentQty - 1);
+                }
+                
+                console.log('New quantity will be:', newQty);
+                this.updateQuantity(key, newQty);
+            });
+        });
     }
     
     async updateQuantity(key, quantity) {
         if (!this.settings.enableQuantityControls) return;
         
+        console.log('Updating quantity:', { key, quantity });
+        
         try {
-            const response = await fetch('/cart/change.js', {
+            // Show loading state
+            const cartItem = this.cartItems.querySelector(`[data-key="${key}"]`)?.closest('.cart-item');
+            if (cartItem) {
+                cartItem.classList.add('loading');
+            }
+            
+            // Try the change API first
+            let response = await fetch('/cart/change.js', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({
                     id: key,
-                    quantity: Math.max(0, quantity)
+                    quantity: quantity
                 })
             });
             
+            console.log('Change API response status:', response.status);
+            
+            // If change API fails, try the update API with variant ID
+            if (!response.ok) {
+                console.log('Change API failed, trying update API...');
+                const button = this.cartItems.querySelector(`[data-key="${key}"]`);
+                const variantId = button?.getAttribute('data-variant-id');
+                
+                if (variantId) {
+                    response = await fetch('/cart/update.js', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            updates: {
+                                [variantId]: quantity
+                            }
+                        })
+                    });
+                    console.log('Update API response status:', response.status);
+                }
+            }
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Both APIs failed:', errorText);
+                throw new Error(`Failed to update cart: ${response.status}`);
+            }
+            
             const cart = await response.json();
+            console.log('Updated cart:', cart);
+            
             this.renderCart(cart);
             
             // Trigger cart updated event for theme compatibility
             document.dispatchEvent(new CustomEvent('cart:updated', { detail: cart }));
         } catch (error) {
             console.error('Error updating cart:', error);
+            // Remove loading state on error
+            const cartItem = this.cartItems.querySelector(`[data-key="${key}"]`)?.closest('.cart-item');
+            if (cartItem) {
+                cartItem.classList.remove('loading');
+            }
         }
     }
     
