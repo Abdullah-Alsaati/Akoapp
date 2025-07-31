@@ -144,7 +144,7 @@
         "type": "floating-cart",
         "settings": {
           "cart_icon": "🛒",
-          "icon_bg_color": "#58aec0",
+          "icon_bg_color": "#f9f9f9",
           "bottom_position": 100,
           "right_position": 30,
           "cart_title": "سلة المنتجات",
