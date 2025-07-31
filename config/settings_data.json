@@ -139,6 +139,30 @@
         "settings": {
           "color_scheme": "scheme-1"
         }
+      },
+      "floating-cart": {
+        "type": "floating-cart",
+        "settings": {
+          "cart_icon": "🛒",
+          "icon_bg_color": "#ff6b6b",
+          "bottom_position": 100,
+          "right_position": 30,
+          "cart_title": "سلة المنتجات",
+          "panel_width": 400,
+          "header_bg_color": "#f8f9fa",
+          "header_text_color": "#2c3e50",
+          "empty_cart_icon": "🛒",
+          "empty_cart_text": "سلة المنتجات فارغة",
+          "footer_bg_color": "#f8f9fa",
+          "footer_text_color": "#2c3e50",
+          "subtotal_text": "المجموع",
+          "checkout_btn_text": "تفقد السلة الكاملة و أدفع",
+          "checkout_btn_color": "#e19d75",
+          "checkout_url": "/cart",
+          "enable_quantity_controls": true,
+          "show_animations": true,
+          "animation_speed": 600
+        }
       }
     },
     "content_for_index": [],
