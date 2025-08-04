@@ -1,0 +1,62 @@
+{{ 'mega_collections.css' | asset_url | stylesheet_tag }}
+
+<div class="swiper mega_collections_wrapper">
+  <div class="swiper-wrapper mega_collections">
+    {% for mega_collection in shop.metaobjects.mega_collection.values %}
+      <div class="swiper-slide mega_collection">
+        <a class="mega-collection-content" href="{{ mega_collection.system.url }}">
+          {% assign first_image = mega_collection.media[1] | where: "media_type", "image" | first %}
+          {% if first_image %}
+            <img class="mega_image" src="{{ first_image.url }}" alt="{{ first_image.alt | escape }}">
+          {% endif %}
+          <h3 class="mega_title">{{ mega_collection.title }}</h3>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-scrollbar"></div>
+</div>
+
+<script>
+  const swiper = new Swiper('.swiper', {
+    slidesPerView: 2,
+    spaceBetween: 20,
+    loop: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      }
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "mega_collections",
+  "tag": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "mega-collections"
+    }
+  ]
+}
+{% endschema %}

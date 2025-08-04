@@ -2,7 +2,18 @@
   "article": [],
   "blog": [],
   "brand": [],
-  "collection": [],
+  "collection": [
+    {
+      "key": "mega_collection",
+      "namespace": "custom",
+      "name": "Mega Collection",
+      "description": "Determines which Mega Collection does the collection belong to",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
   "company": [],
   "company_location": [],
   "location": [],
