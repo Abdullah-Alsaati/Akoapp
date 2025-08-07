@@ -286,11 +286,8 @@ button.add-to-cart-button:hover img {
 
 .featured-collection-swiper {
     border-radius: 10px;
-}
-
-.swiper {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 

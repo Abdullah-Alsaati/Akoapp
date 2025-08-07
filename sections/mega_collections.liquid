@@ -3,59 +3,88 @@
 <div class="swiper mega_collections_wrapper">
   <div class="swiper-wrapper mega_collections">
     {% for mega_collection in shop.metaobjects.mega_collection.values %}
+
       <div class="swiper-slide mega_collection">
         <a class="mega-collection-content" href="{{ mega_collection.system.url }}">
-          {% assign first_image = mega_collection.media[1] | where: "media_type", "image" | first %}
-          {% if first_image %}
-            <img class="mega_image" src="{{ first_image.url }}" alt="{{ first_image.alt | escape }}">
+          {% if mega_collection.media %}
+            {% for media_item in mega_collection.media.value %}
+              <img class="mega_image" src="{{ media_item | image_url }}" alt="{{ mega_collection.title | escape }}">
+              <h3 class="mega_title">{{ mega_collection.title }}</h3>
+            {% break %}
+          {% endfor %}
           {% endif %}
-          <h3 class="mega_title">{{ mega_collection.title }}</h3>
         </a>
       </div>
+
     {% endfor %}
   </div>
-
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-  <div class="swiper-scrollbar"></div>
 </div>
 
 <script>
-  const swiper = new Swiper('.swiper', {
-    slidesPerView: 2,
+document.addEventListener("DOMContentLoaded", function () {
+  const swiperContainer = document.querySelector('.mega_collections_wrapper');
+  const megaCollectionsSwiper = new Swiper('.mega_collections_wrapper', {
+    slidesPerView: 5,
     spaceBetween: 20,
     loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    },
+    speed: 1500,
     breakpoints: {
-      768: {
-        slidesPerView: 2,
-      },
-      1024: {
-        slidesPerView: 3,
-      }
-    }
+      10: { slidesPerView: 1.8, slidesPerGroup: 1, centeredSlides: true, },
+      450: { slidesPerView: 1.8, slidesPerGroup: 1, centeredSlides: true, },
+      768: { slidesPerView: 3, slidesPerGroup: 3 },
+      1024: { slidesPerView: 4, slidesPerGroup: 3 },
+      1200: { slidesPerView: 5, slidesPerGroup: 3},
+    },
+    autoplay: {
+      delay: 800, 
+      disableOnInteraction: false
+    },
+    freeMode: true,
+    freeModeMomentum: false,
+    grabCursor: true,
   });
+
+    swiperContainer.addEventListener('mouseenter', function () {
+    megaCollectionsSwiper.autoplay.stop();
+  });
+
+  swiperContainer.addEventListener('mouseleave', function () {
+    megaCollectionsSwiper.autoplay.start();
+  });
+});
+
 </script>
 
 {% schema %}
 {
-  "name": "mega_collections",
+  "name": "Mega Collections",
   "tag": "section",
-  "settings": [],
+  "class": "mega-collections-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_autoplay",
+      "label": "Enable Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 2000,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Autoplay Delay",
+      "default": 4000
+    }
+  ],
   "presets": [
     {
-      "name": "mega-collections"
+      "name": "Mega Collections"
     }
   ]
 }
