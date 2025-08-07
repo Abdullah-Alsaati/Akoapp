@@ -73,7 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
     loop: true,
     slidesPerView: 5,
     spaceBetween: 15,
-    slidesPerGroup: 3,
+    slidesPerGroup: 2,
+    speed: 1500,
+    autoplay: {
+      delay: 1500, 
+      disableOnInteraction: false
+    },
     breakpoints: {
       10: { slidesPerView: 1.9, slidesPerGroup: 1, centeredSlides: true },
       450: { slidesPerView: 2, slidesPerGroup: 1, centeredSlides: true },
