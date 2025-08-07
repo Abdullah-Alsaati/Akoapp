@@ -207,12 +207,11 @@ button.add-to-cart-button:hover img {
     .featured-collection {
         flex-direction: column;
         gap: 15px;
-        width: 90dvw;
+        width: 100dvw;
     }
 
     .collection-products-wrapper {
         width: 100%;
-        border-radius: 10px;
     }
 
     .product-information {
@@ -279,19 +278,21 @@ button.add-to-cart-button:hover img {
     .prev_button{
         display: none;
     }
+
+    .featured-collection-swiper {
+        border-radius: 0px;
+}
 }
 
 
-/* swiper */
 
 .featured-collection-swiper {
-    border-radius: 10px;
     width: 100%;
     height: 100%;
 }
 
 
-.swiper-slide {
+.product_card_container {
   width: auto;
   display: flex;
   justify-content: center;
@@ -317,8 +318,8 @@ button.add-to-cart-button:hover img {
 .add-to-cart-button .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid #ccc;
-  border-top-color: #333;
+  border: 2px solid #da0e0e;
+  border-top-color: #240303;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
   position: absolute;
