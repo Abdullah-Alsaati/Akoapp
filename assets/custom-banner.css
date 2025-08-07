@@ -1,6 +1,4 @@
-div.swiper-wrapper {
-  transition-timing-function: cubic-bezier(0.72, 0.71, 0, 1.04) !important;
-}
+
 
 .banner-container {
   display: flex;

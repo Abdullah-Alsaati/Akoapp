@@ -79,6 +79,10 @@ document.addEventListener("DOMContentLoaded", function () {
       delay: 1500, 
       disableOnInteraction: false
     },
+    freeMode: false,
+    grabCursor: true,
+    touchRatio: 0.5,
+    threshold: 5,
     breakpoints: {
       10: { slidesPerView: 1.9, slidesPerGroup: 1, centeredSlides: true },
       450: { slidesPerView: 2, slidesPerGroup: 1, centeredSlides: true },
@@ -90,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev"
     },
-    grabCursor: true,
     lazyPreloadPrevNext: 2
   });
 
