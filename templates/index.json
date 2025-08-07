@@ -53,6 +53,14 @@
       ],
       "settings": {}
     },
+    "mega_collections_YQDjKQ": {
+      "type": "mega_collections",
+      "name": "Mega Collections",
+      "settings": {
+        "show_autoplay": true,
+        "autoplay_delay": 3000
+      }
+    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
@@ -104,6 +112,7 @@
   },
   "order": [
     "custom-banner",
+    "mega_collections_YQDjKQ",
     "featured-collection",
     "coffe-banner",
     "images-slider",
