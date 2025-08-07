@@ -58,7 +58,7 @@
       "name": "Mega Collections",
       "settings": {
         "show_autoplay": true,
-        "autoplay_delay": 4000
+        "autoplay_delay": 3000
       }
     },
     "featured-collection": {
