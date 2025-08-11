@@ -103,17 +103,6 @@
         "featured_collection": "تصميم-بسيط"
       }
     },
-    "coffe-banner": {
-      "type": "coffe-banner",
-      "settings": {
-        "heading_1": "جودة فائقة",
-        "text_1": "مواد متينة مقاومة للحرارة وقابلة للاستخدام، صديقة للبيئة ومصممة لتدوم طويلًا.",
-        "heading_2": "تصاميم عصرية وفريدة",
-        "text_2": "أنماط حديثة وأنيقة تناسب كل الأذواق، مثالية للحظات اليومية وجلسات التصوير.",
-        "heading_3": "مثالية لكل المناسبات",
-        "text_3": "متعدد الاستخدامات للمشروبات الساخنة والباردة، يأتي بتغليف أنيق ومناسب للهدايا."
-      }
-    },
     "images-slider": {
       "type": "images-slider",
       "disabled": true,
@@ -151,7 +140,6 @@
     "mini_banners_GeLxa3",
     "mega_collections_YQDjKQ",
     "featured-collection",
-    "coffe-banner",
     "images-slider",
     "featured-collection-2",
     "fun-quiz"
