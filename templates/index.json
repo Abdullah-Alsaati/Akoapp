@@ -53,13 +53,6 @@
       ],
       "settings": {}
     },
-    "mega_collections_YQDjKQ": {
-      "type": "mega_collections",
-      "name": "Mega Collections",
-      "settings": {
-        "show_autoplay": true
-      }
-    },
     "mini_banners_GeLxa3": {
       "type": "mini-banners",
       "blocks": {
@@ -95,6 +88,13 @@
         "mini-tag-checkbox": false,
         "mini-title-checkbox": true,
         "mini-button-checkbox": true
+      }
+    },
+    "mega_collections_YQDjKQ": {
+      "type": "mega_collections",
+      "name": "Mega Collections",
+      "settings": {
+        "show_autoplay": true
       }
     },
     "featured-collection": {
@@ -148,8 +148,8 @@
   },
   "order": [
     "custom-banner",
-    "mega_collections_YQDjKQ",
     "mini_banners_GeLxa3",
+    "mega_collections_YQDjKQ",
     "featured-collection",
     "coffe-banner",
     "images-slider",
