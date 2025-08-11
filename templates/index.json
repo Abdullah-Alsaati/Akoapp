@@ -57,8 +57,44 @@
       "type": "mega_collections",
       "name": "Mega Collections",
       "settings": {
-        "show_autoplay": true,
-        "autoplay_delay": 3000
+        "show_autoplay": true
+      }
+    },
+    "mini_banners_GeLxa3": {
+      "type": "mini-banners",
+      "blocks": {
+        "mini_banner_qiLXfj": {
+          "type": "mini-banner",
+          "settings": {
+            "mini-banner": "shopify://shop_images/Gemini_Generated_Image_5p6s3g5p6s3g5p6s.png",
+            "mini-title": "أكواب القهوة",
+            "mini-tag": "صنف",
+            "mini-button": "أكتشف",
+            "mini-link": ""
+          }
+        },
+        "mini_banner_YRjJFQ": {
+          "type": "mini-banner",
+          "settings": {
+            "mini-banner": "shopify://shop_images/Gemini_Generated_Image_89zkje89zkje89zk.png",
+            "mini-title": "أكواب الشاي",
+            "mini-tag": "صنف",
+            "mini-button": "أكتشف",
+            "mini-link": ""
+          }
+        }
+      },
+      "block_order": [
+        "mini_banner_qiLXfj",
+        "mini_banner_YRjJFQ"
+      ],
+      "name": "mini-banners",
+      "settings": {
+        "mini-text-color": "#ffffff",
+        "mini-content-checkbox": true,
+        "mini-tag-checkbox": false,
+        "mini-title-checkbox": true,
+        "mini-button-checkbox": true
       }
     },
     "featured-collection": {
@@ -113,6 +149,7 @@
   "order": [
     "custom-banner",
     "mega_collections_YQDjKQ",
+    "mini_banners_GeLxa3",
     "featured-collection",
     "coffe-banner",
     "images-slider",
