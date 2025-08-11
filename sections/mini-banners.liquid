@@ -1,17 +1,157 @@
 {{ 'mini-banners.css' |  asset_url |  stylesheet_tag }}
 
-<h2>YES</h2>
+<div class="mini-banners-container">
+    {% for block in section.blocks %}
+        <div class="mini-banner">
 
+            <div class="mini-banner-image">
+                <img src="{{ block.settings.mini-banner |  image_url }}" alt="">
+            </div>
+
+            {% if section.settings.mini-content-checkbox == true %}
+                <div class="mini-contnet">
+
+                    {% if section.settings.mini-tag-checkbox == true %}
+                    <p class="mini-tag">{{ block.settings.mini-tag }}</p>
+                    {% endif %}
+
+                    {% if section.settings.mini-title-checkbox == true %}
+                    <h3 class="mini-title">{{ block.settings.mini-title }}</h3>
+                    {% endif %}
+
+                    {% if section.settings.mini-button-checkbox == true %}
+                    <a class="mini-button-container" href="{{ block.settings.mini-link }}">
+                        <button class="mini-button">{{ block.settings.mini-button }}</button>
+                    </a>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
+
+        </div>
+    {% endfor %}
+</div>
+
+{%- comment -%} Start of CSS linked to settings {%- endcomment -%}
+
+<style>
+    .mini-contnet {
+        color: {{ section.settings.mini-text-color }};
+    }
+</style>
+
+{%- comment -%} End of CSS linked to settings {%- endcomment -%}
 
 {% schema %}
 {
     "name": "mini-banners",
     "settings": [
-        
-        ],
+        {
+            "type": "color",
+            "id": "mini-text-color",
+            "label": "Define the Text Color"
+        },
+        {
+            "type": "checkbox",
+            "id": "mini-content-checkbox",
+            "label": "Show Text Content?",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Elements Visibility",
+            "visible_if": "{{ section.settings.mini-button-checkbox == true }}"
+        },
+        {
+            "type": "paragraph",
+            "content": "Choose to show or hide elements inside the banner",
+            "visible_if": "{{ section.settings.mini-button-checkbox == true }}"
+        },
+        {
+            "type": "checkbox",
+            "id": "mini-tag-checkbox",
+            "label": "Show Tag?",
+            "default": true,
+            "visible_if": "{{ section.settings.mini-content-checkbox == true }}"
+        },
+        {
+            "type": "checkbox",
+            "id": "mini-title-checkbox",
+            "label": "Show Title?",
+            "default": true,
+            "visible_if": "{{ section.settings.mini-content-checkbox == true }}"
+        },
+        {
+            "type": "checkbox",
+            "id": "mini-button-checkbox",
+            "label": "Show Button?",
+            "default": true,
+            "visible_if": "{{ section.settings.mini-content-checkbox == true }}"
+        }
+    ],
+    "tag": "section",
+    "class": "mini-banners-section",
     "presets": [
         {
             "name": "mini-banners"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "mini-banner",
+            "name": "Mini Banner",
+            "limit": 2,
+            "settings": [
+                {
+                    "type": "header",
+                    "content": "The banner Image"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Recommended Image Dimensions: "
+                },
+                {
+                    "type": "image_picker",
+                    "id": "mini-banner",
+                    "label": "Upload a banner image"
+                },
+                {
+                    "type": "header",
+                    "content": "The banner content"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Text content inside the banner"
+                },
+                {
+                    "type": "text",
+                    "id": "mini-title",
+                    "label": "Define the Title of the banner",
+                    "default": "عنوان",
+                    "visible_if": "{{ section.settings.mini-title-checkbox == true }}"
+                },
+                {
+                    "type": "text",
+                    "id": "mini-tag",
+                    "label": "Define the tag of the banner",
+                    "default": "صنف",
+                    "visible_if": "{{ section.settings.mini-tag-checkbox == true }}"
+                },
+                {
+                    "type": "text",
+                    "id": "mini-button",
+                    "label": "Define the Button Text (CTA)",
+                    "default": "تفقد المنتج",
+                    "visible_if": "{{ section.settings.mini-button-checkbox == true }}"
+                },
+                {
+                    "type": "url",
+                    "id": "mini-link",
+                    "label": "Button Link",
+                    "visible_if": "{{ section.settings.mini-button-checkbox == true }}"
+                }
+            ]
         }
     ]
 }

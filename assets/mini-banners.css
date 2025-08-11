@@ -1,0 +1,124 @@
+.mini-banners-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: max-content;
+    background-color: #0d3135;
+}
+
+.mini-banners-container {
+    width: 80%;
+    max-width: 1400px;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.mini-banner {
+    width: 50%;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.mini-banner-image {
+    object-fit: cover;
+    width: 100%;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mini-banner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: 2500ms ease;
+}
+
+.mini-banner:hover .mini-banner-image img {         /* hover effect */
+    transform: scale(1.03);
+}
+
+.mini-contnet {
+    position: absolute;
+    transform: translate(0%, -50%);
+    top: 50%;
+    right: 10%;
+    width: 40%;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mini-tag {
+    font-size: 15px;
+    border-radius: 5px;
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.61);
+    border-width: 1px;
+    padding: 4px 15px;
+    padding-bottom: 6px;
+    width: max-content;
+    opacity: 0.6;
+}
+
+.mini-title {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.mini-button-container {
+    width: max-content;
+    transform: scale(1);
+    transition: 200ms ease;
+}
+
+.mini-button {
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 5px 30px;
+    padding-bottom: 7px;
+    border: none;
+    background-color: #ffffff;
+    color: revert;
+    cursor: pointer;
+    transition: 200ms ease;
+}
+
+
+.mini-button-container:hover {
+    transform: scale(.95);
+}
+
+.mini-button-container:hover .mini-button {
+    background-color: rgba(255, 255, 255, 0.616);
+}
+
+/* responsive styles */
+
+@media (max-width: 450px) {
+
+    .mini-banners-container {
+        flex-direction: column;
+        width: 90%;
+        padding: 40px 0px;
+    }
+    .mini-banner {
+        width: 100%;
+    }
+
+    .mini-banner-image {
+        height: 185px;
+    }
+
+    .mini-contnet {
+        width: 50%;
+    }
+}
