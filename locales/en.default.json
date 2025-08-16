@@ -546,7 +546,65 @@
       "general": {
         "page_title": "بوابة الدفع",
         "error_page_title": "خطأ",
-        "skip_to_content": "تجاوز"
+        "skip_to_content": "تجاوز",
+        "errors": {
+          "payment": {
+            "market_manager_blocks_wallet_payments": "The payment method is not supported by the market manager."
+          }
+        }
+      },
+      "thank_you": {
+        "location_title": "location"
+      }
+    }
+  },
+  "customer_accounts": {
+    "orders": {
+      "order_status": {
+        "gift_card_resend": {
+          "one": "Resend email",
+          "other": "Resend emails"
+        },
+        "gift_card_resend_text": {
+          "one": "Resend text",
+          "other": "Resend text messages"
+        },
+        "gift_card_resend_description": {
+          "one": "If not received, resend the email or",
+          "other": "If not received, please resend the emails or"
+        },
+        "gift_card_resend_description_text": {
+          "one": "If not received, resend the text or",
+          "other": "If not received, resend the text messages or"
+        }
+      },
+      "havent_received_your_delivery": "Didn't receive your order?",
+      "didnt_pick_up_order": "Didn't receive your order?",
+      "if_you_didnt_receive_this": "If you do not receive this,",
+      "if_not_received": {
+        "one": "If not received,",
+        "other": "If not received,"
+      },
+      "let_us_know": "Tell us",
+      "contact_us": "Contact us.",
+      "order_list": {
+        "column_headers": {
+          "items": "purposes"
+        },
+        "list_view": "Show list view",
+        "payment_status": {
+          "table_view": {
+            "overdue": "late",
+            "due": "Due {{date}}",
+            "due_today": "Due today",
+            "paid": "paid",
+            "due_without_date": "right",
+            "due_on_fulfillment": "Due upon execution",
+            "pay_to_confirm": "Payment to confirm",
+            "payment_not_due": "It's not his time yet"
+          }
+        },
+        "table_view": "Show table view"
       }
     }
   }
