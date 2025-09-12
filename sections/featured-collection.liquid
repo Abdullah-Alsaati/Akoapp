@@ -22,13 +22,13 @@
               </div>
               <div class="product-information">
                 <a href="{{ product.url }}">
-                  <h2 class="short_title">{{ product.metafields.custom.product_short_title }}</h2>
-                  <p class="product-title">{{ product.title | truncatewords: 7 }}</p>
+                  <p class="product-title">{{ product.title | truncatewords: 8 }}</p>
                 </a>
                 <div class="product-prices">
                   {% if cart.currency.iso_code == "SAR" %}
                     <div class="saudi-price-holder">
-                      <p class="product-price">{{ product.price | money_without_currency }}</p>
+                      {% assign tax_incl_price = product.price |  times: 1.15  %}
+                      <p class="product-price">{{ tax_incl_price |  money_with_currency }}</p>
                       <img width="auto" height="20px" src="{{ 'sar.svg' | asset_url }}" alt="">
                     </div>
                   {% else %}

@@ -31,11 +31,11 @@
         <div class="product_prices">
           <p class="original_price">
             {% if cart.currency.iso_code == "SAR" %}
-              {% assign tax_inclusive_price = product.price | times: 1.5 %}
+              {% assign tax_inclusive_price = product.price | times: 1.15 %}
               <span class="price_value">{{ tax_inclusive_price | money_without_currency }}</span>
               <img class="sar_currency_og" src="{{ 'sar.svg' | asset_url }}" alt="SAR">
             {% else %}
-              {% assign tax_inclusive_price = product.price | times: 1.5 %}
+              {% assign tax_inclusive_price = product.price | times: 1.15 %}
               {{ tax_inclusive_price | money_with_currency }}
             {% endif %}
           </p>
